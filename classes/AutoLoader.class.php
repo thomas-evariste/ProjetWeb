@@ -26,5 +26,5 @@ class AutoLoader extends MyObject {
 }
 $__LOADER = new AutoLoader();
 
-
+//CECI EST UN COMMENTAIRE DE TEST GIT
 ?>
