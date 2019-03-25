@@ -4,35 +4,39 @@
 		echo '<span class="error">' . $inscErrorText . '</span>'; 
 ?>
 
-<form action="index.php?action=validateInscription" method="post"> 
-	<table> 
-		<tr> 
-			<th>Login* :</th> 
-			<td><input type="text" name="inscLogin"/></td> 
-		</tr> 
-		
-		<tr> 
-			<th>Mot de passe* :</th> 
-			<td><input type="password" name="inscPassword"/></td> 
-		</tr> 
-		
-		<tr> 
-			<th>Mail :</th> 
-			<td><input type="text" name="mail"/></td>
-		</tr> 
-		
-		<tr> 
-			<th>Nom :</th> 
-			<td><input type="text" name="nom"/></td> 
-		</tr>
-		
-		<tr> 
-			<th>Prenom :</th> 
-			<td><input type="text" name="prenom"/></td>
-		</tr> 
-		
-		<tr> 
-			<th /> <td><input type="submit" value="Creer mon compte..." /></td> 
-		</tr>
-	</table> 
-</form> 
+	<div class="container h-100">
+		<div class="d-flex justify-content-center h-100">
+			<div class="user_card_insc">
+				<div class="d-flex justify-content-center">
+					<div class="brand_logo_container">
+						<img src="https://cdn.freebiesupply.com/logos/large/2x/pinterest-circle-logo-png-transparent.png" class="brand_logo" alt="Logo">
+					</div>
+				</div>
+				<div class="d-flex justify-content-center form_container">
+					<form  action="index.php?action=validateInscription" method="post">
+						<table>
+						<tr class="input-group mb-3">
+							<td><input type="text" name="inscLogin" class="form-control input_user" value="" placeholder="Login* :"></td>
+						</tr>
+						<tr class="input-group mb-3">
+							<td><input type="password" name="inscPassword" class="form-control input_user" value="" placeholder="Mot de passe* :"></td>
+						</tr>
+						<tr class="input-group mb-3">
+							<td><input type="text" name="mail" class="form-control input_user" value="" placeholder="Mail :"></td>
+						</tr>
+						<tr class="input-group mb-3">
+							<td><input type="text" name="nom" class="form-control input_user" value="" placeholder="Nom :"></td>
+						</tr>
+						<tr class="input-group mb-2">
+							<td><input type="text" name="prenom" class="form-control input_pass" value="" placeholder="Prenom :"></td>
+						</tr>
+						<tr class="d-flex justify-content-center mt-3 login_container">
+							
+							<th /><td> <input type="submit" value="Creer mon compte" /></td>
+						</tr>
+						</table>
+					</form>
+				</div>
+			</div>
+		</div>
+

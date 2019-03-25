@@ -4,7 +4,9 @@
 // e.g. for http://eden.imt-lille-douai.fr/~luc.fabresse/index.php 
 // __ROOT_DIR = /home/luc.fabresse/public_html
 
-if (!isset($_SESSION)) { session_start(); }
+if (!isset($_SESSION)) { session_start();
+}
+
 
 
 $rootDirectoryPath = realpath(dirname(__FILE__));
@@ -37,5 +39,8 @@ try {
 catch (Exception $e) {
 	echo 'Error : ' . $e->getMessage() . "\n"; 
 }
+
+echo $request->getControllerName();
+
 
 ?>

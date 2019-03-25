@@ -8,14 +8,16 @@ class View{
 
 	
 	
-	function __construct($currentController, $template){
+	function __construct($currentController, $template, $args = array()){
 		$this->currentController = $currentController;
-		$this->data = Array();
+		$this->data = $args;
 		$this->template = $template .'Template';
+
 	}
 
 
 	function render(){
+
 		extract($this->data);
 		require_once(__ROOT_DIR . '/templates/headTemplate.php');
 		require_once(__ROOT_DIR . '/templates/topTemplate.php');
@@ -32,7 +34,6 @@ class View{
 		//$this->data['\'' . $keyName .  '\'' ] = $keyValue;
 		$this->data[$keyName] = $keyValue;
 	}
-
 
 }
 

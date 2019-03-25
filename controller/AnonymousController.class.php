@@ -23,15 +23,8 @@ class AnonymousController extends Controller{
 	}
 	
 	public function home($request){
-		
-		if(isset($_SESSION['login'])){
-			$view = new UserView($this,'home');
-			$view->render();
-		}
-		else{
-			$view = new AnonymousView($this,'home');
-			$view-> render();
-		}
+		$view = new View($this,'home');
+		$view-> render();
 	}
 
 	public function login($request){
@@ -39,37 +32,60 @@ class AnonymousController extends Controller{
 		$view->render();
 	}
 	
+	public function generateInscError($text){
+		$view = new View($this,'inscription');
+		$view->setArg('inscErrorText',$text);
+		$view->render();
+	}
+	
 	
 	public function validateInscription($request) { 
 		$login = $request->read('inscLogin');
-
-		if(User::isLoginUsed($login)) { 
-			$view = new View($this,'inscription'); 
-			$view->setArg('inscErrorText','This login is already used'); 
-			$view->render(); 
-		} else {
-			$password = $request->read('inscPassword'); 
-			$nom = $request->read('nom'); 
-			$prenom = $request->read('prenom'); 
-			$mail = $request->read('mail');
-			$user = User::create($login, $password,$mail,$nom,$prenom);
-			if(!isset($user)) { 
-				$view = new View($this,'inscription'); 
-				$view->setArg('inscErrorText', 'Cannot complete inscription'); 
-				$view->render(); 
-			} else { 
-				$request->resetRequest();
-				$newRequest = $request->getCurrentRequest();
-				$newRequest->write('controller','user');
-				$newRequest->write('user',$user->getLogin());
-				$newRequest->writePost('loginLogin',$user->getLogin());
-				$newRequest->writePost('loginPassword',$user->getPassword());
-				$newController=Dispatcher::dispatch($newRequest); 
-				$newController->tryLogin($newRequest);
+		$password = $request->read('inscPassword'); 
+		if (trim($login)=='' || trim($password)==''){
+			$this->generateInscError('Merci d\'insérer un login et un password valides');
+		}
+		else if(User::isLoginUsed($login)) { 
+			AnonymousController::generateInscError('Ce login est déjà utilisé');
+		} 
+		else {
+			if(strlen($login)>25){
+				AnonymousController::generateInscError('Merci d\'utiliser un login de moins de 25 caractères');
+			}
+			elseif(strlen($password)>25){
+				AnonymousController::generateInscError('Merci d\'utiliser un password de moins de 25 caractères');
+			}
+			else{
+				$nom = $request->read('nom'); 
+				$prenom = $request->read('prenom'); 
+				$mail = $request->read('mail');
+				if(strlen($mail)>70){
+					AnonymousController::generateInscError('Merci d\'utiliser un mail de moins de 70 caractères');
+				}
+				else if(strlen($nom)>50){
+					AnonymousController::generateInscError('Merci d\'utiliser un nom de moins de 50 caractères');
+				}
+				else if(strlen($prenom)>50){
+					AnonymousController::generateInscError('Merci d\'utiliser un prenom de moins de 50 caractères');
+				}
+				else{
+					$user = User::create($login, $password,$mail,$nom,$prenom);
+					if(!isset($user)) { 
+						AnonymousController::generateInscError('Inscription invalide, merci de réessayer');
+					} else { 
+						$request->resetRequest();
+						$newRequest = $request->getCurrentRequest();
+						$newRequest->write('controller','user');
+						$newRequest->write('user',$user->getLogin());
+						$newRequest->writePost('loginLogin',$user->getLogin());
+						$newRequest->writePost('loginPassword',$user->getPassword());
+						$newController=Dispatcher::dispatch($newRequest); 
+						$newController->tryLogin($newRequest);
+					}
+				}
 			}
 		}
 	}
-
 
 
 	public function tryLogin($request){
@@ -77,15 +93,13 @@ class AnonymousController extends Controller{
 		$password = $request->read('loginPassword');
 		$user = User::tryLogin($login,$password);
 		if (isset($user)){
-			if (!isset($_SESSION)){
-				session_start();
-			}
 			$_SESSION['login'] = $login;
 			$request->resetRequest();
 			$newRequest = $request->getCurrentRequest();
 			$newRequest->write('controller','user');
 			$newRequest->write('user',$user->getLogin()); 
 			$newRequest->write('action','validateConnexion');
+			echo "avant dispatch: ".$request->getControllerName();
 			$newController = Dispatcher::dispatch($newRequest);
 			$newController->validateConnexion($newRequest);
 		}
@@ -94,7 +108,6 @@ class AnonymousController extends Controller{
 			$view->setArg('inscErrorText', 'Cannot complete connexion'); 
 			$view->render(); 
 		} 
-		
 	}
 
 
@@ -130,19 +143,19 @@ class AnonymousController extends Controller{
 	*/
 	
 	
-	public function validateConnexion($request){
-		$view = new UserView($this,'connected');
-		$view->render();
-	}
 
+
+   // Bien que cette fonction n'ait pas à être dans AnonymousController, suite à la courte discussion que nous avons eu à 12h, je n'ai pas réussi à l'utiliser correctement depuis UserController
+   //(Ceci affichait une page vide)
+
+
+/*
 	public function deconnexion($request){
 		$_SESSION = array();
-		$request->resetRequest();
-		$newController = Dispatcher::dispatch($request);
-		$newController->home($request);
+		$view = new AnonymousView($this,'home');
+		$view-> render();
 	}
+*/
 
 }
-
-
 ?>

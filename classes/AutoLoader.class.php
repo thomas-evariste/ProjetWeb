@@ -12,7 +12,7 @@ class AutoLoader extends MyObject {
 // an unknown class name in the source code
 
     private function load($className) {
-        $className = ucfirst(strtolower($className));
+        $className = ucfirst($className);
         $directories = ['classes', 'model', 'controller', 'view', 'model/User'];
         foreach ($directories as $dir)
         {

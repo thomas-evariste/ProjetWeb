@@ -2,12 +2,40 @@
 
 class UserController extends AnonymousController{
 	
-    public function defaultAction($request) { 
-		$view = new UserView($this, 'connected'); 
+	protected $currentUser;
+    public function __construct($request) {
+			parent::__construct($request);
+			$this->currentUser = User::getByLogin($_SESSION['login']);
+	}
+
+  public function defaultAction($request) { 
+		$view = new UserView($this, 'connected',array('user' =>$this->currentUser)); 
 		$view->render(); 
 	}
-	
 
+	public function home($request){
+		echo 'UserController';
+		$view = new UserView($this, 'home',array('user' =>$this->currentUser)); 
+		$view->render(); 
+	}
+
+	public function deconnexion($request){
+		$_SESSION = array();
+		/*$request->resetRequest();
+	   $newController = Dispatcher::dispatch($request);
+	   $newController->home($request);
+	   */
+		$request->resetRequest();
+		$newController = Dispatcher::dispatch($request);
+		$request->write('action', 'home');
+		$newController->home($request);
+	 }
+
+	 public function validateConnexion($request){
+		$view = new UserView($this,'connected',array('user'=>$this->currentUser));
+		$view->render();
+	}
+	
 
 }
 ?>
