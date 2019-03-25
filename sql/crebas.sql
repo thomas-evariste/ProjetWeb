@@ -1,0 +1,275 @@
+/*==============================================================*/
+/* Nom de SGBD :  MySQL 5.0                                     */
+/* Date de création :  25/03/2019 17:07:22                      */
+/*==============================================================*/
+
+
+drop table if exists ASSOCIER;
+
+drop table if exists CONTENIR;
+
+drop table if exists CREER;
+
+drop table if exists DISPOSER;
+
+drop table if exists ENSEIGNANT;
+
+drop table if exists EST_INVITE;
+
+drop table if exists NOTE;
+
+drop table if exists PARTICIPANT;
+
+drop table if exists QUESTION;
+
+drop table if exists QUESTIONNAIRE;
+
+drop table if exists REGLE;
+
+drop table if exists REPONSE_DISPONIBLE;
+
+drop table if exists SPECIFIER;
+
+drop table if exists TAG;
+
+drop table if exists TENTER;
+
+/*==============================================================*/
+/* Table : ASSOCIER                                             */
+/*==============================================================*/
+create table ASSOCIER
+(
+   LIBELLE              varchar(50) not null,
+   ID_QUESTION          int not null,
+   primary key (LIBELLE, ID_QUESTION)
+);
+
+/*==============================================================*/
+/* Table : CONTENIR                                             */
+/*==============================================================*/
+create table CONTENIR
+(
+   ID_QUESTION          int not null,
+   ID_QUESTIONNAIRE     int not null,
+   BAREME               decimal,
+   primary key (ID_QUESTION, ID_QUESTIONNAIRE)
+);
+
+/*==============================================================*/
+/* Table : CREER                                                */
+/*==============================================================*/
+create table CREER
+(
+   ID_QUESTION          int not null,
+   ID_USER              int not null,
+   primary key (ID_QUESTION, ID_USER)
+);
+
+/*==============================================================*/
+/* Table : DISPOSER                                             */
+/*==============================================================*/
+create table DISPOSER
+(
+   ID_QUESTION          int not null,
+   ID_PROPOSITION       int not null,
+   primary key (ID_QUESTION, ID_PROPOSITION)
+);
+
+/*==============================================================*/
+/* Table : ENSEIGNANT                                           */
+/*==============================================================*/
+create table ENSEIGNANT
+(
+   ID_USER              int not null,
+   INTERNE              bool not null,
+   DESCRIPTION          varchar(200),
+   NOM                  varchar(50) not null,
+   PRENOM               varchar(50) not null,
+   MAIL                 varchar(200),
+   LOGIN                varchar(200),
+   PASSWORD             varchar(200),
+   primary key (ID_USER)
+);
+
+/*==============================================================*/
+/* Table : EST_INVITE                                           */
+/*==============================================================*/
+create table EST_INVITE
+(
+   ID_USER              int not null,
+   ID_QUESTIONNAIRE     int not null,
+   A_PARTICIPE          bool,
+   primary key (ID_USER, ID_QUESTIONNAIRE)
+);
+
+/*==============================================================*/
+/* Table : NOTE                                                 */
+/*==============================================================*/
+create table NOTE
+(
+   ID_USER              int not null,
+   ENS_ID_USER          int not null,
+   ID_NOTE              int not null,
+   ID_QUESTIONNAIRE     int not null,
+   VALEUR               decimal not null,
+   primary key (ID_USER, ENS_ID_USER, ID_NOTE)
+);
+
+/*==============================================================*/
+/* Table : PARTICIPANT                                          */
+/*==============================================================*/
+create table PARTICIPANT
+(
+   ID_USER              int not null,
+   PROMOTION            int,
+   MAJEURE              varchar(50),
+   NOM                  varchar(50) not null,
+   PRENOM               varchar(50) not null,
+   MAIL                 varchar(200),
+   LOGIN                varchar(200),
+   PASSWORD             varchar(200),
+   primary key (ID_USER)
+);
+
+/*==============================================================*/
+/* Table : QUESTION                                             */
+/*==============================================================*/
+create table QUESTION
+(
+   ID_QUESTION          int not null auto_increment,
+   TYPE                 char(10) not null,
+   INTITULE_QUESTION    varchar(50) not null,
+   primary key (ID_QUESTION)
+);
+
+/*==============================================================*/
+/* Table : QUESTIONNAIRE                                        */
+/*==============================================================*/
+create table QUESTIONNAIRE
+(
+   ID_QUESTIONNAIRE     int not null,
+   TITRE                varchar(50) not null,
+   DESCRIPTION_QUESTIONNAIRE varchar(200),
+   DATE_OUVERTURE       date,
+   DATE_FERMETURE       date,
+   CONNEXION_REQUISE    bool not null,
+   ETAT                 varchar(50) not null,
+   URL                  varchar(200),
+   primary key (ID_QUESTIONNAIRE)
+);
+
+/*==============================================================*/
+/* Table : REGLE                                                */
+/*==============================================================*/
+create table REGLE
+(
+   ID_REGLE             int not null,
+   TITRE_REGLE          varchar(50) not null,
+   DESCRIPTION_REGLE    varchar(200),
+   primary key (ID_REGLE)
+);
+
+/*==============================================================*/
+/* Table : REPONSE_DISPONIBLE                                   */
+/*==============================================================*/
+create table REPONSE_DISPONIBLE
+(
+   ID_PROPOSITION       int not null auto_increment,
+   REP_ID_PROPOSITION   int,
+   REP_ID_PROPOSITION2  int,
+   ID_USER              int,
+   INTITULE_PROPOSITION varchar(50),
+   REPONSE_CORRECTE     bool,
+   primary key (ID_PROPOSITION)
+);
+
+/*==============================================================*/
+/* Table : SPECIFIER                                            */
+/*==============================================================*/
+create table SPECIFIER
+(
+   ID_QUESTIONNAIRE     int not null,
+   ID_REGLE             int not null,
+   primary key (ID_QUESTIONNAIRE, ID_REGLE)
+);
+
+/*==============================================================*/
+/* Table : TAG                                                  */
+/*==============================================================*/
+create table TAG
+(
+   LIBELLE              varchar(50) not null,
+   COULEUR              varchar(50) not null,
+   primary key (LIBELLE)
+);
+
+/*==============================================================*/
+/* Table : TENTER                                               */
+/*==============================================================*/
+create table TENTER
+(
+   ID_USER              int not null,
+   ID_PROPOSITION       int not null,
+   primary key (ID_USER, ID_PROPOSITION)
+);
+
+alter table ASSOCIER add constraint FK_ASSOCIER foreign key (LIBELLE)
+      references TAG (LIBELLE) on delete restrict on update cascade;
+
+alter table ASSOCIER add constraint FK_ASSOCIER2 foreign key (ID_QUESTION)
+      references QUESTION (ID_QUESTION) on delete restrict on update cascade;
+
+alter table CONTENIR add constraint FK_CONTENIR foreign key (ID_QUESTION)
+      references QUESTION (ID_QUESTION) on delete restrict on update cascade;
+
+alter table CONTENIR add constraint FK_CONTENIR2 foreign key (ID_QUESTIONNAIRE)
+      references QUESTIONNAIRE (ID_QUESTIONNAIRE) on delete restrict on update cascade;
+
+alter table CREER add constraint FK_CREER foreign key (ID_QUESTION)
+      references QUESTION (ID_QUESTION) on delete restrict on update cascade;
+
+alter table CREER add constraint FK_CREER2 foreign key (ID_USER)
+      references ENSEIGNANT (ID_USER) on delete restrict on update cascade;
+
+alter table DISPOSER add constraint FK_DISPOSER foreign key (ID_QUESTION)
+      references QUESTION (ID_QUESTION) on delete restrict on update cascade;
+
+alter table DISPOSER add constraint FK_DISPOSER2 foreign key (ID_PROPOSITION)
+      references REPONSE_DISPONIBLE (ID_PROPOSITION) on delete restrict on update cascade;
+
+alter table EST_INVITE add constraint FK_EST_INVITE foreign key (ID_USER)
+      references PARTICIPANT (ID_USER) on delete restrict on update cascade;
+
+alter table EST_INVITE add constraint FK_EST_INVITE2 foreign key (ID_QUESTIONNAIRE)
+      references QUESTIONNAIRE (ID_QUESTIONNAIRE) on delete restrict on update cascade;
+
+alter table NOTE add constraint FK_CORRESPONDRE foreign key (ID_QUESTIONNAIRE)
+      references QUESTIONNAIRE (ID_QUESTIONNAIRE) on delete restrict on update cascade;
+
+alter table NOTE add constraint FK_GERER foreign key (ENS_ID_USER)
+      references ENSEIGNANT (ID_USER) on delete restrict on update cascade;
+
+alter table NOTE add constraint FK_OBTENIR foreign key (ID_USER)
+      references PARTICIPANT (ID_USER) on delete restrict on update cascade;
+
+alter table REPONSE_DISPONIBLE add constraint FK_APPAREILLER foreign key (REP_ID_PROPOSITION2)
+      references REPONSE_DISPONIBLE (ID_PROPOSITION) on delete restrict on update cascade;
+
+alter table REPONSE_DISPONIBLE add constraint FK_APPAREILLER2 foreign key (REP_ID_PROPOSITION)
+      references REPONSE_DISPONIBLE (ID_PROPOSITION) on delete restrict on update cascade;
+
+alter table REPONSE_DISPONIBLE add constraint FK_SUPERVISER foreign key (ID_USER)
+      references ENSEIGNANT (ID_USER) on delete restrict on update cascade;
+
+alter table SPECIFIER add constraint FK_SPECIFIER foreign key (ID_QUESTIONNAIRE)
+      references QUESTIONNAIRE (ID_QUESTIONNAIRE) on delete restrict on update cascade;
+
+alter table SPECIFIER add constraint FK_SPECIFIER2 foreign key (ID_REGLE)
+      references REGLE (ID_REGLE) on delete restrict on update cascade;
+
+alter table TENTER add constraint FK_TENTER foreign key (ID_USER)
+      references PARTICIPANT (ID_USER) on delete restrict on update cascade;
+
+alter table TENTER add constraint FK_TENTER2 foreign key (ID_PROPOSITION)
+      references REPONSE_DISPONIBLE (ID_PROPOSITION) on delete restrict on update restrict;
+
