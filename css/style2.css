@@ -5,12 +5,13 @@
 .grids .row {
     height: 100vh;
     background:#000;
+	width: 100vw;
 }
 
 .brand-centered {
      display: block;
     position: relative;
-    /* width: 100%; */
+    width: 100%; 
     height: 40vh;
     line-height: 1em;
     margin: 0;
@@ -214,67 +215,4 @@ span.calltoaction a:hover {
 span.calltoaction a:hover:before,
 span.calltoaction a:hover:after {
 	box-shadow: 0 24px 30px rgba(0, 0, 0, 0.3);
-}
-
-/* make sidebar nav vertical */ 
-@media (max-width: 1199px) {
-
-    .grid-item {
-        display: block;
-        position: relative;
-        width: 33.33333333333333%;
-        height: 33.33333333333333%;
-        line-height: 1em;
-        margin: 0;
-        font-size: 12px;
-        float: left;
-        overflow: hidden;
-    }
-
-    .grid-item:nth-child(n+10){
-        display:none;
-    }
-    .brand-centered {
-        display: block;
-        position: relative;
-        width: 25%;
-        height: 10vh;
-        line-height: 1em;
-        margin: 0;
-        font-size: 12px;
-        float: left;
-    }
-    a.navbar-brand {
-        width: 100%;
-        height: 100%;
-    }
-    .navbar.navbar-default {
-        height: 10vh;
-        width: 75%;
-        float: right;
-        margin: 0;
-    }
-    .grids {
-        height: 90vh;
-    }
-}
-@media (min-width: 768px) {
-  .sidebar-nav .navbar .navbar-collapse {
-    padding: 0;
-    max-height: none;
-  }
-  .sidebar-nav .navbar ul {
-    float: none;
-  }
-  .sidebar-nav .navbar ul:not {
-    display: block;
-  }
-  .sidebar-nav .navbar li {
-    float: none;
-    display: block;
-  }
-  .sidebar-nav .navbar li a {
-    padding-top: 12px;
-    padding-bottom: 12px;
-  }
 }
