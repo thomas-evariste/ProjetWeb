@@ -18,6 +18,10 @@ class UserController extends AnonymousController{
 		$view = new UserView($this, 'home',array('user' =>$this->currentUser)); 
 		$view->render(); 
 	}
+	public function profil($request){
+		$view = new UserView($this, 'profil',array('user' =>$this->currentUser)); 
+		$view->render(); 
+	}
 
 	public function deconnexion($request){
 		$_SESSION = array();

@@ -4,8 +4,7 @@
 	}
 
 ?>
-<?php
-/*
+
 	<div class="wrapper home">
 <section class="col-md-12 col-lg-10 grids">
     <div class="row">
@@ -143,7 +142,4 @@
         </div> 
     </div>
 </section>
-<footer></footer>
 </div>
-*/
-?>
