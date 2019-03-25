@@ -35,7 +35,7 @@ class User extends Model{
         
     }
 
-    public static function create($login,$password,$mail,$nom,$prenom){
+    public static function create($id,$login,$password,$promotion,$majeure,$nom,$prenom,$mail){
 /*
         $sth = parent::exec("INSERT INTO USER VALUES(:login,:password,:mail,:nom,:prenom)", 
             array(':login'=>$login,
