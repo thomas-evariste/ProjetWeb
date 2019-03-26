@@ -49,11 +49,8 @@ INSERT INTO `NOTE` (`ID_USER`, `ENS_ID_USER`, `ID_NOTE`, `ID_QUESTIONNAIRE`, `VA
 --
 
 INSERT INTO `PARTICIPANT` (`ID_USER`, `LOGIN`, `PASSWORD`, `PROMOTION`, `MAJEURE`, `NOM`, `PRENOM`, `MAIL`) VALUES
-(1, '', '', 2020, 'ISIC', 'COQUEREL', 'Quentin', 'quentin.coquerel@etu.imt-lille-douai.fr'),
-(2, '', '', 2019, 'IM', 'GUYOT', 'Thomas', 'thomas.guyot@etu.imt-lille-douai.fr'),
-(3, 'simon', 'simon', 2018, 'ISIC', 'DROMER', 'Simon', 'simon.dromer@etu.imt-lille-douai.fr'),
-(4, '', '', 2020, 'EI', 'MARY', 'Erwan', 'erwan.mary@etu.imt-lille-douai.fr'),
-(5, '', '', NULL, NULL, 'MARY', 'Grégoire', 'gregoire@test.fr');
+(3, 'simon', 'simon', 2018, 'ISIC', 'DROMER', 'Simon', 'simon.dromer@etu.imt-lille-douai.fr');
+
 
 --
 -- Contenu de la table `QUESTION`
