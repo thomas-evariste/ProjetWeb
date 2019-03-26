@@ -21,6 +21,12 @@
 						<tr class="input-group mb-3">
 							<td><input type="password" name="inscPassword" class="form-control input_user" value="" placeholder="Mot de passe* :"></td>
 						</tr>
+						<tr class="input-group mb-2">
+							<td><input type="text" name="majeure" class="form-control input_pass" value="" placeholder="Majeure :"></td>
+						</tr>
+						<tr class="input-group mb-2">
+							<td><input type="text" name="promotion" class="form-control input_pass" value="" placeholder="Promotion :"></td>
+						</tr>
 						<tr class="input-group mb-3">
 							<td><input type="text" name="mail" class="form-control input_user" value="" placeholder="Mail :"></td>
 						</tr>
@@ -30,6 +36,7 @@
 						<tr class="input-group mb-2">
 							<td><input type="text" name="prenom" class="form-control input_pass" value="" placeholder="Prenom :"></td>
 						</tr>
+
 						<tr class="d-flex justify-content-center mt-3 login_container">
 							
 							<th /><td> <input type="submit" value="Creer mon compte" /></td>
