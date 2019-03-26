@@ -71,7 +71,9 @@ class AnonymousController extends Controller{
 					AnonymousController::generateInscError('Merci d\'utiliser un prenom de moins de 50 caractères');
 				}
 				else{
-					$user = User::create('NULL',$login, $password,$promotion,$majeure ,$nom,$prenom,$mail);
+					User::create(NULL,$login, $password,$promotion,$majeure ,$nom,$prenom,$mail);
+					$id=User::getIdByLogin($login);
+					$user = new User($id,$login, $password,$promotion,$majeure ,$nom,$prenom,$mail);
 					if(!isset($user)) { 
 						AnonymousController::generateInscError('Inscription invalide, merci de réessayer');
 					} else { 
@@ -95,7 +97,7 @@ class AnonymousController extends Controller{
 		$password = $request->read('loginPassword');
 		$user = User::tryLogin($login,$password);
 		if (isset($user)){
-			$_SESSION['id'] = $id;
+			$_SESSION['id'] = $user->getId();
 			$request->resetRequest();
 			$newRequest = $request->getCurrentRequest();
 			$newRequest->write('controller','user');

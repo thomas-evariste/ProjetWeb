@@ -5,7 +5,7 @@ class UserController extends AnonymousController{
 	protected $currentUser;
     public function __construct($request) {
 			parent::__construct($request);
-			$this->currentUser = User::getByLogin($_SESSION['login']);
+			$this->currentUser = User::getById($_SESSION['id']);
 	}
 
   public function defaultAction($request) { 
@@ -25,17 +25,10 @@ class UserController extends AnonymousController{
 
 	public function deconnexion($request){
 		$_SESSION = array();
-		/*$request->resetRequest();
-	   $newController = Dispatcher::dispatch($request);
-	   $newController->home($request);
-	   */
-		$request->resetRequest();
-		$newController = Dispatcher::dispatch($request);
-		$request->write('action', 'home');
-		$newController->home($request);
-	 }
+		header("location: index.php?action=home");
+		}
 
-	 public function validateConnexion($request){
+	public function validateConnexion($request){
 		$view = new UserView($this,'connected',array('user'=>$this->currentUser));
 		$view->render();
 	}
