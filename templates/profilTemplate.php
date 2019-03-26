@@ -14,34 +14,30 @@
                             <table class="table table-user-information ">
                                 <tbody>
                                     <tr>
-                                        <td>login:</td>
-               <!--                         <td><?php //echo $user->getLogin() ?></td>  -->
-										<td>Coin de table</td>
+                                        <td>Login:</td>
+                                        <td><?php echo $user->getLogin() ?></td>  
+									
                                     </tr>
                                     <tr>
-                                        <td>prenom:</td>
-               <!--                         <td><?php //echo $user->getPrenom() ?></td>  -->
-										<td>Quentin</td>
+                                        <td>Prenom:</td>
+                                       <td><?php echo $user->getPrenom() ?></td> 
                                     </tr>
                                     <tr>
-                                        <td>nom de famille:</td>
-               <!--                         <td><?php //echo $user->getNom() ?></td>  -->
-                                        <td>Coquerel</td>
+                                        <td>Nom de famille:</td>
+                                        <td><?php echo $user->getNom() ?></td> 
                                     </tr>
                                     <tr>
-                                        <td>email:</td>
-               <!--                         <td><?php //echo $user->getEmail() ?></td>  -->
-                                        <td>q.c@coucou.vroum</td>
+                                        <td>Email:</td>
+                                        <td><?php echo $user->getMail() ?></td>
                                     </tr>
                                     <tr>
-                                        <td>promotion:</td>
-               <!--                         <td><?php //echo $user->getPromotion() ?></td>  -->
-                                        <td>2020 s'il a de la chance</td>
+                                        <td>Promotion:</td>
+                                        <td><?php echo $user->getPromotion() ?></td> 
+
                                     </tr>
                                     <tr>
-                                        <td>majeur:</td>
-               <!--                         <td><?php //echo $user->getMajeur() ?></td>  -->
-                                        <td>ISIC</td>
+                                        <td>Majeure:</td>
+                                        <td><?php echo $user->getMajeure() ?></td> 
                                     </tr>
 									
                                 </tbody>

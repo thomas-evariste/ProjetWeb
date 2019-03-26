@@ -65,7 +65,7 @@ class User extends Model{
         $sth->bindParam(':prenom',$prenom);
         $sth->bindParam(':mail',$mail);
         $sth->execute();
-        return new User($id,$login,$password,$promotion,$majeure,$nom,$prenom,$mail);
+        //return new User($id,$login,$password,$promotion,$majeure,$nom,$prenom,$mail);
     }
 
     public static function addSqlQuery($name,$sqlRequest){
@@ -123,11 +123,11 @@ class User extends Model{
     public function getPromotion(){
         return $this->promotion;
     }
-
+/*
     public static function logLenght($login){
         return strlen($login)<=25;
     }
-    /*
+  */  /*
     public static function getByLogin($login) {
         $sql = "SELECT * FROM USER WHERE USER_LOGIN = '$login'";
         $sth = parent::query($sql);
@@ -154,6 +154,18 @@ class User extends Model{
             return null;
         }
     }
+
+
+    public static function getIdByLogin($login){
+        $sql = "SELECT ID_USER FROM PARTICIPANT WHERE LOGIN = '$login'";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+        echo "data :".$data->ID_USER;
+        return $data->ID_USER;
+    }
+
+
+
 
     public static function getByLogin($login){
         $sql = "SELECT * FROM PARTICIPANT WHERE LOGIN = '$login'";
