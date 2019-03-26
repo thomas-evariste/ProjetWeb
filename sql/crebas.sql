@@ -12,17 +12,14 @@ drop table if exists CREER;
 
 drop table if exists DISPOSER;
 
-drop table if exists ENSEIGNANT;
-
 drop table if exists EST_INVITE;
 
 drop table if exists NOTE;
 
-drop table if exists PARTICIPANT;
+
 
 drop table if exists QUESTION;
 
-drop table if exists QUESTIONNAIRE;
 
 drop table if exists REGLE;
 
@@ -33,6 +30,13 @@ drop table if exists SPECIFIER;
 drop table if exists TAG;
 
 drop table if exists TENTER;
+
+drop table if exists ENSEIGNANT;
+
+drop table if exists PARTICIPANT;
+
+
+drop table if exists QUESTIONNAIRE;
 
 /*==============================================================*/
 /* Table : ASSOCIER                                             */
@@ -120,14 +124,14 @@ create table NOTE
 /*==============================================================*/
 create table PARTICIPANT
 (
-   ID_USER              int not null,
+   ID_USER              int not null auto_increment,
    PROMOTION            int,
    MAJEURE              varchar(50),
-   NOM                  varchar(50) not null,
-   PRENOM               varchar(50) not null,
+   NOM                  varchar(50),
+   PRENOM               varchar(50),
    MAIL                 varchar(200),
-   LOGIN                varchar(200),
-   PASSWORD             varchar(200),
+   LOGIN                varchar(200) not null,
+   PASSWORD             varchar(200) not null,
    primary key (ID_USER)
 );
 
