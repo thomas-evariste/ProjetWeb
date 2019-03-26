@@ -22,7 +22,7 @@ class User extends Model{
 
     public static function isLoginUsed($login){
         
-        $sth = parent::query("SELECT LOGIN FROM '$table_name' WHERE LOGIN='$login'");
+        $sth = parent::query("SELECT LOGIN FROM $table_name WHERE LOGIN='$login'");
         $data = $sth->fetch(PDO::FETCH_OBJ);
         if(!empty($data)){
             return true;
@@ -31,7 +31,7 @@ class User extends Model{
     }
 
     public static function getList(){
-        parent::query("SELECT * FROM '$table_name'");
+        parent::query("SELECT * FROM $table_name");
         
     }
 
@@ -55,7 +55,7 @@ class User extends Model{
             ':nom'=>$nom,
             ':prenom'=>$prenom));
 */ 
-        $sth = parent::prepare("INSERT INTO '$table_name' VALUES(:id,:login,:password,:promotion,:majeure,:nom,:prenom,:mail)");
+        $sth = parent::prepare("INSERT INTO $table_name VALUES(:id,:login,:password,:promotion,:majeure,:nom,:prenom,:mail)");
         $sth->bindParam(':id',$id);
         $sth->bindParam(':login',$login);  
         $sth->bindParam(':password',$password);
@@ -73,7 +73,7 @@ class User extends Model{
     }
 
     public static function tryLogin($login, $password){
-        $sql = "SELECT * FROM '$table_name' WHERE LOGIN = '$login' AND PASSWORD = '$password'";
+        $sql = "SELECT * FROM $table_name WHERE LOGIN = '$login' AND PASSWORD = '$password'";
         $sth = parent::query($sql);
         $data= $sth->fetch(PDO::FETCH_OBJ);
         if (!empty($data)){
@@ -143,7 +143,7 @@ class User extends Model{
     */
 
     public static function getById($id){
-        $sql = "SELECT * FROM '$table_name' WHERE ID_USER = '$id'";
+        $sql = "SELECT * FROM $table_name WHERE ID_USER = '$id'";
         $sth = parent::query($sql);
         $data= $sth->fetch(PDO::FETCH_OBJ);
         if (!empty($data)){
@@ -156,7 +156,7 @@ class User extends Model{
     }
 
     public static function getByLogin($login){
-        $sql = "SELECT * FROM '$table_name' WHERE LOGIN = '$login'";
+        $sql = "SELECT * FROM $table_name WHERE LOGIN = '$login'";
         $sth = parent::query($sql);
         $data= $sth->fetch(PDO::FETCH_OBJ);
         if (!empty($data)){
