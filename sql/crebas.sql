@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* Nom de SGBD :  MySQL 5.0                                     */
-/* Date de création :  25/03/2019 17:07:22                      */
+/* Date de création :  26/03/2019 09:55:37                      */
 /*==============================================================*/
 
 
@@ -112,7 +112,7 @@ create table NOTE
    ID_NOTE              int not null,
    ID_QUESTIONNAIRE     int not null,
    VALEUR               decimal not null,
-   primary key (ID_USER, ENS_ID_USER, ID_NOTE)
+   primary key (ID_NOTE)
 );
 
 /*==============================================================*/
