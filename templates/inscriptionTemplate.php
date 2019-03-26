@@ -25,7 +25,7 @@
 							<td><input type="text" name="majeure" class="form-control input_pass" value="" placeholder="Majeure :"></td>
 						</tr>
 						<tr class="input-group mb-2">
-							<td><input type="text" name="prenom" class="form-control input_pass" value="" placeholder="Promotion :"></td>
+							<td><input type="text" name="promotion" class="form-control input_pass" value="" placeholder="Promotion :"></td>
 						</tr>
 						<tr class="input-group mb-3">
 							<td><input type="text" name="mail" class="form-control input_user" value="" placeholder="Mail :"></td>
