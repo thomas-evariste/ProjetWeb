@@ -1,4 +1,7 @@
 
+
+
+
  <div class="container">
             <div class="row">
                 <div class="col-md-12  toppad  offset-md-0 ">
@@ -11,71 +14,44 @@
                             <table class="table table-user-information ">
                                 <tbody>
                                     <tr>
-                                        <td>1er Apellido:</td>
-                                        <td>Perez</td>
+                                        <td>login:</td>
+               <!--                         <td><?php //echo $user->getLogin() ?></td>  -->
+										<td>Coin de table</td>
                                     </tr>
                                     <tr>
-                                        <td>2do Apellido:</td>
-                                        <td>Lopez</td>
+                                        <td>prenom:</td>
+               <!--                         <td><?php //echo $user->getPrenom() ?></td>  -->
+										<td>Quentin</td>
                                     </tr>
                                     <tr>
-                                        <td>Cargo:</td>
-                                        <td>Empleado</td>
+                                        <td>nom de famille:</td>
+               <!--                         <td><?php //echo $user->getNom() ?></td>  -->
+                                        <td>Coquerel</td>
                                     </tr>
                                     <tr>
-                                        <td>Alta:</td>
-                                        <td>12/02/2017</td>
+                                        <td>email:</td>
+               <!--                         <td><?php //echo $user->getEmail() ?></td>  -->
+                                        <td>q.c@coucou.vroum</td>
                                     </tr>
                                     <tr>
-                                        <td>NIF:</td>
-                                        <td>a14523687w</td>
-                                    </tr>                                                
-                                    <tr>
-                                        <td>Codigo Postal:</td>
-                                        <td>
-                                            <input
-                                                name="zipCode"
-                                                type="text"
-                                                label="08XXX"
-                                                maxLength="5"
-                                                value=08123
-                                                focus
-                                            />
-                                        </td>
+                                        <td>promotion:</td>
+               <!--                         <td><?php //echo $user->getPromotion() ?></td>  -->
+                                        <td>2020 s'il a de la chance</td>
                                     </tr>
                                     <tr>
-                                        <td>Email</td>
-                                        <td>
-                                            <input
-                                                icon="email-icon"
-                                                name="email"
-                                                type="email"
-                                                label=""
-                                                value=joseperez@frjn.com
-                                                focus
-                                            />
-                                        </td>
+                                        <td>majeur:</td>
+               <!--                         <td><?php //echo $user->getMajeur() ?></td>  -->
+                                        <td>ISIC</td>
                                     </tr>
-                                    <tr>
-
-                                    <td>Telefono</td>
-                                        <td>
-                                            <input
-                                                icon="email-icon"
-                                                name="email"
-                                                type="email"
-                                                label=""
-                                                value={123456789}
-                                                focus
-                                            />
-                                        </td>                                                        
-                                    </tr>
+									
                                 </tbody>
                             </table>
-                            <a href="#" onClick={props.handleSubmitProfile} class="btn btn-primary ml-2">Guardar cambios</a>
+                            <a href="#" onClick={props.handleSubmitProfile} class="btn btn-primary ml-2">Modifer</a>
                         </div>
                     </div>
                 </div>
                 
             </div>
         </div>
+		
+		

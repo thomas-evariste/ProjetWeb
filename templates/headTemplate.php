@@ -7,6 +7,8 @@
 		   
 		<link rel="stylesheet" href="css/style1.css" /> 
 		<link rel="stylesheet" href="css/style2.css" /> 
+		<link rel="stylesheet" href="css/style3.css" /> 
+		<link rel="stylesheet" href="css/style4.css" /> 
 		</head> 
 		<body> 
 			<div id="page">
