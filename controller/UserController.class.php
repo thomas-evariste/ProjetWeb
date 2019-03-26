@@ -5,7 +5,7 @@ class UserController extends AnonymousController{
 	protected $currentUser;
     public function __construct($request) {
 			parent::__construct($request);
-			$this->currentUser = User::getByLogin($_SESSION['login']);
+			$this->currentUser = User::getById($_SESSION['id']);
 	}
 
   public function defaultAction($request) { 

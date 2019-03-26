@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* Nom de SGBD :  MySQL 5.0                                     */
-/* Date de création :  26/03/2019 09:55:37                      */
+/* Date de crï¿½ation :  26/03/2019 09:55:37                      */
 /*==============================================================*/
 
 
@@ -125,13 +125,15 @@ create table NOTE
 create table PARTICIPANT
 (
    ID_USER              int not null auto_increment,
-   PROMOTION            int,
-   MAJEURE              varchar(50),
-   NOM                  varchar(50),
-   PRENOM               varchar(50),
-   MAIL                 varchar(200),
    LOGIN                varchar(200) not null,
    PASSWORD             varchar(200) not null,
+   MAJEURE              varchar(50),
+   PROMOTION            varchar(50),
+   MAIL                 varchar(200),
+   NOM                  varchar(50),
+   PRENOM               varchar(50),
+
+
    primary key (ID_USER)
 );
 
