@@ -20,122 +20,37 @@ SET time_zone = "+00:00";
 -- Base de données :  `simon_dromer`
 --
 
---
--- Contenu de la table `ASSOCIER`
---
 
-INSERT INTO `ASSOCIER` (`LIBELLE`, `ID_QUESTION`) VALUES
-('Développement durable', 4),
-('Histoire', 1),
-('Informatique', 5),
-('Littérature', 3),
-('Littérature', 9),
-('Mécanique des fluides', 8),
-('Nature', 2),
-('Nature', 6),
-('Science', 7);
 
---
--- Contenu de la table `CONTENIR`
---
 
-INSERT INTO `CONTENIR` (`ID_QUESTION`, `ID_QUESTIONNAIRE`, `BAREME`) VALUES
-(1, 1, '1'),
-(1, 2, '0'),
-(2, 1, '1'),
-(2, 2, '0'),
-(3, 2, '0');
-
---
--- Contenu de la table `CREER`
---
-
-INSERT INTO `CREER` (`ID_QUESTION`, `ID_USER`) VALUES
-(1, 13),
-(2, 37),
-(3, 21),
-(4, 13),
-(5, 65);
-
---
--- Contenu de la table `DISPOSER`
---
-
-INSERT INTO `DISPOSER` (`ID_QUESTION`, `ID_PROPOSITION`) VALUES
-(1, 1),
-(1, 2),
-(1, 6),
-(1, 7),
-(2, 8),
-(2, 9),
-(2, 10),
-(2, 11),
-(4, 12),
-(5, 13),
-(5, 14),
-(5, 15),
-(5, 16),
-(6, 17),
-(6, 18),
-(6, 19),
-(6, 20),
-(7, 21),
-(7, 22),
-(7, 23),
-(7, 24),
-(8, 25),
-(8, 26),
-(8, 27),
-(8, 28),
-(9, 29),
-(9, 30),
-(9, 31),
-(9, 32);
 
 --
 -- Contenu de la table `ENSEIGNANT`
 --
 
 INSERT INTO `ENSEIGNANT` (`ID_USER`, `LOGIN`, `PASSWORD`, `INTERNE`, `DESCRIPTION`, `NOM`, `PRENOM`, `MAIL`) VALUES
-(13, '', '', 0, 'Intervenant de MIBI', 'CORDONNIER', 'Jean-Loup', 'jl@c.com'),
+(12, '', '', 0, 'Intervenant de MIBI', 'CORDONNIER', 'Jean-Loup', 'jl@c.com'),
 (21, '', '', 1, 'Professor of opérational research', 'LUJAK', 'Marin', 'bidule@mail.com'),
 (37, '', '', 0, 'Professeur de mathématiques', 'ATALI', 'Jack', 'test@mail.com'),
 (65, '', '', 1, 'Doctorant', 'NEWTON', 'Isaac', 'op@mail.com'),
 (115, '', '', 1, 'Professeur de mathématiques', 'COQUEREL', 'Quentin', 'qc@mail.com');
 
---
--- Contenu de la table `EST_INVITE`
---
-
-INSERT INTO `EST_INVITE` (`ID_USER`, `ID_QUESTIONNAIRE`, `A_PARTICIPE`) VALUES
-(1, 1, 1),
-(1, 2, 1),
-(2, 1, 1),
-(3, 1, 1),
-(3, 2, 0),
-(4, 2, 1),
-(5, 1, 1);
 
 --
 -- Contenu de la table `NOTE`
 --
 
 INSERT INTO `NOTE` (`ID_USER`, `ENS_ID_USER`, `ID_NOTE`, `ID_QUESTIONNAIRE`, `VALEUR`) VALUES
-(1, 13, 1, 1, '4'),
-(2, 13, 2, 1, '2'),
-(3, 13, 3, 1, '1'),
-(5, 13, 4, 1, '1');
+(1,1,1,1,'10');
+
 
 --
 -- Contenu de la table `PARTICIPANT`
 --
 
 INSERT INTO `PARTICIPANT` (`ID_USER`, `LOGIN`, `PASSWORD`, `PROMOTION`, `MAJEURE`, `NOM`, `PRENOM`, `MAIL`) VALUES
-(1, '', '', 2020, 'ISIC', 'COQUEREL', 'Quentin', 'quentin.coquerel@etu.imt-lille-douai.fr'),
-(2, '', '', 2019, 'IM', 'GUYOT', 'Thomas', 'thomas.guyot@etu.imt-lille-douai.fr'),
-(3, 'simon', 'simon', 2018, 'ISIC', 'DROMER', 'Simon', 'simon.dromer@etu.imt-lille-douai.fr'),
-(4, '', '', 2020, 'EI', 'MARY', 'Erwan', 'erwan.mary@etu.imt-lille-douai.fr'),
-(5, '', '', NULL, NULL, 'MARY', 'Grégoire', 'gregoire@test.fr');
+(3, 'simon', 'simon', 2018, 'ISIC', 'DROMER', 'Simon', 'simon.dromer@etu.imt-lille-douai.fr');
+
 
 --
 -- Contenu de la table `QUESTION`
@@ -206,15 +121,6 @@ INSERT INTO `REPONSE_DISPONIBLE` (`ID_PROPOSITION`, `REP_ID_PROPOSITION`, `REP_I
 (32, NULL, NULL, 'M Pokora', 0);
 
 --
--- Contenu de la table `SPECIFIER`
---
-
-INSERT INTO `SPECIFIER` (`ID_QUESTIONNAIRE`, `ID_REGLE`) VALUES
-(1, 3),
-(2, 1),
-(2, 4);
-
---
 -- Contenu de la table `TAG`
 --
 
@@ -229,15 +135,110 @@ INSERT INTO `TAG` (`LIBELLE`, `COULEUR`) VALUES
 ('Science', 'Poupre');
 
 --
+-- Contenu de la table `SPECIFIER`
+--
+
+INSERT INTO `SPECIFIER` (`ID_QUESTIONNAIRE`, `ID_REGLE`) VALUES
+(1, 3),
+(2, 1),
+(2, 4);
+
+
+
+--
 -- Contenu de la table `TENTER`
 --
 
-INSERT INTO `TENTER` (`ID_USER`, `ID_REPONSE`) VALUES
+INSERT INTO `TENTER` (`ID_USER`, `ID_PROPOSITION`) VALUES
 (1, 2),
 (1, 8),
 (1, 11),
 (1, 12),
 (1, 14);
+
+--
+-- Contenu de la table `ASSOCIER`
+--
+
+INSERT INTO `ASSOCIER` (`LIBELLE`, `ID_QUESTION`) VALUES
+('Développement durable', 4),
+('Histoire', 1),
+('Informatique', 5),
+('Littérature', 3),
+('Littérature', 9),
+('Mécanique des fluides', 8),
+('Nature', 2),
+('Nature', 6),
+('Science', 7);
+--
+-- Contenu de la table `EST_INVITE`
+--
+
+INSERT INTO `EST_INVITE` (`ID_USER`, `ID_QUESTIONNAIRE`, `A_PARTICIPE`) VALUES
+(1, 1, 1),
+(1, 2, 1),
+(2, 1, 1),
+(3, 1, 1),
+(3, 2, 0),
+(4, 2, 1),
+(5, 1, 1);
+
+--
+-- Contenu de la table `CONTENIR`
+--
+
+INSERT INTO `CONTENIR` (`ID_QUESTION`, `ID_QUESTIONNAIRE`, `BAREME`) VALUES
+(1, 1, '1'),
+(1, 2, '0'),
+(2, 1, '1'),
+(2, 2, '0'),
+(3, 2, '0');
+
+--
+-- Contenu de la table `CREER`
+--
+
+INSERT INTO `CREER` (`ID_QUESTION`, `ID_USER`) VALUES
+(1, 13),
+(2, 37),
+(3, 21),
+(4, 13),
+(5, 65);
+
+--
+-- Contenu de la table `DISPOSER`
+--
+
+INSERT INTO `DISPOSER` (`ID_QUESTION`, `ID_PROPOSITION`) VALUES
+(1, 1),
+(1, 2),
+(1, 6),
+(1, 7),
+(2, 8),
+(2, 9),
+(2, 10),
+(2, 11),
+(4, 12),
+(5, 13),
+(5, 14),
+(5, 15),
+(5, 16),
+(6, 17),
+(6, 18),
+(6, 19),
+(6, 20),
+(7, 21),
+(7, 22),
+(7, 23),
+(7, 24),
+(8, 25),
+(8, 26),
+(8, 27),
+(8, 28),
+(9, 29),
+(9, 30),
+(9, 31),
+(9, 32);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
