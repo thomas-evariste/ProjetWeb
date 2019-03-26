@@ -123,8 +123,8 @@ INSERT INTO `EST_INVITE` (`ID_USER`, `ID_QUESTIONNAIRE`, `A_PARTICIPE`) VALUES
 INSERT INTO `NOTE` (`ID_USER`, `ENS_ID_USER`, `ID_NOTE`, `ID_QUESTIONNAIRE`, `VALEUR`) VALUES
 (1, 13, 1, 1, '4'),
 (2, 13, 2, 1, '2'),
-(3, 13, 1, 1, '1'),
-(5, 13, 1, 1, '1');
+(3, 13, 3, 1, '1'),
+(5, 13, 4, 1, '1');
 
 --
 -- Contenu de la table `PARTICIPANT`
