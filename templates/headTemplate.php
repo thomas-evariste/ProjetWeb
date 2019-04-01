@@ -9,6 +9,7 @@
 		<link rel="stylesheet" href="css/styleInscription.css" /> 
 		<link rel="stylesheet" href="css/styleProfil.css" /> 
 		<link rel="stylesheet" href="css/styleMerci.css" /> 
+		<link rel="stylesheet" href="css/styleQuiz.css" /> 
 
 
 		
