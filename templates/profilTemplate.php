@@ -42,11 +42,10 @@
 									
                                 </tbody>
                             </table>
-                            <a href="#" onClick={props.handleSubmitProfile} class="btn btn-primary ml-2">Modifer</a>
+                            <a href="index.php?action=modifier&controller=user" onClick={props.handleSubmitProfile} class="btn btn-primary ml-2">Modifier</a>
                         </div>
                     </div>
-                </div>
-                
+                </div>   
             </div>
         </div>
 		
