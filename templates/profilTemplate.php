@@ -10,7 +10,7 @@
                 <div class="col-md-6  offset-md-0  toppad" >
                     <div class="card">
                         <div class="card-body">
-                            <h2 class="card-title">Joses</h2>
+                            <h2 class="card-title">Profil :</h2>
                             <table class="table table-user-information ">
                                 <tbody>
                                     <tr>
