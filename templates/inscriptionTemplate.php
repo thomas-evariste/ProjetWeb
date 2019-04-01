@@ -9,7 +9,7 @@
 			<div class="user_card_insc">
 				<div class="d-flex justify-content-center">
 					<div class="brand_logo_container">
-						<img src="https://cdn.freebiesupply.com/logos/large/2x/pinterest-circle-logo-png-transparent.png" class="brand_logo" alt="Logo">
+						<img src="https://uasevent.hautsdefrance.cci.fr/3emeri/wp-content/uploads/sites/7/2016/08/IMT_Lille_Douai_Logo_RVB_Baseline.png" class="brand_logo" alt="Logo">
 					</div>
 				</div>
 				<div class="d-flex justify-content-center form_container">
@@ -46,4 +46,3 @@
 				</div>
 			</div>
 		</div>
-

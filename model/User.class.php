@@ -20,6 +20,19 @@ class User extends Model{
 */
 
 
+    public static function nbUsers(){
+        $sth = parent::query("select tb1.nb1 + tb2.nb2 as nbtotal from   
+        (Select Count(ID_USER) as 'nb1' From PARTICIPANT) as tb1,
+        (Select Count(ID_USER) as 'nb2' From ENSEIGNANT) as tb2");
+        $data = $sth->fetch(PDO::FETCH_OBJ);
+        if ($data->nbtotal>0){
+            return $data->nbtotal;
+        }
+        else{
+            return 0;
+        }
+    }
+
     public static function isLoginUsed($login){
         
         $sth = parent::query("SELECT LOGIN FROM PARTICIPANT WHERE LOGIN='$login'");
