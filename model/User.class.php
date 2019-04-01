@@ -85,6 +85,11 @@ class User extends Model{
         }
     }
 
+    public static function modify($column, $data,$id){
+        $sql = "UPDATE PARTICIPANT SET $column = '$data' WHERE ID_USER='$id'";
+        $sth = parent::query($sql);
+    }
+    
     public function __construct($id,$login,$password,$promotion,$majeure,$nom,$prenom,$mail){
         $this->id = $id;  
         $this->login = $login;
