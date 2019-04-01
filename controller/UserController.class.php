@@ -33,6 +33,47 @@ class UserController extends AnonymousController{
 		$view->render();
 	}
 	
+	public function modifier($request){
+		$view = new UserView($this,'modify',array('user'=>$this->currentUser));
+		$view->render();
+	}
+
+	public function validateModification($request){
+		$password = $request->read('password');
+		$passwordConf = $request->read('passwordConf'); 
+		$majeure = $request->read('majeure');
+		$promotion = $request->read('promotion'); 
+		$mail = $request->read('mail');
+		$nom = $request->read('nom'); 
+		$prenom = $request->read('prenom');
+
+		if ($password==$passwordConf && $password!=''){
+			User::modify('PASSWORD',$password,$this->currentUser->getId());
+		}
+
+		if ($majeure!=''){
+			User::modify('MAJEURE',$majeure,$this->currentUser->getId());
+		}
+
+		if ($promotion!=''){
+			User::modify('PROMOTION',$promotion,$this->currentUser->getId());
+		}
+
+		if ($mail!=''){
+			User::modify('MAIL',$mail,$this->currentUser->getId());
+		}
+	
+		if ($prenom!=''){
+			User::modify('PRENOM',$prenom,$this->currentUser->getId());
+		}
+
+		if ($nom!=''){
+			User::modify('NOM',$nom,$this->currentUser->getId());
+		}
+
+		$currentUser = User::getById($_SESSION['id']); 
+		header("location: index.php?action=profil&controller=user");
+	}
 
 }
 ?>

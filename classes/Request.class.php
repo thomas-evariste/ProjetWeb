@@ -48,6 +48,10 @@ class Request{
 	public static function writePost($aPost,$aValue){
 		$_POST[$aPost]=$aValue;
 	}
+
+	public static function writeSession($aSession,$aValue){
+		$_SESSION[$aSession]=$aValue;
+	}
 	
 	public function __construct() {}
 

@@ -83,6 +83,7 @@ class AnonymousController extends Controller{
 						$newRequest->write('user',$user->getLogin());
 						$newRequest->writePost('loginLogin',$user->getLogin());
 						$newRequest->writePost('loginPassword',$user->getPassword());
+						$newRequest->writeSession('id',$user->getId());
 						$newController=Dispatcher::dispatch($newRequest); 
 						$newController->tryLogin($newRequest);
 					}
