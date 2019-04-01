@@ -86,13 +86,14 @@ create table DISPOSER
 create table ENSEIGNANT
 (
    ID_USER              int not null auto_increment,
+   LOGIN                varchar(200) not null,
+   PASSWORD             varchar(200) not null,
    INTERNE              bool not null,
    DESCRIPTION          varchar(200),
    NOM                  varchar(50),
    PRENOM               varchar(50),
    MAIL                 varchar(200),
-   LOGIN                varchar(200) not null,
-   PASSWORD             varchar(200) not null,
+
    primary key (ID_USER)
 );
 
