@@ -134,8 +134,8 @@
                 <div class="bg" style="background-image: url('https://fr.cdn.v5.futura-sciences.com/buildsv6/images/mediumoriginal/3/9/a/39a2a0ff2c_97347_01-intro-1057.jpg');"></div>
                 <div class="caption">
                     <div class="text">
-                        <h3>Mathematique</h3>
-                        <p>blabla blabla blabla blabla blabla blabla blabla </p>                   
+                        <h3>Mathematiques</h3>
+                        <p>L’ensemble des connaissances abstraites résultant de raisonnements logiques</p>                   
                     </div>
                 </div>                
             </div>
