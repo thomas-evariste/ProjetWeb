@@ -3,7 +3,7 @@
 /* Date de cr�ation :  26/03/2019 09:55:37                      */
 /*==============================================================*/
 
-
+SET FOREIGN_KEY_CHECKS=0;
 drop table if exists ASSOCIER;
 
 drop table if exists CONTENIR;
@@ -37,6 +37,7 @@ drop table if exists PARTICIPANT;
 
 
 drop table if exists QUESTIONNAIRE;
+
 
 /*==============================================================*/
 /* Table : ASSOCIER                                             */
@@ -84,14 +85,14 @@ create table DISPOSER
 /*==============================================================*/
 create table ENSEIGNANT
 (
-   ID_USER              int not null,
+   ID_USER              int not null auto_increment,
    INTERNE              bool not null,
    DESCRIPTION          varchar(200),
-   NOM                  varchar(50) not null,
-   PRENOM               varchar(50) not null,
+   NOM                  varchar(50),
+   PRENOM               varchar(50),
    MAIL                 varchar(200),
-   LOGIN                varchar(200),
-   PASSWORD             varchar(200),
+   LOGIN                varchar(200) not null,
+   PASSWORD             varchar(200) not null,
    primary key (ID_USER)
 );
 
@@ -279,3 +280,4 @@ alter table TENTER add constraint FK_TENTER foreign key (ID_USER)
 alter table TENTER add constraint FK_TENTER2 foreign key (ID_PROPOSITION)
       references REPONSE_DISPONIBLE (ID_PROPOSITION) on delete restrict on update restrict;
 
+SET FOREIGN_KEY_CHECKS=1;

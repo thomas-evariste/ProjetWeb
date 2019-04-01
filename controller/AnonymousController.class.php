@@ -71,7 +71,7 @@ class AnonymousController extends Controller{
 					AnonymousController::generateInscError('Merci d\'utiliser un prenom de moins de 50 caractères');
 				}
 				else{
-					User::create(NULL,$login, $password,$promotion,$majeure ,$nom,$prenom,$mail);
+					User::create(User::nbUsers()+1,$login, $password,$promotion,$majeure ,$nom,$prenom,$mail);
 					$id=User::getIdByLogin($login);
 					$user = new User($id,$login, $password,$promotion,$majeure ,$nom,$prenom,$mail);
 					if(!isset($user)) { 
@@ -104,7 +104,6 @@ class AnonymousController extends Controller{
 			$newRequest->write('controller','user');
 			$newRequest->write('user',$user->getLogin()); 
 			$newRequest->write('action','validateConnexion');
-			echo "avant dispatch: ".$request->getControllerName();
 			$newController = Dispatcher::dispatch($newRequest);
 			$newController->validateConnexion($newRequest);
 		}
