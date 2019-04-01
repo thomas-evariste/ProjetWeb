@@ -1,10 +1,13 @@
+@charset "UTF-8";
+
+
 #qid {
   padding: 10px 15px;
   -moz-border-radius: 50px;
   -webkit-border-radius: 50px;
   border-radius: 20px;
 }
-label.btn {
+label.btn {  
     padding: 18px 60px;
     white-space: normal;
     -webkit-transform: scale(1.0);
