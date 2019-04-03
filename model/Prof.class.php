@@ -1,6 +1,6 @@
 <?php 
 
-class Prof extends Users{
+class Prof extends User{
 
     protected static $table_name='ENSEIGNANT';
     protected $id; //OBLIGATOIRE
@@ -62,6 +62,49 @@ class Prof extends Users{
         $sth->bindParam(':prenom',$prenom);
         $sth->bindParam(':mail',$mail);
         $sth->execute();
+    
     }
 
+    public static function getIdByLogin($login){
+        $sql = "SELECT ID_USER FROM ENSEIGNANT WHERE LOGIN = '$login'";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+        echo "data :".$data->ID_USER;
+        return $data->ID_USER;
+    }
+
+
+
+
+    public static function getByLogin($login){
+        $sql = "SELECT * FROM ENSEIGNANT WHERE LOGIN = '$login'";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+        if (!empty($data)){
+            $prof = new Prof($data->ID_USER,$data->LOGIN,$data->PASSWORD,$data->INTERNE,$data->DESCRIPTION,$data->NOM,$data->PRENOM,$data->MAIL);
+            return $prof;
+        }
+        else{
+            return null;
+        }
+    }
+
+    public static function tryLogin($login, $password){
+        $sql = "SELECT * FROM ENSEIGNANT WHERE LOGIN = '$login' AND PASSWORD = '$password'";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+        if (!empty($data)){
+            $prof = new User($data->ID_USER,$data->LOGIN,$data->PASSWORD,$data->INTERNE,$data->DESCRIPTION,$data->NOM,$data->PRENOM,$data->MAIL);
+            return $prof;
+        }
+        else{
+            return null;
+        }
+    }
+
+    public static function modify($column, $data,$id){
+        $sql = "UPDATE ENSEIGNANT SET $column = '$data' WHERE ID_USER='$id'";
+        $sth = parent::query($sql);
+    }
+}
 ?>

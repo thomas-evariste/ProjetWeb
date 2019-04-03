@@ -34,7 +34,7 @@
 							<td><input type="text" name="prenom" class="form-control input_pass" value="" placeholder="Prenom :"></td>
 						</tr>
 						<tr class="input-group mb-2">
-							<td>interne : <INPUT type="checkbox" name="interne" class="form-control input_pass" value="" </td>
+							<td>interne : <INPUT type="checkbox" name="interne" class="form-control input_pass" value="1" </td>
 						</tr>
 						<tr class="d-flex justify-content-center mt-3 login_container">
 							

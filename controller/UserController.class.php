@@ -14,12 +14,11 @@ class UserController extends AnonymousController{
 	}
 
 	public function home($request){
-		echo 'UserController';
 		$view = new UserView($this, 'home',array('user' =>$this->currentUser)); 
 		$view->render(); 
 	}
 	public function profil($request){
-		$view = new UserView($this, 'profil',array('user' =>$this->currentUser)); 
+		$view = new UserView($this, 'profiluser',array('user' =>$this->currentUser)); 
 		$view->render(); 
 	}
 
@@ -34,7 +33,7 @@ class UserController extends AnonymousController{
 	}
 	
 	public function modifier($request){
-		$view = new UserView($this,'modify',array('user'=>$this->currentUser));
+		$view = new UserView($this,'modifyuser',array('user'=>$this->currentUser));
 		$view->render();
 	}
 
