@@ -17,8 +17,8 @@ class AnonymousController extends Controller{
 	}
 	
 	public function choixInscription($request){
-		$view = new AnonymousView($this,'choixinscription');
 		$view->render();
+		$view = new AnonymousView($this,'choixinscription');
 	}
 	
 	public function inscription($request){

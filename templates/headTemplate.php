@@ -11,6 +11,7 @@
 		<link rel="stylesheet" href="css/styleMerci.css" /> 
 		<link rel="stylesheet" href="css/styleQuiz.css" /> 
 		<link rel="stylesheet" href="css/styleChoixinscription.css" /> 
+		<link rel="stylesheet" href="css/styleBox.css" /> 
 
 
 		
