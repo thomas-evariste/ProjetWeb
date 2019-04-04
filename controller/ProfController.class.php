@@ -57,7 +57,7 @@ class ProfController extends UserController{
             Prof::modify('INTERNE',1,$this->currentUser->getId());
         }
 
-        if ($promotion!=''){
+        if ($description!=''){
             Prof::modify('DESCRIPTION',$description,$this->currentUser->getId());
         }
 
