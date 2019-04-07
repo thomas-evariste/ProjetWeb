@@ -10,7 +10,7 @@
     <div class="row">
     	<div class="grid-item item1">
             <div class="content">
-                <div class="bg" style="background-image: url('http://www.consciencenergetique.com/wp-content/uploads/2017/02/terre-d%C3%A9veloppement-durable.jpg');"></div>
+                <div class="bg" style="background-image: url('css/images/developement_durable.jpg');"></div>
                 <div class="caption">
                     <div class="text">
                         <h3>Developement Durable</h3>
@@ -21,7 +21,7 @@
         </div>
         <div class="grid-item item2">
             <div class="content">
-                <div class="bg" style="background-image: url('https://www.studyrama.com/local/cache-vignettes/L990xH363/arton104443-52a08.jpg?1522416620');"></div>
+                <div class="bg" style="background-image: url('css/images/histoire.jpg');"></div>
                 <div class="caption">
                     <div class="text">
                         <h3>Histoire</h3>
@@ -32,7 +32,7 @@
         </div>
         <div class="grid-item item3">
             <div class="content">
-                <div class="bg" style="background-image: url('https://scr.sad.supinfo.com/articles/resources/171562/7311/0.jpg');"></div>
+                <div class="bg" style="background-image: url('css/images/prog.jpg');"></div>
                 <div class="caption">
                     <div class="text">
                         <h3>Programation</h3>
@@ -43,7 +43,7 @@
         </div>
         <div class="grid-item item4">
             <div class="content">
-                <div class="bg" style="background-image: url('https://information.tv5monde.com/sites/info.tv5monde.com/files/styles/large/public/assets/images/ThinkstockPhotos-474571303.jpg?itok=GKWfCT1e');"></div>
+                <div class="bg" style="background-image: url('css/images/literature.jpg');"></div>
                 <div class="caption">
                     <div class="text">
                         <h3>Litterature</h3>
@@ -54,7 +54,7 @@
         </div>
         <div class="grid-item item5">
             <div class="content">
-                <div class="bg" style="background-image: url('http://www.cci-paris-idf.fr/sites/default/files/etudes/Images/rapports/transition-energetique.jpg');"></div>
+                <div class="bg" style="background-image: url('css/images/energie.jpg');"></div>
                 <div class="caption">
                     <div class="text">
                         <h3>Energetique</h3>
@@ -65,7 +65,7 @@
         </div>
         <div class="grid-item item6">
             <div class="content">
-                <div class="bg" style="background-image: url('http://www.jefaisdusport.com/wp-content/uploads/2018/12/sport.png');"></div>
+                <div class="bg" style="background-image: url('css/images/sport.png');"></div>
                 <div class="caption">
                     <div class="text">
                         <h3>Sport</h3>
@@ -76,7 +76,7 @@
         </div>
         <div class="grid-item item7">
             <div class="content">
-                <div class="bg" style="background-image: url('https://soulspartan.files.wordpress.com/2017/02/nature-2-26-17.jpg?w=1024');"></div>
+                <div class="bg" style="background-image: url('css/images/nature.jpg');"></div>
                 <div class="caption">
                     <div class="text">
                         <h3>Nature</h3>
@@ -87,7 +87,7 @@
         </div>
         <div class="grid-item item8">
             <div class="content">
-                <div class="bg" style="background-image: url('http://s1.1zoom.me/big0/97/Geography_map_474029.jpg');"></div>
+                <div class="bg" style="background-image: url('css/images/geographie.jpg');"></div>
                 <div class="caption">
                     <div class="text">
                         <h3>Geographie</h3>
@@ -98,7 +98,7 @@
         </div>
         <div class="grid-item item9">
             <div class="content">
-                <div class="bg" style="background-image: url('http://www.ilcp.net/wp-content/uploads/2016/09/langues-etrangeres.jpg');"></div>
+                <div class="bg" style="background-image: url('css/images/langues.jpg');"></div>
                 <div class="caption">
                     <div class="text">
                         <h3>Langue etrangere</h3>
@@ -109,7 +109,7 @@
         </div>
         <div class="grid-item item10">
             <div class="content">
-                <div class="bg" style="background-image: url('https://www.simplilearn.com/ice9/free_resources_article_thumb/leadership-vs-management-difference-article.jpg');"></div>
+                <div class="bg" style="background-image: url('css/images/management.jpg');"></div>
                 <div class="caption">
                     <div class="text">
                         <h3>Management</h3>
@@ -120,7 +120,7 @@
         </div> 
         <div class="grid-item item11">
             <div class="content">
-                <div class="bg" style="background-image: url('http://www.e-kip.fr/wp-content/uploads/2015/10/schema-reseau.jpg');"></div>
+                <div class="bg" style="background-image: url('css/images/reseau.jpg');"></div>
                 <div class="caption">
                     <div class="text">
                         <h3>Telecom et reseau</h3>
@@ -131,7 +131,7 @@
         </div>
         <div class="grid-item item12">
             <div class="content">
-                <div class="bg" style="background-image: url('https://fr.cdn.v5.futura-sciences.com/buildsv6/images/mediumoriginal/3/9/a/39a2a0ff2c_97347_01-intro-1057.jpg');"></div>
+                <div class="bg" style="background-image: url('css/images/math.jpg');"></div>
                 <div class="caption">
                     <div class="text">
                         <h3>Mathematiques</h3>
