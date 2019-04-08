@@ -20,24 +20,22 @@ class User extends Model{
 */
 
 
-    public static function nbUsers(){
-        $sth = parent::query("select tb1.nb1 + tb2.nb2 as nbtotal from   
-        (Select Count(ID_USER) as 'nb1' From PARTICIPANT) as tb1,
-        (Select Count(ID_USER) as 'nb2' From ENSEIGNANT) as tb2");
+    public static function createId(){
+        $sth = parent::query("SELECT MAX(ID_USER) as nb FROM PARTICIPANT");
         $data = $sth->fetch(PDO::FETCH_OBJ);
-        if ($data->nbtotal>0){
-            return $data->nbtotal;
-        }
-        else{
-            return 0;
-        }
+        $sth2 = parent::query("SELECT MAX(ID_USER) as nb FROM ENSEIGNANT");
+        $data2 = $sth2->fetch(PDO::FETCH_OBJ);
+        $max = max($data->nb,$data2->nb);
+        return $max+1;
     }
 
     public static function isLoginUsed($login){
         
         $sth = parent::query("SELECT LOGIN FROM PARTICIPANT WHERE LOGIN='$login'");
         $data = $sth->fetch(PDO::FETCH_OBJ);
-        if(!empty($data)){
+        $sth2 = parent::query("SELECT LOGIN FROM ENSEIGNANT WHERE LOGIN='$login'");
+        $data2 = $sth->fetch(PDO::FETCH_OBJ);
+        if(!empty($data) && !empty($data2)){
             return true;
         }
         return false;
@@ -45,7 +43,6 @@ class User extends Model{
 
     public static function getList(){
         parent::query("SELECT * FROM PARTICIPANT");
-        
     }
 
     public static function create($id,$login,$password,$promotion,$majeure,$nom,$prenom,$mail){
@@ -164,9 +161,17 @@ class User extends Model{
         $sql = "SELECT * FROM PARTICIPANT WHERE ID_USER = '$id'";
         $sth = parent::query($sql);
         $data= $sth->fetch(PDO::FETCH_OBJ);
+        $sql2 = "SELECT * FROM ENSEIGNANT WHERE ID_USER = '$id'";
+        $sth2 = parent::query($sql2);
+        $data2 = $sth2->fetch(PDO::FETCH_OBJ);
+
         if (!empty($data)){
             $user = new User($data->ID_USER,$data->LOGIN,$data->PASSWORD,$data->PROMOTION,$data->MAJEURE,$data->NOM,$data->PRENOM,$data->MAIL);
             return $user;
+        }
+        if (!empty($data2)){
+            $prof = new Prof($data2->ID_USER,$data2->LOGIN,$data2->PASSWORD,$data2->INTERNE,$data2->DESCRIPTION,$data2->NOM,$data2->PRENOM,$data2->MAIL);
+            return $prof;
         }
         else{
             return null;

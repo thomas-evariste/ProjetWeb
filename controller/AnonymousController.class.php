@@ -16,11 +16,11 @@ class AnonymousController extends Controller{
 		$view->render(); 
 	}
 	
-	public function choixinscription($request){
+	public function choixInscription($request){
 		$view = new AnonymousView($this,'choixinscription');
-		$view-> render();
+		$view->render();
 	}
-
+	
 	public function inscription($request){
 		$view = new AnonymousView($this,'inscription');
 		$view-> render();
@@ -47,6 +47,11 @@ class AnonymousController extends Controller{
 		$view->render();
 	}
 	
+	public function generateInscErrorProf($text){
+		$view = new View($this,'inscriptionprof');
+		$view->setArg('inscErrorText',$text);
+		$view->render();
+	}
 	
 	public function validateInscription($request) { 
 		$login = $request->read('inscLogin');
@@ -80,7 +85,7 @@ class AnonymousController extends Controller{
 					AnonymousController::generateInscError('Merci d\'utiliser un prenom de moins de 50 caractères');
 				}
 				else{
-					User::create(User::nbUsers()+1,$login, $password,$promotion,$majeure ,$nom,$prenom,$mail);
+					User::create(User::createId(),$login, $password,$promotion,$majeure ,$nom,$prenom,$mail);
 					$id=User::getIdByLogin($login);
 					$user = new User($id,$login, $password,$promotion,$majeure ,$nom,$prenom,$mail);
 					if(!isset($user)) { 
@@ -106,6 +111,7 @@ class AnonymousController extends Controller{
 		$login = $request->read('loginLogin');
 		$password = $request->read('loginPassword');
 		$user = User::tryLogin($login,$password);
+		$prof = Prof::tryLogin($login,$password);
 		if (isset($user)){
 			$_SESSION['id'] = $user->getId();
 			$request->resetRequest();
@@ -113,6 +119,16 @@ class AnonymousController extends Controller{
 			$newRequest->write('controller','user');
 			$newRequest->write('user',$user->getLogin()); 
 			$newRequest->write('action','validateConnexion');
+			$newController = Dispatcher::dispatch($newRequest);
+			$newController->validateConnexion($newRequest);
+		}
+		else if (isset($prof)){
+			$_SESSION['id'] = $prof->getId();
+			$request->resetRequest();
+			$newRequest = $request->getCurrentRequest();
+			$newRequest->write('controller','prof');
+			$newRequest->write('user',$prof->getLogin()); 
+			$newRequest->write('action','validateConnexionProf');
 			$newController = Dispatcher::dispatch($newRequest);
 			$newController->validateConnexion($newRequest);
 		}
@@ -170,5 +186,81 @@ class AnonymousController extends Controller{
 	}
 */
 
+	public function validateInscriptionProf($request) { 
+		$login = $request->read('inscLogin');
+		$password = $request->read('inscPassword'); 
+		if (trim($login)=='' || trim($password)==''){
+			$this->generateInscErrorProf('Merci d\'insérer un login et un password valides');
+		}
+		else if(User::isLoginUsed($login)) { 
+			AnonymousController::generateInscErrorProf('Ce login est déjà utilisé');
+		} 
+		else {
+			if(strlen($login)>25){
+				AnonymousController::generateInscErrorProf('Merci d\'utiliser un login de moins de 25 caractères');
+			}
+			elseif(strlen($password)>25){
+				AnonymousController::generateInscErrorProf('Merci d\'utiliser un password de moins de 25 caractères');
+			}
+			else{
+				$nom = $request->read('nom'); 
+				$prenom = $request->read('prenom'); 
+				$mail = $request->read('mail');
+				//$interne = ($request->read('interne') == "yes") ? 1 : 0; 
+				$interne = $request->read('interne');
+				$description = $request->read('description');
+				if(strlen($mail)>70){
+					AnonymousController::generateInscErrorProf('Merci d\'utiliser un mail de moins de 70 caractères');
+				}
+				else if(strlen($nom)>50){
+					AnonymousController::generateInscErrorProf('Merci d\'utiliser un nom de moins de 50 caractères');
+				}
+				else if(strlen($prenom)>50){
+					AnonymousController::generateInscErrorProf('Merci d\'utiliser un prenom de moins de 50 caractères');
+				}
+				else{
+					Prof::create(User::createId(),$login, $password,$interne,$description ,$nom,$prenom,$mail);
+					$id=Prof::getIdByLogin($login);
+					$prof = new Prof($id,$login, $password,$interne,$description ,$nom,$prenom,$mail);
+					if(!isset($prof)) { 
+						AnonymousController::generateInscErrorProf('Inscription invalide, merci de réessayer');
+					} else { 
+						$request->resetRequest();
+						$newRequest = $request->getCurrentRequest();
+						$newRequest->write('controller','prof');
+						$newRequest->write('user',$prof->getLogin());
+						$newRequest->writePost('loginLogin',$prof->getLogin());
+						$newRequest->writePost('loginPassword',$prof->getPassword());
+						$newRequest->writeSession('id',$prof->getId());
+						$newController=Dispatcher::dispatch($newRequest); 
+						$newController->tryLogin($newRequest);
+					}
+				}
+			}
+		}
+	}
+//A factoriser en une seule fonction
+	/*
+	public function tryLoginProf($request){
+		$login = $request->read('loginLogin');
+		$password = $request->read('loginPassword');
+		$prof = Prof::tryLogin($login,$password);
+		if (isset($prof)){
+			$_SESSION['id'] = $prof->getId();
+			$request->resetRequest();
+			$newRequest = $request->getCurrentRequest();
+			$newRequest->write('controller','prof');
+			$newRequest->write('user',$prof->getLogin()); 
+			$newRequest->write('action','validateConnexionProf');
+			$newController = Dispatcher::dispatch($newRequest);
+			$newController->validateConnexion($newRequest);
+		}
+		else{ 
+			$view = new View($this,'login'); 
+			$view->setArg('inscErrorText', 'Cannot complete connexion'); 
+			$view->render(); 
+		} 
+	}
+*/
 }
 ?>
