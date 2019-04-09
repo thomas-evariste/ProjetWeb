@@ -78,5 +78,9 @@ class ProfController extends UserController{
     }
 
 
+    public function creerQuestion($request){
+        $view = new ProfView($this,'creerquestion',array('user'=>$this->currentUser));
+        $view->render();
+    }
 }
 ?> 

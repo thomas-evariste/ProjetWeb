@@ -32,7 +32,7 @@ class View{
 		if($this->template != 'Template')
 		{
 			require_once(__ROOT_DIR . '/templates/' . $this->template .'.php');
-		}
+		}		
 		require_once(__ROOT_DIR . '/templates/footTemplate.php');
 	}
 
