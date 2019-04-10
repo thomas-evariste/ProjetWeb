@@ -42,7 +42,9 @@
 									
                                 </tbody>
                             </table>
-                            <a href="index.php?action=modifier&controller=prof" onClick={props.handleSubmitProfile} class="btn btn-primary ml-2">Modifier</a>
+                            <a href="index.php?action=modifier&controller=prof" onClick={props.handleSubmitProfile} class="btn btn-primary ml-2">
+							<i class="fa fa-user-edit"></i>
+							Modifier</a>
                         </div>
                     </div>
                 </div>   
