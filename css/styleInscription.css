@@ -11,7 +11,7 @@
 		.user_card_insc {
 			height: 550px;
 			width: 350px;
-			margin-top: auto;
+			margin-top: 75px;
 			margin-bottom: auto;
 			background: #f39c12;
 			position: relative;
@@ -28,7 +28,7 @@
 		.user_card_log {
 			height: 350px;
 			width: 350px;
-			margin-top: auto;
+			margin-top: 75px;
 			margin-bottom: auto;
 			background: #f39c12;
 			position: relative;
