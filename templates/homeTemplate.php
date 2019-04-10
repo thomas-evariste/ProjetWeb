@@ -1,9 +1,3 @@
-<?php 
-	if (isset($user)){
-		echo 'Connecté en tant que '. $user->getLogin();
-	}
-
-?>
 
 	<div class="wrapper home">
 <section class="col-md-12 col-lg-10 grids">

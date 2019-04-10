@@ -1,16 +1,3 @@
-<!--
-		<nav>
-	
-			<ul>
-				<li><a href=\"index.php?action=home\">Home</a></li>
-				<li><a href=\"index.php?action=login\">Login</a></li>
-				<li><a href=\"index.php?action=choixinscription\">Inscription</a></li>
-				
-			</ul>
-		
-		</nav>";
-	
--->
 
 
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">

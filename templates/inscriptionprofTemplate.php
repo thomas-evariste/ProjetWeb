@@ -1,8 +1,5 @@
 <h2>Inscription</h2>
-<?php 
-	if(isset($inscErrorText)) 
-		echo '<span class="error">' . $inscErrorText . '</span>'; 
-?>
+
 
 	<div class="container h-100">
 		<div class="d-flex justify-content-center h-100">
@@ -22,7 +19,7 @@
 								<td><input type="password" name="inscPassword" class="form-control input_user" value="" placeholder="Mot de passe* :"></td>
 							</tr>
 							<tr class="input-group mb-2">
-								<td><input type="text" name="description" class="form-control input_pass" value="" placeholder="Description :"></td>
+								<td><input type="text" name="description" class="form-control input_pass" value="" placeholder="Titre :"></td>
 							</tr>
 							<tr class="input-group mb-3">
 								<td><input type="text" name="mail" class="form-control input_user" value="" placeholder="Mail :"></td>
