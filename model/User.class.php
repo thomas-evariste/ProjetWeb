@@ -35,7 +35,7 @@ class User extends Model{
         $data = $sth->fetch(PDO::FETCH_OBJ);
         $sth2 = parent::query("SELECT LOGIN FROM ENSEIGNANT WHERE LOGIN='$login'");
         $data2 = $sth->fetch(PDO::FETCH_OBJ);
-        if(!empty($data) && !empty($data2)){
+        if(!empty($data) || !empty($data2)){
             return true;
         }
         return false;
