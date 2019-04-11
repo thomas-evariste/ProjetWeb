@@ -228,7 +228,7 @@ INSERT INTO `TAG` (`LIBELLE`, `COULEUR`) VALUES
 ('Littérature', 'Rouge'),
 ('Energétique', 'Marron'),
 ('Nature', 'Vert'),
-('Science', 'Poupre');
+('Physique Chimie', 'Poupre');
 
 --
 -- Contenu de la table `SPECIFIER`
@@ -281,10 +281,10 @@ INSERT INTO `ASSOCIER` (`LIBELLE`, `ID_QUESTION`) VALUES
 ('Géographie', 23),
 ('Géographie', 24),
 ('Géographie', 25),
-('Science', 26),
-('Science', 27),
-('Science', 28),
-('Science', 7);
+('Physique Chimie', 26),
+('Physique Chimie', 27),
+('Physique Chimie', 28),
+('Physique Chimie', 7);
 --
 -- Contenu de la table `EST_INVITE`
 --
