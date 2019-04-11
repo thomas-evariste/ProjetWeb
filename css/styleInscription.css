@@ -116,7 +116,7 @@
 		}
 		
 		.input_user:focus{
-			background: #111111;
+			background: #eeeeee;
 			box-shadow: none !important;
 			outline: 0px !important;
 		}
