@@ -82,5 +82,26 @@ class ProfController extends UserController{
         $view = new ProfView($this,'creerquestion',array('user'=>$this->currentUser));
         $view->render();
     }
+
+    public function insertionQuestion($request){
+        $intitule=$request->read('intitule_question');
+        $type=$request->read('type_question');
+        if ($type!="QCM" && $type!="QCU" && $type!="QO"){
+            echo "Type invalide lors de l'insertion";
+        }
+        else if(strlen($intitule)>100){
+            echo "Intitule trop long";
+        }
+        else if($intitule==''){
+            echo "Intitule vide";
+        }
+        else{
+            $idQuestion= Question::createId();
+            Question::create($idQuestion,$type,$intitule);
+
+        }
+    }
+
+
 }
 ?> 
