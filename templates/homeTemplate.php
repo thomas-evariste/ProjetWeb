@@ -103,11 +103,11 @@
         </div>
         <div class="grid-item item10">
             <div class="content">
-                <div class="bg" style="background-image: url('css/images/management.jpg');"></div>
+                <div class="bg" style="background-image: url('css/images/phisique_chimi.png');"></div>
                 <div class="caption">
                     <div class="text">
-                        <h3>Management</h3>
-                        <p>la mise en œuvre des moyens humains et matériels d'une entreprise pour atteindre ses objectifs </p>                      
+                        <h3>Physique & Chimie</h3>
+                        <p>Étude des phénomènes dans les systèmes chimiques selon les concepts et les lois de la physique. </p>                      
                     </div>
                 </div>                
             </div>
