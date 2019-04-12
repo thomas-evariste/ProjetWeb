@@ -98,10 +98,60 @@ class ProfController extends UserController{
         else{
             $idQuestion= Question::createId();
             Question::create($idQuestion,$type,$intitule);
-
+            
         }
     }
 
+    public function creerQuestionnaire($request){
+        $view = new ProfView($this,'creerquestionnaire',array('user'=>$this->currentUser));
+        $view->render();
+    }
 
+	public function generateCreationQuestionnaireError($text){
+		$view = new View($this,'creerquestionnaire',array('user'=>$this->currentUser));
+		$view->setArg('inscErrorText',$text);
+		$view->render();
+	}
+
+
+    public function validateCreationQuestionnaire($request){
+        $titre = $request->read('titre');
+        $description = $request->read('description');
+        $dateOuverture = $request->read('dateOuverture');
+        $dateFermeture = $request->read('dateFermeture');
+        $etat = $request->read('etat');
+        $connexionRequise = $request->read('connexionRequise');
+        if ($dateOuverture==''){
+            $dateOuverture=NULL;
+        }
+        if ($dateFermeture==''){
+            $dateFermeture=NULL;
+        }
+
+        if (trim($titre)=='' || strlen($titre)>50){
+            ProfController::generateCreationQuestionnaireError('Merci d\'insérer un titre inférieur à 50 caractères');
+        }
+        else if (strlen($description)>200){
+            ProfController::generateCreationQuestionnaireError('Votre description doit être inférieure à 200 caractères');
+        }
+        else{
+            $idQuestionnaire = Questionnaire::createId();
+            Questionnaire::create($idQuestionnaire,$titre,$description,$dateOuverture,$dateFermeture,$connexionRequise,$etat,NULL,$this->currentUser->getId());
+            $view = new View($this,'questionnairevalide',array('user'=>$this->currentUser));
+            $view->render();
+        }
+    }
+    
+    public function voirQuestionnaires($request){
+        $questionnaires = Prof::getQuestionnaire($this->currentUser->getId());
+        $view = new ProfView($this,'visuquestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+        $view->render();
+    }
+
+    public function modifierQuestionnaire($request){
+        $idQuest = $request->read('questionnaireId');
+        $view = new View($this,'modifQuestionnaire',array('user'=>$this->currentUser,'questionnaireId'=>$idQuest));
+        $view->render();
+    }
 }
 ?> 

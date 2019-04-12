@@ -163,6 +163,7 @@ create table QUESTIONNAIRE
    CONNEXION_REQUISE    bool not null,
    ETAT                 varchar(50) not null,
    URL                  varchar(200),
+   CREATEUR             int not null,
    primary key (ID_QUESTIONNAIRE)
 );
 
@@ -280,5 +281,8 @@ alter table TENTER add constraint FK_TENTER foreign key (ID_USER)
 
 alter table TENTER add constraint FK_TENTER2 foreign key (ID_PROPOSITION)
       references REPONSE_DISPONIBLE (ID_PROPOSITION) on delete restrict on update restrict;
+
+alter table QUESTIONNAIRE add constraint FK_CREATEUR foreign key (CREATEUR)
+      references ENSEIGNANT (ID_USER) on delete restrict on update cascade;
 
 SET FOREIGN_KEY_CHECKS=1;

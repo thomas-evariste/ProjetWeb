@@ -45,7 +45,6 @@
             //alert('repCorrecteRadioBoxQ'+idQuestion+'r'+i);
             if (i!=reponseId){
                 //alert('repCorrecteRadioBoxQ'+idQuestion+'r'+i);
-                
                 document.getElementById('repCorrecteRadioBoxQ'+idQuestion+'r'+i).checked=false;
             }
         }
@@ -62,7 +61,7 @@
         }
         reponsesId[idQuestion]=reponsesId[idQuestion]+1;
         //alert(reponsesId);
-   }
+    }
 
     function creerQuestion(idQuestion,selecter){
         //alert(selecter.value);
@@ -102,7 +101,6 @@
                 alert("Merci de valider la dernière question avant d'en créer une nouvelle");
             }
         });
-        
     });
 
     function addElement(parentId,elementTag,elementId,html,elementAttributes=Object()){
@@ -122,10 +120,11 @@
         element.parentNode.removeChild(element);
     }
 
+/*
     function validateQuestion(linkId, reponsesId){
         var typeQ;
         var intitule;
-        for (var i=0;i<linkId;i++) {
+        for (var i=0;i<linkId;i++){
             //alert (questionsList);
             if (questionsList[i+1]!="DELETED"){
                 //alert(questionsList[i+1] + " / i: "+i);
@@ -141,34 +140,50 @@
                 else{
                     
                     if (questionsList[i+1]=="QCM" || questionsList[i+1]=="QCU"){
-                        alert("Passage dans AJAX QCM/QCU "+i + " / linkId: "+linkId);
                         typeQ = questionsList[i+1];
                         intitule = document.getElementById("intitule"+(i+1)).value ;
+                        /*
+                        appelAjax('index.php?action=insertionQuestion&controller=Prof',{intitule_question: intitule, type_question: typeQ}).done(function(resultat){
+                            removeElement("question"+(i+1));
+                            questionsList[i+1]="DELETED";
+                        });*/
                         $.ajax({
                             type:'POST',
                             url:'index.php?action=insertionQuestion&controller=Prof',
                             data:{intitule_question: intitule, type_question: typeQ},
-                            success:function(response){
+                            /*complete:function(response){
                                 $('#success_para').html("La question "+i+" a bien été insérée.");
-                                alert(i);
+                                //alert(i);
                                 removeElement("question"+(i));
                                 questionsList[i]="DELETED";
-                            }
+                            }*/
+                        }).done(function(data){
+                            removeElement("question"+(i+1));
+                            questionsList[i+1]="DELETED";
                         }); 
                     }
                     else{
+
                         //alert("Passage dans AJAX QCO "+i + " / linkId: "+linkId);
                         typeQ = questionsList[i+1];
                         intitule = document.getElementById("intitule"+(i+1)).value ;
+                        /*
+                        appelAjax('index.php?action=insertionQuestion&controller=Prof',{intitule_question: intitule, type_question: typeQ}).done(function(resultat){
+                            removeElement("question"+(i+1));
+                            questionsList[i+1]="DELETED";
+                        });*/
                         $.ajax({
                             type:'POST',
                             url:'index.php?action=insertionQuestion&controller=Prof',
                             data:{intitule_question: intitule, type_question: typeQ},
-                            success:function(response){
+                            /*complete:function(response){
                                 $('#success_para').html("La question "+i+" a bien été insérée.");
                                 removeElement("question"+(i));
                                 questionsList[i]="DELETED";
-                            }
+                            }*/
+                        }).done(function(data){
+                            removeElement("question"+(i+1));
+                            questionsList[i+1]="DELETED";
                         });
                     }
 
@@ -180,7 +195,34 @@
         }
         alert(questionsList);
     }
-
+*/
+/*
+    function appelAjax(pUrl,pData) {
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                type: 'POST',
+                url: pUrl,
+                data:pData,
+                success: function (data){
+                    var deferred = $.Deferred();
+                    switch (data.code) {
+                        case 200:
+                            deferred.resolve(data);
+                            break;
+                        default:
+                            deferred.reject(data);
+                            break;
+                    }
+                    return deferred.promise();
+                },
+                error:function(){
+                    $.Deferred().reject();
+                }
+                
+            });
+        })
+    }
+*/
 </script>
 
 

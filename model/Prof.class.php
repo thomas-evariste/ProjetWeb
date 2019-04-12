@@ -106,5 +106,29 @@ class Prof extends User{
         $sql = "UPDATE ENSEIGNANT SET $column = '$data' WHERE ID_USER='$id'";
         $sth = parent::query($sql);
     }
+
+    public static function getQuestionnaire($idUser){
+        $sql = "SELECT * FROM QUESTIONNAIRE WHERE CREATEUR='$idUser'";
+        $sth = parent::query($sql);
+        $data = $sth->fetch(PDO::FETCH_OBJ);
+        $questionnaires = array();
+        while(!empty($data)){
+            array_push($questionnaires,Array(
+                    'id'=>$data->ID_QUESTIONNAIRE,
+                    'titre'=>$data->TITRE,
+                    'description'=>$data->DESCRIPTION_QUESTIONNAIRE,
+                    'dateOuverture'=>$data->DATE_OUVERTURE,
+                    'dateFermeture'=>$data->DATE_FERMETURE,
+                    'connexionRequise'=>$data->CONNEXION_REQUISE,
+                    'etat'=>$data->ETAT,
+                    'url'=>$data->URL,
+                    'createur'=>$data->CREATEUR
+                )
+            );
+            $data = $sth->fetch(PDO::FETCH_OBJ);
+        }
+        return $questionnaires;
+    }
+    
 }
 ?>

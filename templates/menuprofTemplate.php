@@ -46,6 +46,18 @@
           Créer question
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="index.php?action=creerQuestionnaire&controller=prof">
+          <i class="fa fa-plus-circle"></i>
+          Créer questionnaire
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="index.php?action=voirQuestionnaires&controller=prof">
+          <i class="fa fa-plus-circle"></i>
+          Mes questionnaires
+        </a>
+      </li>
     </ul>
   </div>
 </nav>
