@@ -33,7 +33,9 @@ INSERT INTO `ENSEIGNANT` (`ID_USER`, `LOGIN`, `PASSWORD`, `INTERNE`, `DESCRIPTIO
 (21, '', '', 1, 'Professor of opérational research', 'LUJAK', 'Marin', 'bidule@mail.com'),
 (37, '', '', 0, 'Professeur de mathématiques', 'ATALI', 'Jack', 'test@mail.com'),
 (65, '', '', 1, 'Doctorant', 'NEWTON', 'Isaac', 'op@mail.com'),
-(115, '', '', 1, 'Professeur de mathématiques', 'COQUEREL', 'Quentin', 'qc@mail.com');
+(115, '', '', 1, 'Professeur de mathématiques', 'COQUEREL', 'Quentin', 'qc@mail.com'),
+(1, '', '', 1, 'Professeur de mathématiques', 'COQUEREL', 'Quentin', 'qc@mail.com'),
+(2, 'simon', 'azerty', 1, 'Super Prof', 'DROMER', 'Simon', 'simon.dromer@etu.imt-lille-douai.fr');
 
 
 --
@@ -49,7 +51,7 @@ INSERT INTO `NOTE` (`ID_USER`, `ENS_ID_USER`, `ID_NOTE`, `ID_QUESTIONNAIRE`, `VA
 --
 
 INSERT INTO `PARTICIPANT` (`ID_USER`, `LOGIN`, `PASSWORD`, `PROMOTION`, `MAJEURE`, `NOM`, `PRENOM`, `MAIL`) VALUES
-(3, 'simon', 'simon', 2018, 'ISIC', 'DROMER', 'Simon', 'simon.dromer@etu.imt-lille-douai.fr');
+(3, 'simon', 'simon', 2018, 'ISIC', 'DROGO', 'Simon', 'simon.dromer@etu.imt-lille-douai.fr');
 
 
 --
@@ -114,8 +116,20 @@ INSERT INTO `QUESTION` (`ID_QUESTION`, `TYPE`, `INTITULE_QUESTION`) VALUES
 --
 
 INSERT INTO `QUESTIONNAIRE` (`ID_QUESTIONNAIRE`, `TITRE`, `DESCRIPTION_QUESTIONNAIRE`, `DATE_OUVERTURE`, `DATE_FERMETURE`, `CONNEXION_REQUISE`, `ETAT`, `URL`) VALUES
-(1, ' ad Mesopotamiam missus a socero per militares', 'Ideoque fertur neminem aliquando ob haec vel similia poenae addictum oblato de more elogio revocari iussisse, quod inexorabiles quoque principes factitarunt. et exitiale hoc vitium, quod in aliis non ', '2019-03-13', '2019-03-30', 1, 'ouvert', 'AdclivitasdefendentibusquoniamIsauriaetriduum.com'),
-(2, 'Inpetraverim est multos statuas non.', 'Pacataeque et et redierit partes Romani pacataeque sunt securitas patrum partes sint nomen omnes Romani partes securitas securitas domina circumspectum canities suscipitur set quotquot licet tribus et', '0000-00-00', '0000-00-00', 0, 'ouvert', 'Suntplurimum.com');
+(1, ' ad Mesopotamiam missus a socero per militares', 'Ideoque fertur neminem aliquando ob haec vel similia poenae addictum oblato de more elogio revocari iussisse, quod inexorabiles quoque principes factitarunt. et exitiale hoc vitium, quod in aliis non ', '2019-03-13', '2019-03-30', 1, 'ouvert', 'AdclivitasdefendentibusquoniamIsauriaetriduum.com',NULL),
+(2, 'Inpetraverim est multos statuas non.', 'Pacataeque et et redierit partes Romani pacataeque sunt securitas patrum partes sint nomen omnes Romani partes securitas securitas domina circumspectum canities suscipitur set quotquot licet tribus et', '0000-00-00', '0000-00-00', 0, 'ouvert', 'Suntplurimum.com',NULL),
+(3, 'QCU Nature', NULL, NULL, NULL, 0, 'ouvert', NULL, 2),
+(4, 'QCU Littérature', NULL, NULL, NULL, 0, 'ouvert', NULL, 2),
+(5, 'QCU Histoire', NULL, NULL, NULL, 0, 'ouvert', NULL, 2),
+(6, 'QCU Informatique', NULL, NULL, NULL, 0, 'ouvert', NULL, 2),
+(7, 'QCU Géographie', NULL, NULL, NULL, 0, 'ouvert', NULL, 2),
+(8, 'QCU Physique-Chimie', NULL, NULL, NULL, 0, 'ouvert', NULL, 2),
+(9, 'QCU Energétique', NULL, NULL, NULL, 0, 'ouvert', NULL, 2),
+(10, 'QCU Développement durable', NULL, NULL, NULL, 0, 'ouvert', NULL, 2),
+(11, 'QCU Mathématiques', NULL, NULL, NULL, 0, 'ouvert', NULL, 2),
+(12, 'QCU Sport', NULL, NULL, NULL, 0, 'ouvert', NULL, 2),
+(13, 'QCU Télécom', NULL, NULL, NULL, 0, 'ouvert', NULL, 2),
+(14, 'QCU Langues', NULL, NULL, NULL, 0, 'ouvert', NULL, 2);
 
 --
 -- Contenu de la table `REGLE`
@@ -451,7 +465,55 @@ INSERT INTO `CONTENIR` (`ID_QUESTION`, `ID_QUESTIONNAIRE`, `BAREME`) VALUES
 (1, 2, '0'),
 (2, 1, '1'),
 (2, 2, '0'),
-(3, 2, '0');
+(3, 2, '0'),
+(6, 3, '1'),
+(19, 3, '1'),
+(20, 3, '1'),
+(21, 3, '1'),
+(9, 4, '1'),
+(10, 4, '1'),
+(11, 4, '1'),
+(12, 4, '1'),
+(1, 5, '1'),
+(13, 5, '1'),
+(14, 5, '1'),
+(15, 5, '1'),
+(5, 6, '1'),
+(16, 6, '1'),
+(17, 6, '1'),
+(18, 6, '1'),
+(22, 7, '1'),
+(23, 7, '1'),
+(24, 7, '1'),
+(25, 7, '1'),
+(7, 8, '1'),
+(26, 8, '1'),
+(27, 8, '1'),
+(28, 8, '1'),
+(8, 9, '1'),
+(29, 9, '1'),
+(30, 9, '1'),
+(31, 9, '1'),
+(32, 10, '1'),
+(33, 10, '1'),
+(34, 10, '1'),
+(35, 10, '1'),
+(36, 11, '1'),
+(37, 11, '1'),
+(38, 11, '1'),
+(39, 11, '1'),
+(40, 12, '1'),
+(41, 12, '1'),
+(42, 12, '1'),
+(43, 12, '1'),
+(44, 13, '1'),
+(45, 13, '1'),
+(46, 13, '1'),
+(47, 13, '1'),
+(48, 14, '1'),
+(49, 14, '1'),
+(50, 14, '1'),
+(51, 14, '1');
 
 --
 -- Contenu de la table `CREER`
