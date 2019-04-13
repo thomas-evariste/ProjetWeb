@@ -73,6 +73,10 @@ class UserController extends AnonymousController{
 		$currentUser = User::getById($_SESSION['id']); 
 		header("location: index.php?action=profil&controller=user");
 	}
-
+	
+	public function repondreQuiz($request){
+		$view = new UserView($this, 'quizReponse',array('user' =>$this->currentUser)); 
+		$view->render(); 
+	}
 }
 ?>
