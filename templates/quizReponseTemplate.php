@@ -17,16 +17,14 @@
     						<input type="radio" id="radio-button-1-1" name="radio-button" value="5">
     						<label for="radio-button-1-1">
     							<span class="frb-title">Answer 1</span>
-    							<span class="frb-description"></span>
     						</label>
-    					</div>
+							</div>
                         </div>
                         <div class="col-md-4">
                             <div class="frb frb-danger margin-bottom-none">
     						<input type="radio" id="radio-button-1-2" name="radio-button" value="5">
     						<label for="radio-button-1-2">
     							<span class="frb-title">Answer 2</span>
-    							<span class="frb-description"></span>
     						</label>
     					</div>
                         </div>
@@ -35,7 +33,6 @@
     						<input type="radio" id="radio-button-1-3" name="radio-button" value="5">
     						<label for="radio-button-1-3">
     							<span class="frb-title">Answer 3</span>
-    							<span class="frb-description"></span>
     						</label>
     					</div>
                         </div>
@@ -46,7 +43,6 @@
     						<input type="radio" id="radio-button-1-4" name="radio-button" value="5">
     						<label for="radio-button-1-4">
     							<span class="frb-title">Answer 4</span>
-    							<span class="frb-description"></span>
     						</label>
     					</div>
                         </div>
@@ -55,7 +51,6 @@
     						<input type="radio" id="radio-button-1-5" name="radio-button" value="5">
     						<label for="radio-button-1-5">
     							<span class="frb-title">Answer 5</span>
-    							<span class="frb-description"></span>
     						</label>
     					</div>
                         </div>
@@ -64,7 +59,6 @@
     						<input type="radio" id="radio-button-1-6" name="radio-button" value="5">
     						<label for="radio-button-1-6">
     							<span class="frb-title">Answer 6</span>
-    							<span class="frb-description"></span>
     						</label>
     					</div>
                         </div>
@@ -100,7 +94,6 @@
     						<input type="radio" id="radio-button-2-1" name="radio-button2" value="5">
     						<label for="radio-button-2-1">
     							<span class="frb-title">Answer 1</span>
-    							<span class="frb-description"></span>
     						</label>
     					</div>
                         </div>
@@ -109,7 +102,6 @@
     						<input type="radio" id="radio-button-2-2" name="radio-button2" value="5">
     						<label for="radio-button-2-2">
     							<span class="frb-title">Answer 2</span>
-    							<span class="frb-description"></span>
     						</label>
     					</div>
                         </div>
@@ -118,7 +110,6 @@
     						<input type="radio" id="radio-button-2-3" name="radio-button2" value="5">
     						<label for="radio-button-2-3">
     							<span class="frb-title">Answer 3</span>
-    							<span class="frb-description"></span>
     						</label>
     					</div>
                         </div>
@@ -129,7 +120,6 @@
     						<input type="radio" id="radio-button-2-4" name="radio-button2" value="5">
     						<label for="radio-button-2-4">
     							<span class="frb-title">Answer 4</span>
-    							<span class="frb-description"></span>
     						</label>
     					</div>
                         </div>
@@ -138,7 +128,6 @@
     						<input type="radio" id="radio-button-2-5" name="radio-button2" value="5">
     						<label for="radio-button-2-5">
     							<span class="frb-title">Answer 5</span>
-    							<span class="frb-description"></span>
     						</label>
     					</div>
                         </div>
@@ -147,7 +136,6 @@
     						<input type="radio" id="radio-button-2-6" name="radio-button2" value="5">
     						<label for="radio-button-2-6">
     							<span class="frb-title">Answer 6</span>
-    							<span class="frb-description"></span>
     						</label>
     					</div>
                         </div>
@@ -160,9 +148,12 @@
                                 <span class="fa fa-send"></span>back</button>
                         </div>
                         <div class="col-md-6">
+								<a href="index.php?action=home&controller=user" class="btn btn-primary btn-sm btn-block">fin</a>
+                        </div>
+                     <!--   <div class="col-md-6">
                             <button type="submit" class="btn btn-primary btn-sm btn-block">
                                next</button>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
