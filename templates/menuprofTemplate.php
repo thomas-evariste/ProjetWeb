@@ -40,23 +40,25 @@
           Deconecter
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="index.php?action=creerQuestion&controller=prof">
-          <i class="fa fa-plus-circle"></i>
-          Créer question
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-question-circle"></i>
+          Quiz
         </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="index.php?action=creerQuestionnaire&controller=prof">
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="index.php?action=voirQuestionnaires&controller=prof">
+          <i class="fa fa-check-circle"></i>
+          Mes questionnaires
+        </a>
+        <a class="dropdown-item" href="index.php?action=creerQuestionnaire&controller=prof">
           <i class="fa fa-plus-circle"></i>
           Créer questionnaire
         </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="index.php?action=voirQuestionnaires&controller=prof">
+        <a class="dropdown-item" href="index.php?action=creerQuestion&controller=prof">
           <i class="fa fa-plus-circle"></i>
-          Mes questionnaires
+          Créer question
         </a>
+        </div>
       </li>
     </ul>
   </div>
