@@ -86,7 +86,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-8 col-md-offset-2" id="panel2">
+        <div class="panel col-md-8 col-md-offset-2" id="panel2">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title text-danger">
