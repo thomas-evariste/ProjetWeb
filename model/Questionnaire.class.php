@@ -130,7 +130,7 @@ class Questionnaire extends Model{
 
         if (!empty($data)){
             $questionnaire = new Questionnaire($data->ID_QUESTIONNAIRE,$data->TITRE,$data->DESCRIPTION_QUESTIONNAIRE,
-                                          $data->DATE_OUVERTURE,$data->DATE_FERMETURE,$data->CONNEXION_REQUISE,$data->ETAT,$data->URL,$data->CREATEUR);
+                                          $data->DATE_OUVERTURE,$data->DATE_FERMETURE,$data->CONNEXION_REQUISE,$data->ETAT,$data->URL,$data->ID_CREATEUR);
             return $questionnaire;
         }
         else{
@@ -165,6 +165,14 @@ class Questionnaire extends Model{
         }
     }*/
     
+    public static function ajouterQuestion($idQuestion,$idQuestionnaire,$bareme){
+        $sth = parent::prepare("INSERT INTO CONTENIR VALUES(:idQuestion,:idQuestionnaire,:bareme)");
+        $sth->bindParam(':idQuestion',$idQuestion);
+        $sth->bindParam(':idQuestionnaire',$idQuestionnaire);
+        $sth->bindParam(':bareme',$bareme);
+        $sth->execute();
+    }
+
 }
 
 ?> 

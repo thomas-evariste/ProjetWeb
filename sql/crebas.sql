@@ -56,7 +56,7 @@ create table CONTENIR
 (
    ID_QUESTION          int not null,
    ID_QUESTIONNAIRE     int not null,
-   BAREME               decimal,
+   BAREME               decimal  not null,
    primary key (ID_QUESTION, ID_QUESTIONNAIRE)
 );
 
@@ -146,7 +146,7 @@ create table QUESTION
 (
    ID_QUESTION          int not null auto_increment,
    TYPE                 char(10) not null,
-   INTITULE_QUESTION    varchar(150) not null,
+   INTITULE_QUESTION    varchar(100) not null,
    primary key (ID_QUESTION)
 );
 
@@ -187,7 +187,7 @@ create table REPONSE_DISPONIBLE
    REP_ID_PROPOSITION   int,
    REP_ID_PROPOSITION2  int,
    ID_USER              int,
-   INTITULE_PROPOSITION varchar(50),
+   INTITULE_PROPOSITION varchar(100),
    REPONSE_CORRECTE     bool,
    primary key (ID_PROPOSITION)
 );

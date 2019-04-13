@@ -21,7 +21,7 @@
         
             foreach($questionnaires as $questionnaire){
                 echo "<tr>   
-                <th>" . $questionnaire['id'] ." </th>
+                <th>" . $questionnaire['titre'] ." </th>
                 <th>" . $questionnaire['description']."</th>
                 <th>" . $questionnaire['dateOuverture'] ."</th>
                 <th>" . $questionnaire['dateFermeture'] ."</th>

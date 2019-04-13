@@ -129,6 +129,27 @@ class Prof extends User{
         }
         return $questionnaires;
     }
-    
+
+    public static function getQuestions($idQuestionnaire){
+        $sql = "SELECT QUESTION.* 
+        FROM QUESTION, CONTENIR, QUESTIONNAIRE 
+        WHERE QUESTION.ID_QUESTION = CONTENIR.ID_QUESTION
+        AND CONTENIR.ID_QUESTIONNAIRE = QUESTIONNAIRE.ID_QUESTIONNAIRE
+        AND QUESTIONNAIRE.ID_QUESTIONNAIRE = '$idQuestionnaire'";
+        $sth = parent::query($sql);
+        $data = $sth->fetch(PDO::FETCH_OBJ);
+        $questions = array();
+        while(!empty($data)){
+            array_push($questions,Array(
+                    'id'=>$data->ID_QUESTION,
+                    'type'=>$data->TYPE,
+                    'intitule'=>$data->INTITULE_QUESTION
+                )
+            );
+            $data=$sth->fetch(PDO::FETCH_OBJ);
+        }
+        return $questions;
+    }
+
 }
 ?>

@@ -86,7 +86,7 @@ class ProfController extends UserController{
     public function insertionQuestion($request){
         $intitule=$request->read('intitule_question');
         $type=$request->read('type_question');
-        if ($type!="QCM" && $type!="QCU" && $type!="QO"){
+/*        if ($type!="QCM" && $type!="QCU" && $type!="QO"){
             echo "Type invalide lors de l'insertion";
         }
         else if(strlen($intitule)>100){
@@ -98,7 +98,19 @@ class ProfController extends UserController{
         else{
             $idQuestion= Question::createId();
             Question::create($idQuestion,$type,$intitule);
-            
+        }*/
+        $nbReponses = $request->read('nbRep');
+        $idQuestionnaire=$request->read('idQuestionnaire');
+        $bareme=$request->read('bareme_question');
+        print_r($_POST);
+        if ($type=="QO"){
+            echo "ON EST UN TYPE QO !";
+            $idQuestion = Question::createId();
+            Question::create($idQuestion,$type,$intitule);
+            Questionnaire::ajouterQuestion($idQuestion,$idQuestionnaire,$bareme);
+        }
+        else{
+            echo "ON EST UN TYPE QCM OU QCU !";
         }
     }
 
@@ -150,7 +162,8 @@ class ProfController extends UserController{
 
     public function modifierQuestionnaire($request){
         $idQuest = $request->read('questionnaireId');
-        $view = new View($this,'modifQuestionnaire',array('user'=>$this->currentUser,'questionnaireId'=>$idQuest));
+        $questions = Prof::getQuestions($idQuest);
+        $view = new View($this,'modifQuestionnaire',array('user'=>$this->currentUser,'questionnaireId'=>$idQuest,'questions'=>$questions));
         $view->render();
     }
 }
