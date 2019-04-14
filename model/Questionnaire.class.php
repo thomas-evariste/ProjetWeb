@@ -53,7 +53,7 @@ class Questionnaire extends Model{
     }
 
     public static function modify($column, $data,$id){
-        $sql = "UPDATE QUESTIONNAIRE SET $column = '$data' WHERE ID_USER='$id'";
+        $sql = "UPDATE QUESTIONNAIRE SET $column = '$data' WHERE ID_QUESTIONNAIRE='$id'";
         $sth = parent::query($sql);
     }
 
@@ -124,7 +124,7 @@ class Questionnaire extends Model{
     */
 
     public static function getById($id){
-        $sql = "SELECT * FROM QUESTIONNAIRE WHERE QUESTION = '$id'";
+        $sql = "SELECT * FROM QUESTIONNAIRE WHERE ID_QUESTIONNAIRE = '$id'";
         $sth = parent::query($sql);
         $data= $sth->fetch(PDO::FETCH_OBJ);
 

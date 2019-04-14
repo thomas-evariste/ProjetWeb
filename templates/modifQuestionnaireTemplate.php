@@ -7,9 +7,9 @@ echo $questionnaireId;
 ?>
 
 
-<table>
+<table id="questionList">
 
-    <thead>
+    <thead id="questionListHead">
     
         <tr>
             <th>ID</th>
@@ -18,7 +18,7 @@ echo $questionnaireId;
         </tr>
     </thead>
 
-    <tbody>
+    <tbody id="questionListBody">
     
         <?php 
         
@@ -27,7 +27,7 @@ echo $questionnaireId;
                 <th>" . $question['id'] ." </th>
                 <th>" . $question['type']."</th>
                 <th>" . $question['intitule'] ."</th>
-                <th><form action=\"index.php?action=modifierQuestionnaire&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$question['id']."'><input type='submit' value='Modifier'></form></th>
+                <th><form action=\"index.php?action=modifierQuestion&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$question['id']."'><input type='submit' value='Modifier'></form></th>
                 </tr>";
             }
         
@@ -61,6 +61,13 @@ echo $questionnaireId;
         });
         questionEnCours=selecter.value;
     }
+    
+
+    function isNumber(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+
+
 
     function validateQuestion(){
         var dataAJAX = {};
@@ -84,10 +91,17 @@ echo $questionnaireId;
                 erreurPresente=true;
             }
         }
-        if(isNaN(bareme.value)){
+        if(!isNumber($('#bareme').val())){
             $("#Error").append("<p>Merci d'insérer un barème de type numérique</p>");
             erreurPresente=true;
         }
+        else{
+            if($('#bareme').val() > 1000){
+                $("#Error").append("<p>Merci d'insérer un barème, qui est de valeur inférieure à 1000</p>");
+                erreurPresente=true;
+            }
+        }
+        
         if(!erreurPresente){
             dataAJAX['intitule_question']=($('#intitule').val());
             dataAJAX['bareme_question']=($('#bareme').val());
@@ -121,10 +135,19 @@ echo $questionnaireId;
                 url:'index.php?action=insertionQuestion&controller=Prof',
                 data:dataAJAX,
                 }).done(function(data){
-                    alert("data saved" + data);
+                    $('#Error').append("La question a été ajoutée avec succès !");
+                    addToQuestionList("",""+questionEnCours,$('#intitule').val());
+                    removeElement("Form");
                 })
         }
         return false;
+    }
+
+    function addToQuestionList(id,type,intitule){
+        addElement("questionListBody","tr","questionAdded","");
+        addElement("questionAdded","th","idQuestionAdded",id);
+        addElement("questionAdded","th","typeQuestionAdded",type);
+        addElement("questionAdded","th","intituleQuestionAdded",intitule);
     }
 
     function ajouterReponseQCU(question){

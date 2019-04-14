@@ -108,7 +108,7 @@ class Prof extends User{
     }
 
     public static function getQuestionnaire($idUser){
-        $sql = "SELECT * FROM QUESTIONNAIRE WHERE CREATEUR='$idUser'";
+        $sql = "SELECT * FROM QUESTIONNAIRE WHERE ID_CREATEUR='$idUser'";
         $sth = parent::query($sql);
         $data = $sth->fetch(PDO::FETCH_OBJ);
         $questionnaires = array();
@@ -122,7 +122,7 @@ class Prof extends User{
                     'connexionRequise'=>$data->CONNEXION_REQUISE,
                     'etat'=>$data->ETAT,
                     'url'=>$data->URL,
-                    'createur'=>$data->CREATEUR
+                    'createur'=>$data->ID_CREATEUR
                 )
             );
             $data = $sth->fetch(PDO::FETCH_OBJ);

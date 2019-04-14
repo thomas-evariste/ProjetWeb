@@ -111,6 +111,29 @@ class ProfController extends UserController{
         }
         else{
             echo "ON EST UN TYPE QCM OU QCU !";
+            $idQuestion = Question::createId();
+            Question::create($idQuestion,$type,$intitule);
+
+            Questionnaire::ajouterQuestion($idQuestion,$idQuestionnaire,$bareme);
+            for ($i=0;$i<$nbReponses;$i++){
+                $idRep=Reponse::createId();
+                $rep = $request->read('rep'.$i);
+                $repCorrecte = $request->read('repCorrecte'.$i);
+                Reponse::create($idRep,NULL,NULL,NULL,$rep,$repCorrecte);
+                Reponse::ajouterReponse($idRep,$idQuestion);
+            }
+
+            /*
+            echo ($type);
+            echo ($bareme);
+            echo ($nbReponses);
+            echo("reponse:");
+            print_r($reponse);
+            echo("valeurReponse:");
+            print_r($valeurReponse);*/
+
+
+
         }
     }
 

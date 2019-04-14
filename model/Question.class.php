@@ -11,10 +11,18 @@ class Question extends Model{
 
 
     public static function createId(){
-        $sth = parent::query("SELECT MAX(ID_QUESTION) as nb FROM QUESTION");
+        $sth = parent::query("SELECT COUNT(ID_QUESTION) as nb FROM QUESTION");
         $data = $sth->fetch(PDO::FETCH_OBJ);
-        $max = $data->nb;
-        return $max+1;
+        $compte = $data->nb;
+        if ($compte>0){
+            $sth = parent::query("SELECT MAX(ID_QUESTION) as nb FROM QUESTION");
+            $data = $sth->fetch(PDO::FETCH_OBJ);
+            $max = $data->nb;
+            return $max+1;
+        }
+        else{
+            return 1;
+        }
     }
 /*
     public static function isLoginUsed($login){
@@ -49,7 +57,7 @@ class Question extends Model{
     }
 
     public static function modify($column, $data,$id){
-        $sql = "UPDATE PARTICIPANT SET $column = '$data' WHERE ID_USER='$id'";
+        $sql = "UPDATE QUESTION SET $column = '$data' WHERE ID_QUESTION='$id'";
         $sth = parent::query($sql);
     }
 
@@ -91,7 +99,7 @@ class Question extends Model{
     */
 
     public static function getById($id){
-        $sql = "SELECT * FROM QUESTION WHERE QUESTION = '$id'";
+        $sql = "SELECT * FROM QUESTION WHERE ID_QUESTION = '$id'";
         $sth = parent::query($sql);
         $data= $sth->fetch(PDO::FETCH_OBJ);
 
