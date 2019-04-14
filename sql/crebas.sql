@@ -219,6 +219,7 @@ create table TENTER
 (
    ID_USER              int not null,
    ID_PROPOSITION       int not null,
+   A_CORRIGER           bool not null,
    primary key (ID_USER, ID_PROPOSITION)
 );
 
