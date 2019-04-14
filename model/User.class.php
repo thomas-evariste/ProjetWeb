@@ -202,6 +202,30 @@ class User extends Model{
             return null;
         }
     }
+	
+	
+    public static function getQuestionnaire($idUser){
+        $sql = "SELECT * FROM QUESTIONNAIRE";
+        $sth = static::query($sql);
+        $data = $sth->fetch(PDO::FETCH_OBJ);
+        $questionnaires = array();
+        while(!empty($data)){
+            array_push($questionnaires,Array(
+                    'id'=>$data->ID_QUESTIONNAIRE,
+                    'titre'=>$data->TITRE,
+                    'description'=>$data->DESCRIPTION_QUESTIONNAIRE,
+                    'dateOuverture'=>$data->DATE_OUVERTURE,
+                    'dateFermeture'=>$data->DATE_FERMETURE,
+                    'connexionRequise'=>$data->CONNEXION_REQUISE,
+                    'etat'=>$data->ETAT,
+                    'url'=>$data->URL,
+                    'createur'=>$data->ID_CREATEUR
+                )
+            );
+            $data = $sth->fetch(PDO::FETCH_OBJ);
+        }
+        return $questionnaires;
+    }
 }
 
 ?> 
