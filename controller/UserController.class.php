@@ -73,31 +73,24 @@ class UserController extends AnonymousController{
 		$currentUser = User::getById($_SESSION['id']); 
 		header("location: index.php?action=profil&controller=user");
 	}
+		
+    
+    public function voirQuestionnaires($request){
+		$currentUser = User::getById($_SESSION['id']);
+        $questionnaires = User::getQuestionnaire($currentUser->getId());
+        $view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+        $view->render();
+    }
 	
 	public function repondreQuiz($request){
-		$view = new UserView($this, 'quizReponse',array('user' =>$this->currentUser)); 
-		$view->render(); 
-	}
-	
-	public function choixQuiz($request){
-		$view = new UserView($this, 'choixQuiz',array('user' =>$this->currentUser)); 
-		$view->render(); 
-	}
-	
-	public function arriveeQuiz($request){
 		//pour l'instant je charge que le dernier;
 		$currentUser = User::getById($_SESSION['id']);
+        $idQuest = $request->read('questionnaireId');
+		
+		$questionnaire = $currentUser->getQuestionnaireById($idQuest);
 		
 		$allQuiz = $currentUser->getQuestionnaire($currentUser->getId()); 
 
-		$max = sizeof($allQuiz);
-		for($i = 0; $i < $max;$i++){
-			$quiz = $allQuiz[$i];
-		}
-		
-		$questionnaire = new Questionnaire($quiz['id'],$quiz['titre'],$quiz['description'],$quiz['dateOuverture'],$quiz['dateFermeture'],$quiz['connexionRequise'],$quiz['etat'],$quiz['url'],$quiz['createur']);
-		
-		
 		$questions = $questionnaire->getQuestions($questionnaire->getId()); 
 		$nbQuestion = sizeof($questions);
 		

@@ -226,6 +226,23 @@ class User extends Model{
         }
         return $questionnaires;
     }
+	
+	
+    public static function getQuestionnaireById($id){
+        $sql = "SELECT * FROM QUESTIONNAIRE WHERE ID_QUESTIONNAIRE = '$id'";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+
+        if (!empty($data)){
+            $questionnaire = new Questionnaire($data->ID_QUESTIONNAIRE,$data->TITRE,$data->DESCRIPTION_QUESTIONNAIRE,
+                                          $data->DATE_OUVERTURE,$data->DATE_FERMETURE,$data->CONNEXION_REQUISE,$data->ETAT,$data->URL,$data->ID_CREATEUR);
+            return $questionnaire;
+        }
+        else{
+            return null;
+        }
+    }
+	
 }
 
 ?> 
