@@ -159,7 +159,29 @@ class Question extends Model{
             return null;
         }
     }*/
-    
+    public static function getReponses($idQuestion){
+        $sql = "SELECT REPONSE_DISPONIBLE.* 
+                FROM QUESTION, DISPOSER, REPONSE_DISPONIBLE 
+                WHERE QUESTION.ID_QUESTION = '$idQuestion'
+                AND QUESTION.ID_QUESTION = DISPOSER.ID_QUESTION
+                AND DISPOSER.ID_PROPOSITION = REPONSE_DISPONIBLE.ID_PROPOSITION";
+        $sth = parent::query($sql);
+        $data = $sth->fetch(PDO::FETCH_OBJ);
+        $reponses = Array();
+        while(!empty($data)){
+            array_push($reponses,Array(
+                    'id'=>$data->ID_PROPOSITION,
+                    'rep_id_prop'=>$data->REP_ID_PROPOSITION,
+                    'rep_id_prop2'=>$data->REP_ID_PROPOSITION2,
+                    'idUser'=>$data->ID_USER,
+                    'intitule'=>$data->INTITULE_PROPOSITION,
+                    'reponseCorrecte'=>$data->REPONSE_CORRECTE
+                )
+            );
+            $data=$sth->fetch(PDO::FETCH_OBJ);
+        }
+        return $reponses;
+    }
 }
 
 ?> 

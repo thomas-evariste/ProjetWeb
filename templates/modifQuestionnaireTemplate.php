@@ -8,7 +8,7 @@ echo $questionnaireId;
 
 
 <table id="questionList">
-
+<!--
     <thead id="questionListHead">
     
         <tr>
@@ -17,18 +17,27 @@ echo $questionnaireId;
             <th>INTITULE</th>
         </tr>
     </thead>
-
+-->
     <tbody id="questionListBody">
     
         <?php 
-        
+            $i = 0;
+
             foreach($questions as $question){
-                echo "<tr>   
-                <th>" . $question['id'] ." </th>
-                <th>" . $question['type']."</th>
-                <th>" . $question['intitule'] ."</th>
-                <th><form action=\"index.php?action=modifierQuestion&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$question['id']."'><input type='submit' value='Modifier'></form></th>
-                </tr>";
+                echo "<ul class=\"niveau2\">".  
+                //<th>" . $question['id'] ." </th>
+                //<th>" . $question['type']."</th>
+                "<li>" . $question['intitule'] ."</li>";
+                echo "<ul class=\"niveau3\">";
+                foreach($reponses[$i] as $reponse){
+                    echo "<li><a>". $reponse['intitule'] ."</a> <a>". $reponse['reponseCorrecte'] . "</a></li>";
+                }
+                echo "</ul>";
+                echo "</ul>";
+
+                //<th><form action=\"index.php?action=modifierQuestion&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$question['id']."'><input type='submit' value='Modifier'></form></th>
+
+                $i++;
             }
         
         ?>
@@ -41,27 +50,36 @@ echo $questionnaireId;
 
     var questionEnCours=false;
     var nbRep = 0;
+    var nbTag=0;
 
     function creerQuestion(selecter){
         removeElement("question");
         removeElement("selecter");
         addElement("Form","input","intitule","",{"type":"text","name":"intitule","class":"form-control input_user","placeholder":"Entrez intitulé"});
+        addElement("Form","input","bareme","",{"type":"number","name":"bareme","class":"form-control input_user","placeholder":"Entrez barème","min":0,"max":10, "step":0.1})
+        addElement("Form","div","tagList","Tags de la question :",{"class":"tagList"});
+        addElement("Form","div","answerList","Réponses possibles :",{"class":"answerList"});
+        addElement("Form","div","buttonList","",{"class":"buttonList"});
+        addElement("buttonList","button","addTag","Ajouter Tag",{"type":"button","onclick":"ajouterTag(\"tagList\");"});
         if(selecter.value!="QO"){
             if(selecter.value=="QCM"){
-                addElement("Form","button","addReponse","Ajouter Réponse",{"type":"button","onclick":"ajouterReponse(\"Form\");"});
+                addElement("buttonList","button","addReponse","Ajouter Réponse",{"type":"button","onclick":"ajouterReponse(\"answerList\");"});
             }
             if(selecter.value=="QCU"){
-                addElement("Form","button","addReponse","Ajouter Réponse",{"type":"button","onclick":"ajouterReponseQCU(\"Form\");"});
+                addElement("buttonList","button","addReponse","Ajouter Réponse",{"type":"button","onclick":"ajouterReponseQCU(\"answerList\");"});
             }
         }
-        addElement("Form","input","bareme","",{"type":"number","name":"bareme","class":"form-control input_user","placeholder":"Entrez barème","min":0,"max":10, "step":0.1})
-        $('#Form').append("<input id=\"submitButton\" type=\"button\" value=\"Send\">");
+        $('#buttonList').append("<input id=\"submitButton\" type=\"button\" value=\"Send\">");
         $('#submitButton').click(function(){
             validateQuestion();
         });
         questionEnCours=selecter.value;
     }
     
+    function ajouterTag(element){
+        addElement(element,"input","tag"+nbTag,"",{"type":"text","name":"tag"+nbTag,"class":"form-control input_user","placeholder":"Entrez tag"});
+        nbTag=nbTag+1;
+    }
 
     function isNumber(n) {
         return !isNaN(parseFloat(n)) && isFinite(n);
@@ -82,6 +100,12 @@ echo $questionnaireId;
         for (var i=0;i<nbRep;i++){
             if ($('#rep'+i).val().trim() == "" || $('#rep'+i).val().length >100){
                 $("#Error").append("<p>L'intitulé de la réponse " + (i+1) + " est vide ou excède 100 caractères</p>");
+                erreurPresente=true;
+            }
+        }
+        for (var i=0;i<nbTag;i++){
+            if ($('#tag'+i).val().trim() == "" || $('#tag'+i).val().length >50){
+                $("#Error").append("<p>L'intitulé du tag " + (i+1) + " est vide ou excède 50 caractères</p>");
                 erreurPresente=true;
             }
         }
@@ -108,6 +132,10 @@ echo $questionnaireId;
             dataAJAX['type_question']=questionEnCours;
             dataAJAX['idQuestionnaire']=<?=$questionnaireId?>;
             dataAJAX['nbRep']=nbRep;
+            dataAJAX['nbTag']=nbTag;
+            for (var j=0;j<nbTag;j++){
+                dataAJAX['tag'+j] = $('#tag'+j).val();
+            }
             if (questionEnCours!="QO"){
                 for (var i=0;i<nbRep;i++){
                     dataAJAX['rep'+i]=$('#rep'+i).val();
@@ -135,9 +163,13 @@ echo $questionnaireId;
                 url:'index.php?action=insertionQuestion&controller=Prof',
                 data:dataAJAX,
                 }).done(function(data){
+                    alert(data);
                     $('#Error').append("La question a été ajoutée avec succès !");
                     addToQuestionList("",""+questionEnCours,$('#intitule').val());
-                    removeElement("Form");
+                    removeChildren("Form");
+                    questionEnCours=false;
+                    nbRep=0;
+                    nbTag=0;
                 })
         }
         return false;
@@ -190,6 +222,13 @@ echo $questionnaireId;
         // Removes an element from the document
         var element = document.getElementById(elementId);
         element.parentNode.removeChild(element);
+    }
+
+    function removeChildren(elementId){
+        var element = document.getElementById(elementId);
+        while (element.firstChild) {
+            element.removeChild(element.firstChild);
+        }
     }
 
     $(document).ready(function() {
