@@ -111,6 +111,27 @@ class Question extends Model{
             return null;
         }
     }
+	
+	public static function gerReponses($idQuestion){
+        $sql = "SELECT * FROM REPONSE_DISPONIBLE WHERE ID_PROPOSITION IN (SELECT ID_PROPOSITION FROM DISPOSER WHERE ID_QUESTION = '$idQuestion' )";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+		
+        $reponses = array();
+        while(!empty($data)){
+            array_push($reponses,Array(
+                    'id_proposition'=>$data->ID_PROPOSITION,
+                    'rep_id_proposition'=>$data->REP_ID_PROPOSITION,
+                    'rep_id_proposition2'=>$data->REP_ID_PROPOSITION2,
+                    'id_user'=>$data->ID_USER,
+                    'intitule_proposition'=>$data->INTITULE_PROPOSITION,
+                    'reponse_correcte'=>$data->REPONSE_CORRECTE,
+                )
+            );
+            $data = $sth->fetch(PDO::FETCH_OBJ);
+        }
+		return $reponses;
+	}
 
 /* --- > TRANSFORMER EN GET INTITULE BY ID ?
 

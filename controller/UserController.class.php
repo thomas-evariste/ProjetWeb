@@ -106,17 +106,42 @@ class UserController extends AnonymousController{
 		$view = new UserView($this, 'quizReponseIneractifDebut',array('user' =>$this->currentUser)); 
 		$view->renderDebut(); 
 		$view->renderMilieu(); 
-		for($i = 0; $i < $nbQuestion - 1 ;$i++){
+		for($i = 0; $i < $nbQuestion  ;$i++){
 			$question = $questions[$i];
-			$view = new UserView($this, 'quizReponseIneractif',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i)); 
+			if($question['type']=='QCU'){
+				$type='radio';
+			}
+			else if($question['type']=='QCM'){
+				$type='checkbox';
+			}
+			$view = new UserView($this, 'quizReponseIneractifDebutDUneQuestion',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i)); 
+			$view->renderMilieu(); 
+			$view = new UserView($this, 'debutDeLigne',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i)); 
+			$view->renderMilieu(); 
+			
+			
+			$questionModel = new Question($question['id'],$question['type'],$question['intitule']);
+			$reponses = $questionModel->gerReponses($questionModel->getId()); 
+			$nbReponse = sizeof($reponses);
+			for($j = 0; $j < $nbReponse ;$j++){
+				$reponse = $reponses[$j];
+				$view = new UserView($this, 'quizReponseIneractifUneReponse',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i, 'reponse' => $reponse, 'numero_reponse' => $j, 'type' => $type)); 
+				$view->renderMilieu(); 
+				
+				//recuperer les reponse possible
+			}
+			
+			$view = new UserView($this, 'finDeLigne',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i)); 
+			$view->renderMilieu(); 
+			if($i<$nbQuestion-1){
+				$view = new UserView($this, 'quizReponseIneractifFinDUneQuestion',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i)); 
+			}
+			else{
+				$view = new UserView($this, 'quizReponseIneractifFin',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i));
+			}
 			$view->renderMilieu(); 
 		}
 		
-		$i = $nbQuestion - 1 ;
-		$question = $questions[$i];
-		
-		$view = new UserView($this, 'quizReponseIneractifFin',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i)); 
-		$view->renderMilieu(); 
 		$view->renderFin(); 
 	}
 	
