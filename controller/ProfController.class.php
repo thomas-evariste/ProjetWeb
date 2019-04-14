@@ -100,6 +100,7 @@ class ProfController extends UserController{
             Question::create($idQuestion,$type,$intitule);
         }*/
         $nbReponses = $request->read('nbRep');
+        $nbTag = $request->read('nbTag');
         $idQuestionnaire=$request->read('idQuestionnaire');
         $bareme=$request->read('bareme_question');
         print_r($_POST);
@@ -108,6 +109,13 @@ class ProfController extends UserController{
             $idQuestion = Question::createId();
             Question::create($idQuestion,$type,$intitule);
             Questionnaire::ajouterQuestion($idQuestion,$idQuestionnaire,$bareme);
+            for ($i=0;$i<$nbTag;$i++){
+                $tag = $request->read('tag'.$i);
+                if(!(Tag::tagExists($tag))){
+                    Tag::create($tag,'red');
+                }
+                Tag::linkTagToQuestion($tag,$idQuestion);
+            }
         }
         else{
             echo "ON EST UN TYPE QCM OU QCU !";
@@ -121,6 +129,13 @@ class ProfController extends UserController{
                 $repCorrecte = $request->read('repCorrecte'.$i);
                 Reponse::create($idRep,NULL,NULL,NULL,$rep,$repCorrecte);
                 Reponse::ajouterReponse($idRep,$idQuestion);
+            }
+            for ($i=0;$i<$nbTag;$i++){
+                $tag = $request->read('tag'.$i);
+                if(!(Tag::tagExists($tag))){
+                    Tag::create($tag,'red');
+                }
+                Tag::linkTagToQuestion($tag,$idQuestion);
             }
 
             /*
@@ -186,7 +201,11 @@ class ProfController extends UserController{
     public function modifierQuestionnaire($request){
         $idQuest = $request->read('questionnaireId');
         $questions = Prof::getQuestions($idQuest);
-        $view = new View($this,'modifQuestionnaire',array('user'=>$this->currentUser,'questionnaireId'=>$idQuest,'questions'=>$questions));
+        $reponses = Array();
+        foreach ($questions as $question){
+            array_push($reponses,Question::getReponses($question['id']));
+        }
+        $view = new View($this,'modifQuestionnaire',array('user'=>$this->currentUser,'questionnaireId'=>$idQuest,'questions'=>$questions,'reponses'=>$reponses));
         $view->render();
     }
 }

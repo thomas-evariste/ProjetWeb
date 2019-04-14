@@ -1,6 +1,6 @@
 <?php 
 
-class Reponse extends Model{
+class Tag extends Model{
 
     protected static $table_name='TAG';
     protected $libelle; //OBLIGATOIRE
@@ -22,13 +22,19 @@ class Reponse extends Model{
         }
     }
 */
+    public static function tagExists($libelle){
+        $sth = parent::query("SELECT COUNT(LIBELLE) as nb FROM TAG WHERE LIBELLE='$libelle'");
+        $data = $sth->fetch(PDO::FETCH_OBJ);
+        $compte = $data->nb;
+        return ($compte>0);
+    }
 
     public static function getList(){
         parent::query("SELECT * FROM TAG");
     }
 
     public static function create($libelle,$couleur){
-        $sth = parent::prepare("INSERT INTO REPONSE_DISPONIBLE VALUES(:libelle,:couleur)");
+        $sth = parent::prepare("INSERT INTO TAG VALUES(:libelle,:couleur)");
         $sth->bindParam(':libelle',$libelle);
         $sth->bindParam(':couleur',$couleur); 
         $sth->execute();
@@ -55,6 +61,18 @@ class Reponse extends Model{
     public function getCouleur(){
         return $this->couleur;
     }
+    /*
+    public static function addTag($libelle){
+        if (!tagExists($libelle)){
+            create($libelle,'red');
+        }
+    }*/
 
-
+    public static function linkTagToQuestion($libelle,$idQuestion){
+        $sth = parent::prepare("INSERT INTO ASSOCIER VALUES(:libelle,:idQuestion)");
+        $sth->bindParam(':libelle',$libelle);
+        $sth->bindParam(':idQuestion',$idQuestion); 
+        $sth->execute();
+    }
+}
 ?> 
