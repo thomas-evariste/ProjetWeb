@@ -246,17 +246,27 @@ class User extends Model{
 	public static function tenter($id_user,$args = array()){
 		foreach ($args as $tentative) {
 			if(ctype_digit($tentative)){
-				$sth = parent::prepare("INSERT INTO TENTER VALUES(:id_user,:id_proposition)");
+				$zero =0;
+				$sth = parent::prepare("INSERT INTO TENTER VALUES(:id_user,:id_proposition,:a_corriger,:juste)");
 				$sth->bindParam(':id_user',$id_user);
-				$sth->bindParam(':id_proposition',$tentative);  
+				$sth->bindParam(':id_proposition',$tentative);
+				$sth->bindParam(':a_corriger',$zero);  
+				
+				
+				$sql2 = "SELECT REPONSE_CORRECTE FROM REPONSE_DISPONIBLE WHERE ID_PROPOSITION = '$tentative'";
+				$sth2 = parent::query($sql2);
+				$data2= $sth2->fetch(PDO::FETCH_OBJ);
+				
+				$sth->bindParam(':juste',$data2->REPONSE_CORRECTE);  
 				$sth->execute();
 			}
 			else{
 				// gerer les question écrite
 			}
-			
 		}
 	}
+	
+	
 	
 }
 

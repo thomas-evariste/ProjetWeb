@@ -154,5 +154,13 @@ class UserController extends AnonymousController{
 		
 	}
 	
+	public function correctionAuto($request){
+		$note=0;
+		$bonus=0;
+		$malus=0;
+		
+		$regle = 0;
+	}
+	
 }
 ?>
