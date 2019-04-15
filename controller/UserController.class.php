@@ -127,15 +127,31 @@ class UserController extends AnonymousController{
 			$view = new UserView($this, 'finDeLigne',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i)); 
 			$view->renderMilieu(); 
 			if($i<$nbQuestion-1){
-				$view = new UserView($this, 'quizReponseIneractifFinDUneQuestion',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i)); 
+				$view = new UserView($this, 'quizReponseIneractifFinDUneQuestion',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i, 'type' => $type)); 
 			}
 			else{
-				$view = new UserView($this, 'quizReponseIneractifFin',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i));
+				$view = new UserView($this, 'quizReponseIneractifFin',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i, 'type' => $type));
 			}
 			$view->renderMilieu(); 
 		}
 		
 		$view->renderFin(); 
+	}
+	
+	public function tenter($request){
+		$currentUser = User::getById($_SESSION['id']);
+		$id_user = $currentUser->getId();
+		$args = array();
+		foreach($_POST as $key => $value){
+			if(strpos($key,"button")){
+				$args[] = $value;
+			}
+		}
+		$currentUser->tenter($id_user,$args);
+		$view = new UserView($this, 'home',array('user' =>$this->currentUser)); 
+		$view->render(); 
+		
+		
 	}
 	
 }

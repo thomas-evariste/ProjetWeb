@@ -243,6 +243,21 @@ class User extends Model{
         }
     }
 	
+	public static function tenter($id_user,$args = array()){
+		foreach ($args as $tentative) {
+			if(ctype_digit($tentative)){
+				$sth = parent::prepare("INSERT INTO TENTER VALUES(:id_user,:id_proposition)");
+				$sth->bindParam(':id_user',$id_user);
+				$sth->bindParam(':id_proposition',$tentative);  
+				$sth->execute();
+			}
+			else{
+				// gerer les question écrite
+			}
+			
+		}
+	}
+	
 }
 
 ?> 

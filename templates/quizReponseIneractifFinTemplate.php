@@ -6,13 +6,15 @@
                                 <span class="fa fa-send"></span>back</button>
                         </div>
                         <div class="col-md-6">
-								<a href="index.php?action=home&controller=user" class="btn btn-primary btn-sm btn-block">fin</a>
+							<!--	<a href="index.php?action=home&controller=user" class="btn btn-primary btn-sm btn-block">fin</a>  -->
+								<input class="btn btn-primary btn-sm btn-block" type="submit" value="fin">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+	</form>
 </div>
 
 
