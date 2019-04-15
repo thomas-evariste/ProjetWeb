@@ -32,9 +32,7 @@
           Quiz
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="index.php?action=repondreQuiz&controller=user">Repondre a un quiz test</a>
-          <a class="dropdown-item" href="index.php?action=arriveeQuiz&controller=user">Repondre a un quiz test2</a>
-          <a class="dropdown-item" href="index.php?action=choixQuiz&controller=user">Repondre a un nouveau quiz</a>
+          <a class="dropdown-item" href="index.php?action=voirQuestionnaires&controller=user">Repondre a un nouveau quiz</a>
         </div>
       </li>
     </ul>
