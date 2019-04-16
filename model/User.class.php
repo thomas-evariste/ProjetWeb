@@ -243,20 +243,73 @@ class User extends Model{
         }
     }
 	
-	public static function tenter($id_user,$args = array()){
+	public static function tenterQCM_QCU($id_user,$args = array()){
 		foreach ($args as $tentative) {
-			if(ctype_digit($tentative)){
-				$sth = parent::prepare("INSERT INTO TENTER VALUES(:id_user,:id_proposition)");
-				$sth->bindParam(':id_user',$id_user);
-				$sth->bindParam(':id_proposition',$tentative);  
-				$sth->execute();
-			}
-			else{
-				// gerer les question écrite
-			}
+			$zero =0;
+			$sth = parent::prepare("INSERT INTO TENTER VALUES(:id_user,:id_proposition,:a_corriger,:juste)");
+			$sth->bindParam(':id_user',$id_user);
+			$sth->bindParam(':id_proposition',$tentative);
+			$sth->bindParam(':a_corriger',$zero);  
+			
+			
+			$sql2 = "SELECT REPONSE_CORRECTE FROM REPONSE_DISPONIBLE WHERE ID_PROPOSITION = '$tentative'";
+			$sth2 = parent::query($sql2);
+			$data2= $sth2->fetch(PDO::FETCH_OBJ);
+			
+			$sth->bindParam(':juste',$data2->REPONSE_CORRECTE);  
+			$sth->execute();
 			
 		}
 	}
+	
+	public static function tenterQO($id_user,$args = array()){
+		$argsRep = array();
+		echo ' args: ';
+		print_r($args);
+		foreach ($args as $key => $tentative) {
+			$zero =0;
+			$id_reponse = REPONSE::createId();
+			$sth = parent::prepare("INSERT INTO TENTER VALUES(:id_reponse,:rep_id_reponse,:rep_id_reponse2,:id_user,:intitule_reponse,:reponse_correcte)");
+			$sth->bindParam(':id_reponse',$id_reponse);
+			$sth->bindParam(':id_user',$id_user);
+			$sth->bindParam(':intitule_reponse',$tentative);
+			$sth->bindParam(':reponse_correcte',$zero);
+			echo '<br>';
+			echo $id_reponse;
+			echo '<br>';
+			echo $id_user;
+			echo '<br>';
+			echo $tentative;
+			echo '<br>';
+			echo $zero;
+			echo '<br>';
+			$sth->execute();
+			echo'coucou';
+			$argsRep[$key]=$id_reponse;
+		}
+		echo ' argsRep: ';
+		print_r($argsRep);
+		foreach ($argsRep as $id_question => $id_reponse) {
+			$sth = parent::prepare("INSERT INTO TENTER VALUES(:id_question,:id_reponse)");
+			$sth->bindParam(':id_question',$id_question);
+			$sth->bindParam(':id_reponse',$id_reponse);
+			$sth->execute();
+		}
+		foreach ($argsRep as $id_reponse) {
+			$zero =0;
+			$un =0;
+			$sth = parent::prepare("INSERT INTO TENTER VALUES(:id_user,:id_proposition,:a_corriger,:juste)");
+			$sth->bindParam(':id_user',$id_user);
+			$sth->bindParam(':id_proposition',$id_reponse);
+			$sth->bindParam(':a_corriger',$un);  
+			
+			$sth->bindParam(':juste',$zero);  
+			$sth->execute();
+			
+		}
+	}
+	
+	
 	
 }
 
