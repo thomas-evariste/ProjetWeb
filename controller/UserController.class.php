@@ -107,21 +107,32 @@ class UserController extends AnonymousController{
 			else if($question['type']=='QCM'){
 				$type='checkbox';
 			}
+			else{
+				$type='ouverte';
+			}
+			
 			$view = new UserView($this, 'quizReponseIneractifDebutDUneQuestion',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i)); 
 			$view->renderMilieu(); 
 			$view = new UserView($this, 'debutDeLigne',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i)); 
 			$view->renderMilieu(); 
-			
-			
 			$questionModel = new Question($question['id'],$question['type'],$question['intitule']);
-			$reponses = $questionModel->gerReponses($questionModel->getId()); 
-			$nbReponse = sizeof($reponses);
-			for($j = 0; $j < $nbReponse ;$j++){
-				$reponse = $reponses[$j];
-				$view = new UserView($this, 'quizReponseIneractifUneReponse',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i, 'reponse' => $reponse, 'numero_reponse' => $j, 'type' => $type)); 
-				$view->renderMilieu(); 
+			
+			if($type!='ouverte'){
 				
-				//recuperer les reponse possible
+				$reponses = $questionModel->gerReponses($questionModel->getId()); 
+				$nbReponse = sizeof($reponses);
+				for($j = 0; $j < $nbReponse ;$j++){
+					$reponse = $reponses[$j];
+					$view = new UserView($this, 'quizReponseIneractifUneReponse',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i, 'reponse' => $reponse, 'numero_reponse' => $j, 'type' => $type)); 
+					$view->renderMilieu(); 
+				
+					//recuperer les reponse possible
+				}
+			}
+			
+			else{
+				$view = new UserView($this, 'quizReponseIneractifUneReponseOuverte',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i, 'type' => $type));
+				$view->renderMilieu();
 			}
 			
 			$view = new UserView($this, 'finDeLigne',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i)); 
@@ -142,12 +153,21 @@ class UserController extends AnonymousController{
 		$currentUser = User::getById($_SESSION['id']);
 		$id_user = $currentUser->getId();
 		$args = array();
+		$argsQO = array();
+		print_r($_POST);
 		foreach($_POST as $key => $value){
 			if(strpos($key,"button")){
 				$args[] = $value;
 			}
+			if(is_numeric($key)){
+				$argsQO[$key] = $value;
+			}
+			
 		}
-		$currentUser->tenter($id_user,$args);
+		echo '<br> argsQO: ';
+		print_r($argsQO);
+		$currentUser->tenterQO($id_user,$argsQO);
+		$currentUser->tenterQCM_QCU($id_user,$args);
 		$view = new UserView($this, 'home',array('user' =>$this->currentUser)); 
 		$view->render(); 
 		
