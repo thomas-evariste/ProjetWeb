@@ -268,9 +268,12 @@ class User extends Model{
 		print_r($args);
 		foreach ($args as $key => $tentative) {
 			$zero =0;
+			$null = null;
 			$id_reponse = REPONSE::createId();
-			$sth = parent::prepare("INSERT INTO TENTER VALUES(:id_reponse,:rep_id_reponse,:rep_id_reponse2,:id_user,:intitule_reponse,:reponse_correcte)");
+			$sth = parent::prepare("INSERT INTO REPONSE_DISPONIBLE VALUES(:id_reponse,:rep_id_reponse,:rep_id_reponse2,:id_user,:intitule_reponse,:reponse_correcte)");
 			$sth->bindParam(':id_reponse',$id_reponse);
+			$sth->bindParam(':rep_id_reponse',$null);
+			$sth->bindParam(':rep_id_reponse2',$null);
 			$sth->bindParam(':id_user',$id_user);
 			$sth->bindParam(':intitule_reponse',$tentative);
 			$sth->bindParam(':reponse_correcte',$zero);
@@ -290,7 +293,7 @@ class User extends Model{
 		echo ' argsRep: ';
 		print_r($argsRep);
 		foreach ($argsRep as $id_question => $id_reponse) {
-			$sth = parent::prepare("INSERT INTO TENTER VALUES(:id_question,:id_reponse)");
+			$sth = parent::prepare("INSERT INTO DISPOSER VALUES(:id_question,:id_reponse)");
 			$sth->bindParam(':id_question',$id_question);
 			$sth->bindParam(':id_reponse',$id_reponse);
 			$sth->execute();
@@ -302,7 +305,6 @@ class User extends Model{
 			$sth->bindParam(':id_user',$id_user);
 			$sth->bindParam(':id_proposition',$id_reponse);
 			$sth->bindParam(':a_corriger',$un);  
-			
 			$sth->bindParam(':juste',$zero);  
 			$sth->execute();
 			
