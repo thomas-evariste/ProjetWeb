@@ -300,7 +300,7 @@ class User extends Model{
 		}
 		foreach ($argsRep as $id_reponse) {
 			$zero =0;
-			$un =0;
+			$un =1;
 			$sth = parent::prepare("INSERT INTO TENTER VALUES(:id_user,:id_proposition,:a_corriger,:juste)");
 			$sth->bindParam(':id_user',$id_user);
 			$sth->bindParam(':id_proposition',$id_reponse);
