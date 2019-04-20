@@ -189,7 +189,26 @@ class Questionnaire extends Model{
             $data = $sth->fetch(PDO::FETCH_OBJ);
         }
 		return $questions;
-	}
+    }
+    
+    public static function getQuestionsOuvertes($idQuestionnaire){
+        $sql = "SELECT * FROM QUESTION 
+                WHERE ID_QUESTION IN (SELECT ID_QUESTION FROM CONTENIR WHERE ID_QUESTIONNAIRE = '$idQuestionnaire' )
+                AND TYPE='QO'";
+
+        $sth = parent::query($sql);
+        $data=$sth->fetch(PDO::FETCH_OBJ);
+        $questions=array();
+        while (!empty($data)){
+            array_push($questions,Array(
+                'id'=>$data->ID_QUESTION,
+                'type'=>$data->TYPE,
+                'intitule'=>$data->INTITULE_QUESTION,
+            ));
+            $data=$sth->fetch(PDO::FETCH_OBJ);
+        }
+        return $questions;
+    }
 
 }
 

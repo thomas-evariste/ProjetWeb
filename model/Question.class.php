@@ -182,6 +182,40 @@ class Question extends Model{
         }
         return $reponses;
     }
+
+    public static function getReponsesQO($idQuestion){
+        $sql = "SELECT rep.ID_PROPOSITION,rep.INTITULE_PROPOSITION, PARTICIPANT.ID_USER 
+                FROM REPONSE_DISPONIBLE as rep, TENTER, QUESTION, PARTICIPANT, DISPOSER
+                WHERE QUESTION.ID_QUESTION = '$idQuestion'
+                AND QUESTION.ID_QUESTION = DISPOSER.ID_QUESTION
+                AND DISPOSER.ID_PROPOSITION = rep.ID_PROPOSITION
+                AND PARTICIPANT.ID_USER = TENTER.ID_USER
+                AND TENTER.ID_PROPOSITION = rep.ID_PROPOSITION
+                AND TENTER.A_CORRIGER=1";
+        $sth = parent::query($sql);
+        $data = $sth->fetch(PDO::FETCH_OBJ);
+        $reponses = Array();
+        while (!empty($data)){
+            array_push($reponses, Array(
+                'id'=>$data->ID_PROPOSITION,
+                'intitule'=>$data->INTITULE_PROPOSITION,
+                'id_user'=>$data->ID_USER
+            ));
+            $data=$sth->fetch(PDO::FETCH_OBJ);
+        }
+        return $reponses;
+    }
+
+    public static function corriger($idReponse,$idUser,$answerValue){
+
+        $sql = "UPDATE TENTER
+                SET A_CORRIGER=0, JUSTE=$answerValue
+                WHERE ID_PROPOSITION = $idReponse
+                ";
+        $sth=parent::query($sql);
+        
+    }
+
 }
 
 ?> 

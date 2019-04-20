@@ -14,7 +14,7 @@
 								<td><input type="text" name="titre" class="form-control input_user" value="" placeholder="Titre* :"></td>
 							</tr>
 							<tr class="input-group mb-3">
-								<td><input type="password" name="description" class="form-control input_user" value="" placeholder="Description :"></td>
+								<td><input type="text" name="description" class="form-control input_user" value="" placeholder="Description :"></td>
 							</tr>
 							<tr class="input-group mb-2">
 								<td><input type="date" name="dateOuverture" class="form-control input_user" value="" placeholder="Date Ouverture :"></td>
