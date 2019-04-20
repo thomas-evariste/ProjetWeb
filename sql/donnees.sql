@@ -176,10 +176,10 @@ INSERT INTO `QUESTIONNAIRE` (`ID_QUESTIONNAIRE`, `TITRE`, `DESCRIPTION_QUESTIONN
 -- Contenu de la table `REGLE`
 --
 
-INSERT INTO `REGLE` (`ID_REGLE`, `TITRE_REGLE`, `DESCRIPTION_REGLE`) VALUES
-(1, 'Classique', '1 point pour bon 0 pour faux'),
-(2, 'Pénalité', '1 point pour bon -0.5 pour faux'),
-(3, 'Grosse pénalité', '1 point pour bon -1 pour faux');
+INSERT INTO `REGLE` (`ID_REGLE`, `BONUS`, `MALUS`) VALUES
+(1, 1, 0),
+(2, 2, 1),
+(3, 1, 1);
 
 --
 -- Contenu de la table `REPONSE_DISPONIBLE`
@@ -531,8 +531,7 @@ INSERT INTO `TAG` (`LIBELLE`, `COULEUR`) VALUES
 
 INSERT INTO `SPECIFIER` (`ID_QUESTIONNAIRE`, `ID_REGLE`) VALUES
 (1, 3),
-(2, 1),
-(2, 2);
+(2, 1);
 
 
 

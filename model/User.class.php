@@ -264,8 +264,6 @@ class User extends Model{
 	
 	public static function tenterQO($id_user,$args = array()){
 		$argsRep = array();
-		echo ' args: ';
-		print_r($args);
 		foreach ($args as $key => $tentative) {
 			$zero =0;
 			$null = null;
@@ -277,21 +275,9 @@ class User extends Model{
 			$sth->bindParam(':id_user',$id_user);
 			$sth->bindParam(':intitule_reponse',$tentative);
 			$sth->bindParam(':reponse_correcte',$zero);
-			echo '<br>';
-			echo $id_reponse;
-			echo '<br>';
-			echo $id_user;
-			echo '<br>';
-			echo $tentative;
-			echo '<br>';
-			echo $zero;
-			echo '<br>';
 			$sth->execute();
-			echo'coucou';
 			$argsRep[$key]=$id_reponse;
 		}
-		echo ' argsRep: ';
-		print_r($argsRep);
 		foreach ($argsRep as $id_question => $id_reponse) {
 			$sth = parent::prepare("INSERT INTO DISPOSER VALUES(:id_question,:id_reponse)");
 			$sth->bindParam(':id_question',$id_question);
@@ -311,7 +297,63 @@ class User extends Model{
 		}
 	}
 	
+	public static function getQuestionnaireByReponse($id_reponse){
+        $sql = "SELECT * FROM QUESTIONNAIRE WHERE ID_QUESTIONNAIRE = (SELECT ID_QUESTIONNAIRE FROM CONTENIR WHERE ID_QUESTION in (SELECT ID_QUESTION FROM DISPOSER WHERE ID_PROPOSITION = '$id_reponse') )";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+
+        if (!empty($data)){
+            $questionnaire = new Questionnaire($data->ID_QUESTIONNAIRE,$data->TITRE,$data->DESCRIPTION_QUESTIONNAIRE,
+                                          $data->DATE_OUVERTURE,$data->DATE_FERMETURE,$data->CONNEXION_REQUISE,$data->ETAT,$data->URL,$data->ID_CREATEUR);
+            return $questionnaire;
+        }
+        else{
+            return null;
+        }		
+	}
 	
+	public static function getRegle($id_questionnaire){
+        $sql = "SELECT * FROM REGLE WHERE ID_REGLE in (SELECT ID_REGLE FROM SPECIFIER WHERE ID_QUESTIONNAIRE = '$id_questionnaire' )";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+        if (!empty($data)){
+			return $data;
+		}
+		else{
+			$sql = "SELECT * FROM REGLE WHERE ID_REGLE = 1";
+			$sth = parent::query($sql);
+			$data= $sth->fetch(PDO::FETCH_OBJ);
+			return $data;
+		}
+	}
+	
+	public static function verifiReponse($tentative){
+        $sql = "SELECT REPONSE_CORRECTE FROM REPONSE_DISPONIBLE WHERE ID_PROPOSITION = '$tentative' ";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+        if (!empty($data)){
+			return $data->REPONSE_CORRECTE;
+		}
+		else{
+			return 0 ;
+		}
+	}
+	
+	public static function attribuNote($id_user,$id_questionnaire,$note){
+		$sth = parent::prepare("INSERT INTO NOTE VALUES(:id_user,:ens_id_user,:id_note,:id_questionnaire,:valeur)");
+		$sth->bindParam(':id_user',$id_user);
+		$id_note=Note::createId();
+		$sth->bindParam(':id_note',$id_note);
+		$sth->bindParam(':id_questionnaire',$id_questionnaire);
+		$sth->bindParam(':valeur',$note); 
+			
+		$sql2 = "SELECT ID_CREATEUR FROM QUESTIONNAIRE WHERE ID_QUESTIONNAIRE = '$id_questionnaire'";
+		$sth2 = parent::query($sql2);
+		$data2= $sth2->fetch(PDO::FETCH_OBJ);
+		$sth->bindParam(':ens_id_user',$data2->ID_CREATEUR);  
+			
+		$sth->execute();
+	}
 	
 }
 
