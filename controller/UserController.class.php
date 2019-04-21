@@ -205,8 +205,9 @@ class UserController extends AnonymousController{
 			}
 		}
 		
-		$bonus=0;
-		
+				 echo "<br>";
+		print_r($args);
+				 echo "<br>";
 		foreach ($args as $key => $tentative) {
 			if(strpos($key,"adio")){
 				$justesse = $currentUser->verifiReponse($tentative);
@@ -218,8 +219,8 @@ class UserController extends AnonymousController{
 				}
 			}
 			else{
-				echo "key : " . $key ."  tentative : " . $tentative;
-				echo "<br>";
+				 echo "key : " . $key ."  tentative : " . $tentative;
+				 echo "<br>";
 			}
 		}
 		$currentUser->attribuNote($_SESSION['id'],$id_questionnaire,$note);

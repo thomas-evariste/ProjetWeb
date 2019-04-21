@@ -30,11 +30,11 @@ SET FOREIGN_KEY_CHECKS=0;
 --
 
 INSERT INTO `ENSEIGNANT` (`ID_USER`, `LOGIN`, `PASSWORD`, `INTERNE`, `DESCRIPTION`, `NOM`, `PRENOM`, `MAIL`) VALUES
-(12, '', '', 0, 'Intervenant de MIBI', 'CORDONNIER', 'Jean-Loup', 'jl@c.com'),
-(21, '', '', 1, 'Professor of opérational research', 'LUJAK', 'Marin', 'bidule@mail.com'),
-(37, '', '', 0, 'Professeur de mathématiques', 'ATALI', 'Jack', 'test@mail.com'),
-(65, '', '', 1, 'Doctorant', 'NEWTON', 'Isaac', 'op@mail.com'),
-(115, '', '', 1, 'Professeur de mathématiques', 'COQUEREL', 'Quentin', 'qc@mail.com'),
+(4, '', '', 0, 'Intervenant de MIBI', 'CORDONNIER', 'Jean-Loup', 'jl@c.com'),
+(5, '', '', 1, 'Professor of opérational research', 'LUJAK', 'Marin', 'bidule@mail.com'),
+(6, '', '', 0, 'Professeur de mathématiques', 'ATALI', 'Jack', 'test@mail.com'),
+(7, '', '', 1, 'Doctorant', 'NEWTON', 'Isaac', 'op@mail.com'),
+(8, '', '', 1, 'Professeur de mathématiques', 'COQUEREL', 'Quentin', 'qc@mail.com'),
 (1, '', '', 1, 'Professeur de mathématiques', 'COQUEREL', 'Quentin', 'qc@mail.com'),
 (2, 'simon', 'azerty', 1, 'Super Prof', 'DROMER', 'Simon', 'simon.dromer@etu.imt-lille-douai.fr');
 
