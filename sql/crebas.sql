@@ -173,8 +173,8 @@ create table QUESTIONNAIRE
 create table REGLE
 (
    ID_REGLE             int not null,
-   TITRE_REGLE          varchar(50) not null,
-   DESCRIPTION_REGLE    varchar(200),
+   BONUS				int,
+   MALUS				int,
    primary key (ID_REGLE)
 );
 

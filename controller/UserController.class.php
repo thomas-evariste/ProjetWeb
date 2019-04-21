@@ -154,32 +154,77 @@ class UserController extends AnonymousController{
 		$id_user = $currentUser->getId();
 		$args = array();
 		$argsQO = array();
-		print_r($_POST);
+		$id_reponse=1;
 		foreach($_POST as $key => $value){
 			if(strpos($key,"button")){
-				$args[] = $value;
+				$args[$key] = $value;
+				$id_reponse=$value;
 			}
 			if(is_numeric($key)){
 				$argsQO[$key] = $value;
+				$id_reponse=$key;
 			}
 			
 		}
-		echo '<br> argsQO: ';
-		print_r($argsQO);
 		$currentUser->tenterQO($id_user,$argsQO);
 		$currentUser->tenterQCM_QCU($id_user,$args);
 		$view = new UserView($this, 'home',array('user' =>$this->currentUser)); 
 		$view->render(); 
 		
+		$questionnaire = $currentUser->getQuestionnaireByReponse($id_reponse);
+		
+		unset($_POST);
+		$_POST["questionnaire"] = $questionnaire;
+		$_POST["args"] = $args;
+		
+		$this->correctionAuto($request);
+		
 		
 	}
 	
 	public function correctionAuto($request){
+		$questionnaire = $_POST["questionnaire"];
+		$args = $_POST["args"];		
+		
+		$currentUser = User::getById($_SESSION['id']);
+		$id_questionnaire = $questionnaire->getId();
+		
 		$note=0;
 		$bonus=0;
 		$malus=0;
 		
-		$regle = 0;
+		$regle = $currentUser->getRegle($id_questionnaire);
+		
+		
+		foreach ($regle as $nom => $valeur) {
+			if($nom=='BONUS'){
+				$bonus=$valeur;
+			}
+			if($nom=='MALUS'){
+				$malus=$valeur;
+			}
+		}
+		
+				 echo "<br>";
+		print_r($args);
+				 echo "<br>";
+		foreach ($args as $key => $tentative) {
+			if(strpos($key,"adio")){
+				$justesse = $currentUser->verifiReponse($tentative);
+				if($justesse==1){
+					$note=$note+$bonus;
+				}
+				else{
+					$note=$note+$malus;
+				}
+			}
+			else{
+				 echo "key : " . $key ."  tentative : " . $tentative;
+				 echo "<br>";
+			}
+		}
+		$currentUser->attribuNote($_SESSION['id'],$id_questionnaire,$note);
+		
 	}
 	
 }

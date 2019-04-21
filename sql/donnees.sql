@@ -30,13 +30,12 @@ SET FOREIGN_KEY_CHECKS=0;
 --
 
 INSERT INTO `ENSEIGNANT` (`ID_USER`, `LOGIN`, `PASSWORD`, `INTERNE`, `DESCRIPTION`, `NOM`, `PRENOM`, `MAIL`) VALUES
-(12, '', '', 0, 'Intervenant de MIBI', 'CORDONNIER', 'Jean-Loup', 'jl@c.com'),
-(21, '', '', 1, 'Professor of opérational research', 'LUJAK', 'Marin', 'bidule@mail.com'),
-(37, '', '', 0, 'Professeur de mathématiques', 'ATALI', 'Jack', 'test@mail.com'),
-(65, '', '', 1, 'Doctorant', 'NEWTON', 'Isaac', 'op@mail.com'),
-(115, '', '', 1, 'Professeur de mathématiques', 'COQUEREL', 'Quentin', 'qc@mail.com'),
-(1, '', '', 1, 'Professeur de mathématiques', 'COQUEREL', 'Quentin', 'qc@mail.com'),
-(2, 'simon', 'azerty', 1, 'Super Prof', 'DROMER', 'Simon', 'simon.dromer@etu.imt-lille-douai.fr');
+(4, 'a', 'a', 0, 'Intervenant de MIBI', 'CORDONNIER', 'Jean-Loup', 'jl@c.com'),
+(5, 'b', 'b', 1, 'Professor of opérational research', 'LUJAK', 'Marin', 'bidule@mail.com'),
+(6, 'c', 'c', 0, 'Professeur de mathématiques', 'ATALI', 'Jack', 'test@mail.com'),
+(7, 'd', 'd', 1, 'Doctorant', 'NEWTON', 'Isaac', 'op@mail.com'),
+(8, 'e', 'e', 1, 'Professeur de mathématiques', 'COQUEREL', 'Quentin', 'qc@mail.com'),
+(1, 'f', 'f', 1, 'Professeur de mathématiques', 'COQUEREL', 'Quentin', 'qc@mail.com'),
 
 
 --
@@ -176,10 +175,10 @@ INSERT INTO `QUESTIONNAIRE` (`ID_QUESTIONNAIRE`, `TITRE`, `DESCRIPTION_QUESTIONN
 -- Contenu de la table `REGLE`
 --
 
-INSERT INTO `REGLE` (`ID_REGLE`, `TITRE_REGLE`, `DESCRIPTION_REGLE`) VALUES
-(1, 'Classique', '1 point pour bon 0 pour faux'),
-(2, 'Pénalité', '1 point pour bon -0.5 pour faux'),
-(3, 'Grosse pénalité', '1 point pour bon -1 pour faux');
+INSERT INTO `REGLE` (`ID_REGLE`, `BONUS`, `MALUS`) VALUES
+(1, 1, 0),
+(2, 2, 1),
+(3, 1, 1);
 
 --
 -- Contenu de la table `REPONSE_DISPONIBLE`
@@ -531,8 +530,7 @@ INSERT INTO `TAG` (`LIBELLE`, `COULEUR`) VALUES
 
 INSERT INTO `SPECIFIER` (`ID_QUESTIONNAIRE`, `ID_REGLE`) VALUES
 (1, 3),
-(2, 1),
-(2, 2);
+(2, 1);
 
 
 
