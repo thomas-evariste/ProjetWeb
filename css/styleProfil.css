@@ -20,6 +20,10 @@
 .table-user-information > tbody > tr > td {
     border-top: 0;
 }
-.toppad
-{margin-top:20px;
+.toppad{
+	margin-top:20px;
+}
+
+.card {
+	background-color: #F39C12;
 }

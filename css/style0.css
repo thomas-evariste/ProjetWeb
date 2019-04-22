@@ -3,3 +3,13 @@
 body{
 	 background: #00B8DE; 
 }
+
+
+.merci 
+{
+    margin: 10 px;
+	position: absolute;
+	top: 33%; 
+	transform: translate(0%, -50%);
+	overflow-x: auto;
+}
