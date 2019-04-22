@@ -260,9 +260,6 @@ alter table NOTE add constraint FK_CORRESPONDRE foreign key (ID_QUESTIONNAIRE)
 alter table NOTE add constraint FK_GERER foreign key (ENS_ID_USER)
       references ENSEIGNANT (ID_USER) on delete restrict on update cascade;
 
-alter table NOTE add constraint FK_OBTENIR foreign key (ID_USER)
-      references PARTICIPANT (ID_USER) on delete restrict on update cascade;
-
 alter table REPONSE_DISPONIBLE add constraint FK_APPAREILLER foreign key (REP_ID_PROPOSITION2)
       references REPONSE_DISPONIBLE (ID_PROPOSITION) on delete restrict on update cascade;
 
@@ -277,9 +274,6 @@ alter table SPECIFIER add constraint FK_SPECIFIER foreign key (ID_QUESTIONNAIRE)
 
 alter table SPECIFIER add constraint FK_SPECIFIER2 foreign key (ID_REGLE)
       references REGLE (ID_REGLE) on delete restrict on update cascade;
-
-alter table TENTER add constraint FK_TENTER foreign key (ID_USER)
-      references PARTICIPANT (ID_USER) on delete restrict on update cascade;
 
 alter table TENTER add constraint FK_TENTER2 foreign key (ID_PROPOSITION)
       references REPONSE_DISPONIBLE (ID_PROPOSITION) on delete restrict on update restrict;
