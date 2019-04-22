@@ -152,6 +152,7 @@ class UserController extends AnonymousController{
 		$args = array();
 		$argsQO = array();
 		$id_reponse=1;
+		print_r($_POST);
 		foreach($_POST as $key => $value){
 			if(strpos($key,"button")){
 				$args[$key] = $value;
@@ -163,6 +164,8 @@ class UserController extends AnonymousController{
 			}
 			
 		}
+		print_r($args);
+		print_r($argsQO);
 		$currentUser->tenterQO($id_user,$argsQO);
 		$currentUser->tenterQCM_QCU($id_user,$args);
 		$view = new UserView($this, 'merci',array('user' =>$this->currentUser)); 
@@ -181,7 +184,7 @@ class UserController extends AnonymousController{
 	
 	public function correctionAuto($request){
 		$questionnaire = $_POST["questionnaire"];
-		$args = $_POST["args"];		
+		$args = $_POST["args"];	
 		
 		$currentUser = User::getById($_SESSION['id']);
 		$id_questionnaire = $questionnaire->getId();
@@ -254,6 +257,9 @@ class UserController extends AnonymousController{
     public function voirResultatQuestionnaires($request){
 		$currentUser = User::getById($_SESSION['id']);
         $questionnaires = User::getQuestionnaireFait($currentUser->getId());
+		foreach($questionnaires as $key => $questionnaire){
+			$questionnaires[$key]['corrige']=Questionnaire::getCorrige($questionnaire['id']);
+		}
         $view = new UserView($this,'resultatQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
         $view->render();
     }

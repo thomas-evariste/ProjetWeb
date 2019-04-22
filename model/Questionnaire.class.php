@@ -234,6 +234,24 @@ class Questionnaire extends Model{
         }
         return $questions;
     }
+	
+	public static function getCorrige($idQuestionnaire){
+		
+        $sql = "SELECT * FROM TENTER 
+                WHERE (A_CORRIGER = 1) AND (ID_PROPOSITION IN (SELECT ID_QUESTION FROM CONTENIR WHERE ID_QUESTIONNAIRE = '$idQuestionnaire' ))";
+
+        $sth = parent::query($sql);
+        $data=$sth->fetch(PDO::FETCH_OBJ);
+		
+		if(!empty($data)){
+			print_r($data);
+			return 1;
+		}
+		else{
+			return 0;
+		}
+		
+	}
 }
 
 ?> 
