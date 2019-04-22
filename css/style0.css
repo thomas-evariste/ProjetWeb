@@ -4,6 +4,14 @@ body{
 	 background: #00B8DE; 
 }
 
+.ReponseCorrecte{
+    color:green !important;
+}
+
+.ReponseFausse{
+    color:red !important;
+}
+
 
 .merci 
 {

@@ -52,7 +52,7 @@ class Reponse extends Model{
     }
 
     public function __construct(){
-        
+
     }
 /*
     public function __construct($id,$proposition,$aCorriger,$idUser,$intitule,$reponseCorrecte){
@@ -107,6 +107,16 @@ class Reponse extends Model{
     public static function ajouterReponse($idReponse,$idQuestion){
         $sth = parent::prepare("INSERT INTO DISPOSER VALUES(:idQuestion,:idReponse)");
         $sth->bindParam(':idQuestion',$idQuestion);
+        $sth->bindParam(':idReponse',$idReponse);
+        $sth->execute();
+    }
+
+    public static function supprimerReponse($idReponse){
+        $sth = parent::prepare("DELETE FROM DISPOSER WHERE ID_PROPOSITION=:idReponse");
+        $sth->bindParam(':idReponse',$idReponse);
+        $sth->execute();
+        
+        $sth = parent::prepare("DELETE FROM REPONSE_DISPONIBLE WHERE ID_PROPOSITION=:idReponse");
         $sth->bindParam(':idReponse',$idReponse);
         $sth->execute();
     }

@@ -242,6 +242,28 @@ class ProfController extends UserController{
         $answerValue=$request->read('answerValue');
         Question::corriger($idReponse,$idUser,$answerValue);
     }
+
+    public function suppressionQuestion($request){
+        $idQuestion= $request->read('idQuestion');
+        Question::supprimer($idQuestion);
+    }
+
+    public function suppressionReponse($request){
+        $idReponse = $request->read('idReponse');
+        Reponse::supprimerReponse($idReponse);
+    }
+
+    public function modifierQuestion($request){
+        $idQuestion = $request->read('idQuestion');
+        $intituleQuestion = $request->read('intituleQuestion');
+        Question::modify("INTITULE_QUESTION", $intituleQuestion,$idQuestion);
+    }
+
+    public function modifierReponse($request){
+        $idReponse=$request->read('idReponse');
+        $intituleReponse=$request->read('intituleReponse');
+        Reponse::modify("INTITULE_PROPOSITION",$intituleReponse,$idReponse);
+    }
 	
 	
     public function voirQuestionnaires($request){
