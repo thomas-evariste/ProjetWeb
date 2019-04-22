@@ -1,14 +1,13 @@
-
 <table>
 
     <thead>
     
         <tr>
-            <th>TITRE</th>
-            <th>DESCRIPTION</th>
-            <th>ETAT</th>
-            <th>CREATEUR</th>
-            <th>NOTE</th> 
+            <th>Classement</th>
+            <th>Pseudo</th>
+            <th>Prenom</th>
+            <th>Nom</th>
+            <th>Note</th> 
         </tr>
     </thead>
 
@@ -23,8 +22,7 @@
                 <th>" . $questionnaire['etat'] ."</th>
                 <th>" . $questionnaire['createur'] ."</th> 
                 <th>" . $questionnaire['note'] ."</th> 
-				<th><form action=\"index.php?action=repondreQuiz&controller=user\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$questionnaire['id']."'><input type='submit' value='Repondre'></form></th>
-                </tr>";
+                 </tr>";
             }
         
         ?>
@@ -32,7 +30,3 @@
     </tbody>
 
 </table>
-
-
-
-
