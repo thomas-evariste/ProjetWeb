@@ -37,7 +37,7 @@
       <li class="nav-item">
         <a class="nav-link" href="index.php?action=deconnexion&controller=prof">
           <i class="fa fa-sign-out-alt"></i>
-          Deconecter
+          Déconnexion
         </a>
       </li>
       <li class="nav-item dropdown">
