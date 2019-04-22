@@ -15,13 +15,14 @@
     
         <?php 
         
-            foreach($questionnaires as $questionnaire){
+            foreach($resultats as $resultat){
+				
                 echo "<tr>   
-                <th>" . $questionnaire['titre'] ." </th>
-                <th>" . $questionnaire['description']."</th>
-                <th>" . $questionnaire['etat'] ."</th>
-                <th>" . $questionnaire['createur'] ."</th> 
-                <th>" . $questionnaire['note'] ."</th> 
+                <th>" . $resultat['classement'] ." </th>
+                <th>" . $resultat['login']."</th>
+                <th>" . $resultat['prenom'] ."</th>
+                <th>" . $resultat['nom'] ."</th> 
+                <th>" . $resultat['valeur'] ."</th> 
                  </tr>";
             }
         

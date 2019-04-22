@@ -254,10 +254,42 @@ class UserController extends AnonymousController{
     public function voirResultatQuestionnaires($request){
 		$currentUser = User::getById($_SESSION['id']);
         $questionnaires = User::getQuestionnaireFait($currentUser->getId());
-        $view = new UserView($this,'ResultatQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+        $view = new UserView($this,'resultatQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
         $view->render();
     }
 	
+	public function classementQuiz($request){
+		$currentUser = User::getById($_SESSION['id']);
+		$id_questionnaire = $_POST['questionnaireId'];
+		$resultats = NOTE::getResultats($id_questionnaire);
+		$nbResultats = count($resultats);
+		
+		$permut =true;
+		while($permut){
+			$permut =false;
+			for($i=0;$i<$nbResultats-1;$i++){
+				if($resultats[$i]['valeur']>$resultats[$i+1]['valeur']){
+					$permut = true;
+					$int = resultats[$i]['valeur'];
+					$resultats[$i]['valeur']=$resultats[$i+1]['valeur'];
+					$resultats[$i+1]['valeur'] = $int;
+				}
+			}
+		}
+		
+		for($i=0;$i<$nbResultats;$i++){
+			$resultats[$i]['classement']=$i+1;
+			if(!array_key_exists ('nom',$resultats[$i])){
+				$resultats[$i]['nom']="";
+			}
+			if(!array_key_exists ('prenom',$resultats[$i])){
+				$resultats[$i]['prenom']="";
+			}
+		}
+		
+        $view = new UserView($this,'classementQuestionnaires',array('user'=>$this->currentUser, 'resultats'=>$resultats));
+        $view->render();
+    }
 	
 }
 ?>
