@@ -16,23 +16,29 @@
 							<tr class="input-group mb-3">
 								<td><input type="text" name="description" class="form-control input_user" value="" placeholder="Description :"></td>
 							</tr>
-							<tr class="input-group mb-2">
+							<tr class="input-group mb-3">
 								<td><input type="date" name="dateOuverture" class="form-control input_user" value="" placeholder="Date Ouverture :"></td>
 							</tr>
 							<tr class="input-group mb-3">
 								<td><input type="date" name="dateFermeture" class="form-control input_user" value="" placeholder="Date Fermeture :"></td>
 							</tr>  
+							<tr class="input-group mb-3">
+								<td><input type="number" name="bonus" class="form-control input_user" value="1" placeholder="points pour bonne réponse:"></td>
+							</tr>
+							<tr class="input-group mb-3">
+								<td><input type="number" name="malus" class="form-control input_user" value="0" placeholder="points pour mauvaise réponse:"></td>
+							</tr>  
 
-							<tr class="input-group mb-2">
+							<tr class="input-group mb-3">
 								<td>Disponibilité: 
                                     <select name="etat" class="form-control input_user" placeholder="Prenom :">
-                                        <option value = "Disponible">Disponible</option>
-                                        <option value = "Ferme">Fermé</option>
+                                        <option value = "Public">Public</option>
+                                        <option value = "Prive">Privé</option>
                                     </select>
 
                                 </td>
 							</tr>
-							<tr class="input-group mb-2">
+							<tr class="input-group mb-3">
                                 
 								<td class="interne_quest">Connexion Requise:  <input type='hidden' value='0' name='connexionRequise'> <INPUT type="checkbox" name="connexionRequise" class="form-control interne_btn " value="1" ></td>
 							</tr>

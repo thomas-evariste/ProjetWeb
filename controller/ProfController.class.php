@@ -169,6 +169,8 @@ class ProfController extends UserController{
         $description = $request->read('description');
         $dateOuverture = $request->read('dateOuverture');
         $dateFermeture = $request->read('dateFermeture');
+        $bonus = $request->read('bonus');
+        $malus = $request->read('malus');
         $etat = $request->read('etat');
         $connexionRequise = $request->read('connexionRequise');
         if ($dateOuverture==''){
@@ -176,6 +178,12 @@ class ProfController extends UserController{
         }
         if ($dateFermeture==''){
             $dateFermeture=NULL;
+        }
+        if ($bonus==''){
+            $bonus=1;
+        }
+        if ($malus==''){
+            $malus=0;
         }
 
         if (trim($titre)=='' || strlen($titre)>50){
@@ -187,6 +195,7 @@ class ProfController extends UserController{
         else{
             $idQuestionnaire = Questionnaire::createId();
             Questionnaire::create($idQuestionnaire,$titre,$description,$dateOuverture,$dateFermeture,$connexionRequise,$etat,NULL,$this->currentUser->getId());
+			Regle::setRegle($idQuestionnaire,$bonus,$malus);
             $view = new View($this,'questionnairevalide',array('user'=>$this->currentUser));
             $view->render();
         }
