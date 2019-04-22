@@ -7,8 +7,8 @@
                 <div class="bg" style="background-image: url('css/images/developement_durable.jpg');"></div>
                 <div class="caption">
                     <div class="text">
-                        <h3>Developement Durable</h3>
-                        <p>répondre aux besoins du présent sans compromettre la capacité de satisfaire ceux des générations futures</p>                
+                        <h3>Dévelopement Durable</h3>
+                        <p>Un développement qui répond aux besoins du présent sans compromettre la capacité des générations futures à répondre aux leurs</p>                
                     </div>                
                 </div>                
             </div>
@@ -19,7 +19,7 @@
                 <div class="caption">
                     <div class="text">
                         <h3>Histoire</h3>
-                        <p>l’étude et l'écriture des faits et des événements passés </p>                      
+                        <p>L’étude et l'écriture des faits et des événements passés </p>                      
                     </div>                
                 </div>                
             </div>
@@ -29,8 +29,8 @@
                 <div class="bg" style="background-image: url('css/images/prog.jpg');"></div>
                 <div class="caption">
                     <div class="text">
-                        <h3>Programation</h3>
-                        <p>l'ensemble des activités qui permettent l'écriture des programmes informatiques </p>                   
+                        <h3>Informatique</h3>
+                        <p>Science qui traite automatiquement l'information grâce à des programmes établis sur des ordinateurs</p>                   
                     </div>                
                 </div>                
             </div>
@@ -40,8 +40,8 @@
                 <div class="bg" style="background-image: url('css/images/literature.jpg');"></div>
                 <div class="caption">
                     <div class="text">
-                        <h3>Litterature</h3>
-                        <p>exploitation des ressources de la langue pour multiplier les effets sur le destinataire</p>                  
+                        <h3>Littérature</h3>
+                        <p>Exploitation des ressources de la langue pour multiplier les effets sur le destinataire</p>                  
                     </div>                
                 </div>                
             </div>
@@ -51,7 +51,7 @@
                 <div class="bg" style="background-image: url('css/images/energie.jpg');"></div>
                 <div class="caption">
                     <div class="text">
-                        <h3>Energetique</h3>
+                        <h3>Energétique</h3>
                         <p>Ce qui met le monde en mouvement</p>                    
                     </div>                
                 </div>                
@@ -63,7 +63,7 @@
                 <div class="caption">
                     <div class="text">
                         <h3>Sport</h3>
-                        <p> ensemble d'exercices physiques se pratiquant sous forme de jeux individuels ou collectifs </p>                    
+                        <p>Ensemble d'exercices physiques se pratiquant sous forme de jeux individuels ou collectifs </p>                    
                     </div>                
                 </div>                
             </div>
@@ -74,7 +74,7 @@
                 <div class="caption">
                     <div class="text">
                         <h3>Nature</h3>
-                        <p>l'ensemble des systèmes et des phénomènes naturels </p>                
+                        <p>L'ensemble des systèmes et des phénomènes naturels </p>                
                     </div>                
                 </div>                
             </div>
@@ -84,8 +84,8 @@
                 <div class="bg" style="background-image: url('css/images/geographie.jpg');"></div>
                 <div class="caption">
                     <div class="text">
-                        <h3>Geographie</h3>
-                        <p>la description de la Terre et en particulier l'étude des phénomènes physiques, biologiques et humains qui se produisent sur le globe terrestre</p>                     
+                        <h3>Géographie</h3>
+                        <p>La description de la Terre et en particulier l'étude des phénomènes physiques, biologiques et humains qui se produisent sur le globe terrestre</p>                     
                     </div>                
                 </div>                
             </div>
@@ -95,7 +95,7 @@
                 <div class="bg" style="background-image: url('css/images/langues.jpg');"></div>
                 <div class="caption">
                     <div class="text">
-                        <h3>Langue etrangere</h3>
+                        <h3>Langues étrangères</h3>
                         <p>Apprenez une nouvelle langue </p>                     
                     </div>
                 </div>                
@@ -117,8 +117,8 @@
                 <div class="bg" style="background-image: url('css/images/reseau.jpg');"></div>
                 <div class="caption">
                     <div class="text">
-                        <h3>Telecom et reseau</h3>
-                        <p>ensemble d'arcs et de nœuds permettant aux messages d’être transmis d'un bout à l'autre du réseau</p>                    
+                        <h3>Télécom et réseau</h3>
+                        <p>Ensemble d'arcs et de nœuds permettant aux messages d’être transmis d'un bout à l'autre du réseau</p>                    
                     </div>
                 </div>                
             </div>
@@ -128,7 +128,7 @@
                 <div class="bg" style="background-image: url('css/images/math.jpg');"></div>
                 <div class="caption">
                     <div class="text">
-                        <h3>Mathematiques</h3>
+                        <h3>Mathématiques</h3>
                         <p>L’ensemble des connaissances abstraites résultant de raisonnements logiques</p>                   
                     </div>
                 </div>                

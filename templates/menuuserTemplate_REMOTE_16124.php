@@ -33,7 +33,6 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="index.php?action=voirQuestionnaires&controller=user">Répondre à un nouveau quiz</a>
-          <a class="dropdown-item" href="index.php?action=voirResultatQuestionnaires&controller=user">Voir résultats</a>
         </div>
       </li>
     </ul>

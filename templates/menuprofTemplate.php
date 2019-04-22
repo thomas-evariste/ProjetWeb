@@ -37,7 +37,7 @@
       <li class="nav-item">
         <a class="nav-link" href="index.php?action=deconnexion&controller=prof">
           <i class="fa fa-sign-out-alt"></i>
-          Deconecter
+          Déconnexion
         </a>
       </li>
       <li class="nav-item dropdown">
@@ -52,11 +52,11 @@
         </a>
         <a class="dropdown-item" href="index.php?action=creerQuestionnaire&controller=prof">
           <i class="fa fa-plus-circle"></i>
-          Créer questionnaire
+          Créer un questionnaire
         </a>
         <a class="dropdown-item" href="index.php?action=creerQuestion&controller=prof">
           <i class="fa fa-plus-circle"></i>
-          Créer question
+          Créer une question
         </a>
         </div>
       </li>
