@@ -96,7 +96,7 @@ class UserController extends AnonymousController{
 		
 		//echo $nbQuestion;
 		
-		$view = new UserView($this, 'quizReponseIneractifDebut',array('user' =>$this->currentUser)); 
+		$view = new UserView($this, 'quizReponseInteractifDebut',array('user' =>$this->currentUser)); 
 		$view->renderDebut(); 
 		$view->renderMilieu(); 
 		for($i = 0; $i < $nbQuestion  ;$i++){
@@ -111,7 +111,7 @@ class UserController extends AnonymousController{
 				$type='ouverte';
 			}
 			
-			$view = new UserView($this, 'quizReponseIneractifDebutDUneQuestion',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i)); 
+			$view = new UserView($this, 'quizReponseInteractifDebutDUneQuestion',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i)); 
 			$view->renderMilieu(); 
 			$view = new UserView($this, 'debutDeLigne',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i)); 
 			$view->renderMilieu(); 
@@ -123,7 +123,7 @@ class UserController extends AnonymousController{
 				$nbReponse = sizeof($reponses);
 				for($j = 0; $j < $nbReponse ;$j++){
 					$reponse = $reponses[$j];
-					$view = new UserView($this, 'quizReponseIneractifUneReponse',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i, 'reponse' => $reponse, 'numero_reponse' => $j, 'type' => $type)); 
+					$view = new UserView($this, 'quizReponseInteractifUneReponse',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i, 'reponse' => $reponse, 'numero_reponse' => $j, 'type' => $type)); 
 					$view->renderMilieu(); 
 				
 					//recuperer les reponse possible
@@ -131,17 +131,17 @@ class UserController extends AnonymousController{
 			}
 			
 			else{
-				$view = new UserView($this, 'quizReponseIneractifUneReponseOuverte',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i, 'type' => $type));
+				$view = new UserView($this, 'quizReponseInteractifUneReponseOuverte',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i, 'type' => $type));
 				$view->renderMilieu();
 			}
 			
 			$view = new UserView($this, 'finDeLigne',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i)); 
 			$view->renderMilieu(); 
 			if($i<$nbQuestion-1){
-				$view = new UserView($this, 'quizReponseIneractifFinDUneQuestion',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i, 'type' => $type)); 
+				$view = new UserView($this, 'quizReponseInteractifFinDUneQuestion',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i, 'type' => $type)); 
 			}
 			else{
-				$view = new UserView($this, 'quizReponseIneractifFin',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i, 'type' => $type));
+				$view = new UserView($this, 'quizReponseInteractifFin',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i, 'type' => $type));
 			}
 			$view->renderMilieu(); 
 		}
