@@ -23,7 +23,7 @@
       <li class="nav-item">
         <a class="nav-link" href="index.php?action=deconnexion&controller=user">
           <i class="fa fa-sign-out-alt"></i>
-          Déconnexion
+          Deconecter
         </a>
       </li>
       <li class="nav-item dropdown">
@@ -32,7 +32,7 @@
           Quiz
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="index.php?action=voirQuestionnaires&controller=user">Répondre à un nouveau quiz</a>
+          <a class="dropdown-item" href="index.php?action=voirQuestionnaires&controller=user">Repondre a un nouveau quiz</a>
           <a class="dropdown-item" href="index.php?action=voirResultatQuestionnaires&controller=user">Voir résultats</a>
         </div>
       </li>

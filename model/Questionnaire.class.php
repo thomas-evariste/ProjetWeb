@@ -234,7 +234,6 @@ class Questionnaire extends Model{
         }
         return $questions;
     }
-
 }
 
 ?> 
