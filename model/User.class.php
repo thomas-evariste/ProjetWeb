@@ -327,7 +327,7 @@ class User extends Model{
 		}
 	}
 	
-	public static function verifiReponse($tentative){
+	public static function verifiReponseQCU($tentative){
         $sql = "SELECT REPONSE_CORRECTE FROM REPONSE_DISPONIBLE WHERE ID_PROPOSITION = '$tentative' ";
         $sth = parent::query($sql);
         $data= $sth->fetch(PDO::FETCH_OBJ);
@@ -337,6 +337,34 @@ class User extends Model{
 		else{
 			return 0 ;
 		}
+	}
+	
+	public static function verifiReponseQCM($argsTentative){
+		$id_reponse = $argsTentative[0];
+		
+		$sql0 = "SELECT ID_QUESTION FROM DISPOSER WHERE ID_PROPOSITION = '$id_reponse'";
+        $sth0 = parent::query($sql0);
+        $data0= $sth0->fetch(PDO::FETCH_OBJ);
+		$id_question = $data0->ID_QUESTION;
+		
+        $sql = "SELECT ID_PROPOSITION FROM REPONSE_DISPONIBLE WHERE (REPONSE_CORRECTE = 1) AND (ID_PROPOSITION IN (SELECT ID_PROPOSITION FROM DISPOSER WHERE ID_QUESTION = '$id_question')) ";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+		$bonneReponce=array();
+        while (!empty($data)){
+			$bonneReponce[] = $data->ID_PROPOSITION;
+			$data= $sth->fetch(PDO::FETCH_OBJ);
+		}
+		foreach($argsTentative as $tentative){
+			if(!in_array($tentative,$bonneReponce)){
+				print_r($bonneReponce);
+				echo '<br> $tentative : '. $tentative . '<br>';
+				return 0;
+			}
+		}
+		$nbBonneReponse = floatval(count($bonneReponce));
+		$nbTentative = floatval(count($argsTentative));
+		return $nbTentative/$nbBonneReponse;
 	}
 	
 	public static function attribuNote($id_user,$id_questionnaire,$note){

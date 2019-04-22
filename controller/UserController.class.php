@@ -205,12 +205,11 @@ class UserController extends AnonymousController{
 			}
 		}
 		
-				 echo "<br>";
-		print_r($args);
-				 echo "<br>";
+		$argsQCM = array();
+		$numQestionQCM = array();
 		foreach ($args as $key => $tentative) {
 			if(strpos($key,"adio")){
-				$justesse = $currentUser->verifiReponse($tentative);
+				$justesse = $currentUser->verifiReponseQCU($tentative);
 				if($justesse==1){
 					$note=$note+$bonus;
 				}
@@ -219,10 +218,38 @@ class UserController extends AnonymousController{
 				}
 			}
 			else{
-				 echo "key : " . $key ."  tentative : " . $tentative;
-				 echo "<br>";
+				$q = substr($key, -3, 1);
+				$r = substr($key, -1, 1);
+				$newKey = intval($q) * 1000 + intval($r);
+				$argsQCM[$newKey]=$tentative;
+				
+				if(!in_array($q,$numQestionQCM)){
+					$numQestionQCM[]=$q;
+				}
 			}
 		}
+		
+		foreach ($numQestionQCM as $q) {
+			$argsTentative = array();
+			foreach ($argsQCM as $key => $tentative){
+				if(intval($key/1000)==$q){
+					$argsTentative[] = $tentative;
+				}
+			}
+			$justesse =0;
+			if(!empty($argsTentative)){
+				$justesse = $currentUser->verifiReponseQCM($argsTentative,$id_questionnaire);
+				echo 'justesse : ' . $justesse . '<br>';
+				if($justesse==0){
+					$note=$note+$malus;
+				}
+				else{
+					echo 'pt :' . $bonus*$justesse . '<br>';
+					$note=$note+$bonus*$justesse;
+				}
+			}
+		}
+		echo 'note : ' . $note;
 		$currentUser->attribuNote($_SESSION['id'],$id_questionnaire,$note);
 		
 	}
