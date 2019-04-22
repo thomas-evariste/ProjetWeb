@@ -19,10 +19,10 @@
 						</tr>
 -->
 						<tr class="input-group mb-3">
-							<td><input type="password" name="password" class="form-control input_user" value="" placeholder="Mot de passe :"></td>
+							<td><input type="password" name="password" class="form-control input_user" value="" placeholder="Nouveau mot de passe :"></td>
 						</tr>
                         <tr class="input-group mb-3">
-							<td><input type="password" name="passwordConf" class="form-control input_user" value="" placeholder="Confirmez le nouveau mot de passe :"></td>
+							<td><input type="password" name="passwordConf" class="form-control input_user" value="" placeholder="Confirmez le nouveau mdp :"></td>
 						</tr>
                         <tr class="input-group mb-2">
 							<td><input type="text" name="prenom" class="form-control input_pass" value="" placeholder="Prenom :"></td>
@@ -34,7 +34,7 @@
 							<td><input type="text" name="mail" class="form-control input_user" value="" placeholder="Mail :"></td>
 						</tr>
                         <tr class="input-group mb-2">
-							<td><input type="checkbox" name="interne" class="form-control input_pass" value="yes" placeholder="Interne :"></td>
+							<td class="interne_quest">Interne:  <input type='hidden' value='0' name='interne'><INPUT type="checkbox" name="interne" class="form-control interne_btn " value="1" </td>
 						</tr>
 						<tr class="input-group mb-2">
 							<td><input type="text" name="description" class="form-control input_pass" value="" placeholder="Description :"></td>
