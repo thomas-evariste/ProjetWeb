@@ -197,7 +197,7 @@ class ProfController extends UserController{
         $view = new ProfView($this,'visuquestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
         $view->render();
     }
-
+/*
     public function modifierQuestionnaire($request){
         $idQuest = $request->read('questionnaireId');
         $questions = Prof::getQuestions($idQuest);
@@ -206,6 +206,13 @@ class ProfController extends UserController{
             array_push($reponses,Question::getReponses($question['id']));
         }
         $view = new View($this,'modifQuestionnaire',array('user'=>$this->currentUser,'questionnaireId'=>$idQuest,'questions'=>$questions,'reponses'=>$reponses));
+        $view->render();
+    }
+*/
+    public function modifierQuestionnaire($request){
+        $idQuest = $request->read('questionnaireId');
+        $questionnaire = Questionnaire::getById($idQuest);
+        $view = new View($this,'modifQuestionnaire',array('user'=>$this->currentUser,'questionnaire'=>$questionnaire));
         $view->render();
     }
 

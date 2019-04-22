@@ -1,11 +1,5 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
-<?php 
-
-echo $questionnaireId; 
-
-?>
-
 
 <table id="questionList">
 <!--
@@ -21,23 +15,21 @@ echo $questionnaireId;
     <tbody id="questionListBody">
     
         <?php 
-            $i = 0;
 
-            foreach($questions as $question){
+            foreach($questionnaire->getQuestions() as $question){
                 echo "<ul class=\"niveau2\">".  
                 //<th>" . $question['id'] ." </th>
                 //<th>" . $question['type']."</th>
-                "<li>" . $question['intitule'] ."</li>";
+                "<li>" . $question->getIntitule() ."</li>";
                 echo "<ul class=\"niveau3\">";
-                foreach($reponses[$i] as $reponse){
-                    echo "<li><a>". $reponse['intitule'] ."</a> <a>". $reponse['reponseCorrecte'] . "</a></li>";
+                foreach($question->getReponses() as $reponse){
+                    echo "<li><a class=\"" .($reponse->getReponseCorrecte() ? "ReponseCorrecte":"ReponseFausse") ."\">". $reponse->getIntitule() ."</a></li>";
                 }
                 echo "</ul>";
                 echo "</ul>";
 
                 //<th><form action=\"index.php?action=modifierQuestion&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$question['id']."'><input type='submit' value='Modifier'></form></th>
 
-                $i++;
             }
         
         ?>
@@ -130,7 +122,7 @@ echo $questionnaireId;
             dataAJAX['intitule_question']=($('#intitule').val());
             dataAJAX['bareme_question']=($('#bareme').val());
             dataAJAX['type_question']=questionEnCours;
-            dataAJAX['idQuestionnaire']=<?=$questionnaireId?>;
+            dataAJAX['idQuestionnaire']=<?=$questionnaire->getId()?>;
             dataAJAX['nbRep']=nbRep;
             dataAJAX['nbTag']=nbTag;
             for (var j=0;j<nbTag;j++){
@@ -238,7 +230,7 @@ echo $questionnaireId;
                 addQuestionIn($('#Linking'));
             }
             else{
-                alert("Merci de valider la dernière question avant d'en créer une nouvelle");
+                $("#Error").append("Merci de valider la dernière question avant d'en créer une nouvelle");
             }
         });
     });

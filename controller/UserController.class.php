@@ -168,7 +168,7 @@ class UserController extends AnonymousController{
 		}
 		$currentUser->tenterQO($id_user,$argsQO);
 		$currentUser->tenterQCM_QCU($id_user,$args);
-		$view = new UserView($this, 'home',array('user' =>$this->currentUser)); 
+		$view = new UserView($this, 'merci',array('user' =>$this->currentUser)); 
 		$view->render(); 
 		
 		$questionnaire = $currentUser->getQuestionnaireByReponse($id_reponse);

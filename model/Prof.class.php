@@ -152,8 +152,11 @@ class Prof extends User{
     }
 
     public static function getQuestionsOuvertes($idQuestionnaire){
-        $sql = "SELECT * FROM QUESTION 
-                WHERE ID_QUESTION IN (SELECT ID_QUESTION FROM CONTENIR WHERE ID_QUESTIONNAIRE = '$idQuestionnaire' )
+        $sql = "SELECT * FROM QUESTION
+                WHERE ID_QUESTION IN 
+                    (SELECT ID_QUESTION 
+                    FROM CONTENIR 
+                    WHERE ID_QUESTIONNAIRE = '$idQuestionnaire' )
                 AND TYPE='QO'";
 
         $sth = parent::query($sql);

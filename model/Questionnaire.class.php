@@ -12,6 +12,7 @@ class Questionnaire extends Model{
     protected $etat;
     protected $url;
     protected $createur;
+    protected $questions=Array();
 
     public static function createId(){
         $sth = parent::query("SELECT COUNT(ID_QUESTIONNAIRE) as nb FROM QUESTIONNAIRE");
@@ -67,6 +68,7 @@ class Questionnaire extends Model{
         $this->etat = $etat;
         $this->url = $url;
         $this->createur=$createur;
+        $this->questions=Questionnaire::obtainQuestions($id);
     }
 
     public function getTitre(){
@@ -101,6 +103,10 @@ class Questionnaire extends Model{
 
     public function getCreateur(){
         return $this->createur;
+    }
+
+    public function getQuestions(){
+        return $this->questions;
     }
 
 
@@ -173,13 +179,14 @@ class Questionnaire extends Model{
         $sth->execute();
     }
 	
-	public static function getQuestions($idQuestionnaire){
+	public static function obtainQuestions($idQuestionnaire){
         $sql = "SELECT * FROM QUESTION WHERE ID_QUESTION IN (SELECT ID_QUESTION FROM CONTENIR WHERE ID_QUESTIONNAIRE = '$idQuestionnaire' )";
         $sth = parent::query($sql);
-        $data= $sth->fetch(PDO::FETCH_OBJ);
-		
-        $questions = array();
-        while(!empty($data)){
+        $data= $sth->fetchAll(PDO::FETCH_CLASS,'Question');
+        foreach($data as $question){
+            $question->setReponses(Question::obtainReponses($question->getId()));
+        }
+        /*while(!empty($data)){
             array_push($questions,Array(
                     'id'=>$data->ID_QUESTION,
                     'type'=>$data->TYPE,
@@ -187,8 +194,8 @@ class Questionnaire extends Model{
                 )
             );
             $data = $sth->fetch(PDO::FETCH_OBJ);
-        }
-		return $questions;
+        }*/
+		return $data;
     }
     
     public static function getQuestionsOuvertes($idQuestionnaire){

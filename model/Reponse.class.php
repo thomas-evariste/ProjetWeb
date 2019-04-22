@@ -3,12 +3,12 @@
 class Reponse extends Model{
 
     protected static $table_name='REPONSE_DISPONIBLE';
-    protected $id; //OBLIGATOIRE
-    protected $proposition;
-    protected $aCorriger; 
-    protected $idUser;
-    protected $intitule;
-    protected $reponseCorrecte;
+    protected $ID_PROPOSITION; //OBLIGATOIRE
+    protected $REP_ID_PROPOSITION;
+    protected $REP_ID_PROPOSITION2; 
+    protected $ID_USER;
+    protected $INTITULE_PROPOSITION;
+    protected $REPONSE_CORRECTE;
 
 
     public static function createId(){
@@ -31,11 +31,11 @@ class Reponse extends Model{
         parent::query("SELECT * FROM REPONSE_DISPONIBLE");
     }
 
-    public static function create($id,$proposition,$aCorriger,$idUser,$intitule,$reponseCorrecte){
-        $sth = parent::prepare("INSERT INTO REPONSE_DISPONIBLE VALUES(:id,:proposition,:aCorriger,:idUser,:intitule,:reponseCorrecte)");
+    public static function create($id,$proposition,$proposition2,$idUser,$intitule,$reponseCorrecte){
+        $sth = parent::prepare("INSERT INTO REPONSE_DISPONIBLE VALUES(:id,:proposition,:proposition2,:idUser,:intitule,:reponseCorrecte)");
         $sth->bindParam(':id',$id);
         $sth->bindParam(':proposition',$proposition);  
-        $sth->bindParam(':aCorriger',$aCorriger);
+        $sth->bindParam(':proposition2',$proposition2);
         $sth->bindParam(':idUser',$idUser);
         $sth->bindParam(':intitule',$intitule);
         $sth->bindParam(':reponseCorrecte',$reponseCorrecte);
@@ -51,6 +51,10 @@ class Reponse extends Model{
         $sth = parent::query($sql);
     }
 
+    public function __construct(){
+        
+    }
+/*
     public function __construct($id,$proposition,$aCorriger,$idUser,$intitule,$reponseCorrecte){
         $this->id = $id;  
         $this->proposition = $proposition;
@@ -59,28 +63,28 @@ class Reponse extends Model{
         $this->intitule = $intitule;
         $this->reponseCorrecte = $reponseCorrecte;
     }
-
+*/
     public function getId(){
-        return $this->id;
+        return $this->ID_PROPOSITION;
     }
 
     public function getProposition(){
-        return $this->date_ouverture;
+        return $this->REP_ID_PROPOSITION;
     }
-    public function getACorriger(){
-        return $this->aCorriger;
+    public function getProposition2(){
+        return $this->REP_ID_PROPOSITION2;
     }
 
     public function getIdUser(){
-        return $this->idUser;
+        return $this->ID_USER;
     }
 
     public function getIntitule(){
-        return $this->intitule;
+        return $this->INTITULE_PROPOSITION;
     }
 
     public function getReponseCorrecte(){
-        return $this->reponseCorrecte;
+        return $this->REPONSE_CORRECTE;
     }
 
 
@@ -106,6 +110,8 @@ class Reponse extends Model{
         $sth->bindParam(':idReponse',$idReponse);
         $sth->execute();
     }
+
+    
 
 }
 

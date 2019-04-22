@@ -3,9 +3,10 @@
 class Question extends Model{
 
     protected static $table_name='QUESTION';
-    protected $id; //OBLIGATOIRE
-    protected $type; //OBLIGATOIRE
-    protected $intitule;  //OBLIGATOIRE
+    protected $ID_QUESTION; //OBLIGATOIRE
+    protected $TYPE; //OBLIGATOIRE
+    protected $INTITULE_QUESTION;  //OBLIGATOIRE
+    protected $reponses=Array();
 
 
 
@@ -37,6 +38,9 @@ class Question extends Model{
         return false;
     }
 */
+    public function __construct(){
+
+    }
 
     public static function getList(){
         parent::query("SELECT * FROM QUESTION");
@@ -60,24 +64,31 @@ class Question extends Model{
         $sql = "UPDATE QUESTION SET $column = '$data' WHERE ID_QUESTION='$id'";
         $sth = parent::query($sql);
     }
-
+    /*
     public function __construct($id,$type,$intitule){
         $this->id = $id;  
         $this->type = $type;
         $this->intitule = $intitule;
-    }
+    }*/
 
     public function getType(){
-        return $this->type;
+        return $this->TYPE;
     }
     public function getIntitule(){
-        return $this->intitule;
+        return $this->INTITULE_QUESTION;
     }
 
     public function getId(){
-        return $this->id;
+        return $this->ID_QUESTION;
     }
 
+    public function getReponses(){
+        return $this->reponses;
+    }
+
+    public function setReponses($reponses){
+        $this->reponses=$reponses;
+    }
 
 /*
     public static function logLenght($login){
@@ -159,6 +170,8 @@ class Question extends Model{
             return null;
         }
     }*/
+
+    /*
     public static function getReponses($idQuestion){
         $sql = "SELECT REPONSE_DISPONIBLE.* 
                 FROM QUESTION, DISPOSER, REPONSE_DISPONIBLE 
@@ -181,9 +194,22 @@ class Question extends Model{
             $data=$sth->fetch(PDO::FETCH_OBJ);
         }
         return $reponses;
+    }*/
+
+    public static function obtainReponses($idQuestion){
+        $sql = "SELECT REPONSE_DISPONIBLE.* 
+                FROM QUESTION, DISPOSER, REPONSE_DISPONIBLE 
+                WHERE QUESTION.ID_QUESTION = :id_question
+                AND QUESTION.ID_QUESTION = DISPOSER.ID_QUESTION
+                AND DISPOSER.ID_PROPOSITION = REPONSE_DISPONIBLE.ID_PROPOSITION";
+        $sth = parent::prepare($sql);
+        $sth->bindParam(":id_question",$idQuestion);
+        $sth->execute();
+        $reponses = $sth->fetchAll(PDO::FETCH_CLASS,'Reponse');
+        return $reponses;
     }
 
-    public static function getReponsesQO($idQuestion){
+    public static function obtainReponsesQO($idQuestion){
         $sql = "SELECT rep.ID_PROPOSITION,rep.INTITULE_PROPOSITION, PARTICIPANT.ID_USER 
                 FROM REPONSE_DISPONIBLE as rep, TENTER, QUESTION, PARTICIPANT, DISPOSER
                 WHERE QUESTION.ID_QUESTION = '$idQuestion'
