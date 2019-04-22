@@ -242,5 +242,40 @@ class ProfController extends UserController{
         $answerValue=$request->read('answerValue');
         Question::corriger($idReponse,$idUser,$answerValue);
     }
+	
+	
+	public function classementQuiz($request){
+		$currentUser = Prof::getById($_SESSION['id']);
+		$id_questionnaire = $_POST['questionnaireId'];
+		$resultats = NOTE::getResultats($id_questionnaire);
+		$nbResultats = count($resultats);
+		
+		$permut =true;
+		while($permut){
+			$permut =false;
+			for($i=0;$i<$nbResultats-1;$i++){
+				if($resultats[$i]['valeur']>$resultats[$i+1]['valeur']){
+					$permut = true;
+					$int = resultats[$i]['valeur'];
+					$resultats[$i]['valeur']=$resultats[$i+1]['valeur'];
+					$resultats[$i+1]['valeur'] = $int;
+				}
+			}
+		}
+		
+		for($i=0;$i<$nbResultats;$i++){
+			$resultats[$i]['classement']=$i+1;
+			if(!array_key_exists ('nom',$resultats[$i])){
+				$resultats[$i]['nom']="";
+			}
+			if(!array_key_exists ('prenom',$resultats[$i])){
+				$resultats[$i]['prenom']="";
+			}
+		}
+		
+        $view = new UserView($this,'classementQuestionnaires',array('user'=>$this->currentUser, 'resultats'=>$resultats));
+        $view->render();
+    }
+	
 }
 ?> 
