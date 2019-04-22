@@ -1,6 +1,6 @@
 	<div class="container h-100">
 		<div class="d-flex justify-content-center h-100">
-			<div class="user_card_insc_prof">
+			<div class="user_card_creation_questionnaire">
 				<div class="d-flex justify-content-center">
 					<div class="brand_logo_container">
 						<img src="css/images/user.png" class="brand_logo" alt="Logo">
@@ -23,10 +23,10 @@
 								<td><input type="date" name="dateFermeture" class="form-control input_user" value="" placeholder="Date Fermeture :"></td>
 							</tr>  
 							<tr class="input-group mb-3">
-								<td><input type="number" name="bonus" class="form-control input_user" value="1" placeholder="points pour bonne réponse:"></td>
+								<td>Bonus: <input type="number" name="bonus" class="form-control input_user" value="1" placeholder="points pour bonne réponse:"></td>
 							</tr>
 							<tr class="input-group mb-3">
-								<td><input type="number" name="malus" class="form-control input_user" value="0" placeholder="points pour mauvaise réponse:"></td>
+								<td>Malus: <input type="number" name="malus" class="form-control input_user" value="0" placeholder="points pour mauvaise réponse:"></td>
 							</tr>  
 
 							<tr class="input-group mb-3">
