@@ -1,8 +1,8 @@
 
 
 
-<div>
+<div class="merci">
 
-	<img src="images/merci.jpg" alt="merci" id="merci">
+	<img src="images/merci.jpg" alt="merci" >
 
 </div> 
