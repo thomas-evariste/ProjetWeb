@@ -34,7 +34,7 @@ INSERT INTO `ENSEIGNANT` (`ID_USER`, `LOGIN`, `PASSWORD`, `INTERNE`, `DESCRIPTIO
 (5, 'b', 'b', 1, 'Professor of opérational research', 'LUJAK', 'Marin', 'bidule@mail.com'),
 (6, 'c', 'c', 0, 'Professeur de mathématiques', 'ATALI', 'Jack', 'test@mail.com'),
 (7, 'd', 'd', 1, 'Doctorant', 'NEWTON', 'Isaac', 'op@mail.com'),
-(8, 'e', 'e', 1, 'Professeur de mathématiques', 'COQUEREL', 'Quentin', 'qc@mail.com'),
+(2, 'e', 'e', 1, 'Professeur de mathématiques', 'COQUEREL', 'Quentin', 'qc@mail.com'),
 (1, 'f', 'f', 1, 'Professeur de mathématiques', 'COQUEREL', 'Quentin', 'qc@mail.com');
 
 
