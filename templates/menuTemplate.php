@@ -26,7 +26,7 @@
           Inscription
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="index.php?action=inscription">Eleve</a>
+          <a class="dropdown-item" href="index.php?action=inscription">Elève</a>
           <a class="dropdown-item" href="index.php?action=inscriptionprof">Professeur</a>
         </div>
       </li>

@@ -19,7 +19,7 @@
 									
                                     </tr>
                                     <tr>
-                                        <td>Prenom:</td>
+                                        <td>Prénom:</td>
                                        <td><?php echo $user->getPrenom() ?></td> 
                                     </tr>
                                     <tr>

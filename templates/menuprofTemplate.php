@@ -52,11 +52,11 @@
         </a>
         <a class="dropdown-item" href="index.php?action=creerQuestionnaire&controller=prof">
           <i class="fa fa-plus-circle"></i>
-          Créer questionnaire
+          Créer un questionnaire
         </a>
         <a class="dropdown-item" href="index.php?action=creerQuestion&controller=prof">
           <i class="fa fa-plus-circle"></i>
-          Créer question
+          Créer une question
         </a>
         </div>
       </li>
