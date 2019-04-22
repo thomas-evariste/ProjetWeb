@@ -111,7 +111,7 @@ class UserController extends AnonymousController{
 				$type='ouverte';
 			}
 			
-			$view = new UserView($this, 'quizReponseInteractifDebutDUneQuestion',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i)); 
+			$view = new UserView($this, 'quizReponseInteractifDebutDUneQuestion',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i, 'type' => $question['type'])); 
 			$view->renderMilieu(); 
 			$view = new UserView($this, 'debutDeLigne',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i)); 
 			$view->renderMilieu(); 
