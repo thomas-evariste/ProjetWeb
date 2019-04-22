@@ -251,5 +251,13 @@ class UserController extends AnonymousController{
 		
 	}
 	
+    public function voirResultatQuestionnaires($request){
+		$currentUser = User::getById($_SESSION['id']);
+        $questionnaires = User::getQuestionnaireFait($currentUser->getId());
+        $view = new UserView($this,'ResultatQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+        $view->render();
+    }
+	
+	
 }
 ?>
