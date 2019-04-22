@@ -1,11 +1,10 @@
 charset "UTF-8";
 
 
-.merci-image{
-
-	width: 80vw;
-}
-
-.merci-p{
-	
+#merci 
+{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }
