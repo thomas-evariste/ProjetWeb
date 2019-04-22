@@ -77,21 +77,19 @@ class UserController extends AnonymousController{
     
     public function voirQuestionnaires($request){
 		$currentUser = User::getById($_SESSION['id']);
-        $questionnaires = User::getQuestionnaire($currentUser->getId());
+        $questionnaires = User::getQuestionnaireAFaire($currentUser->getId());
         $view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
         $view->render();
     }
 	
 	public function repondreQuiz($request){
-		//pour l'instant je charge que le dernier;
 		$currentUser = User::getById($_SESSION['id']);
         $idQuest = $request->read('questionnaireId');
 		
 		$questionnaire = $currentUser->getQuestionnaireById($idQuest);
 		
-		$allQuiz = $currentUser->getQuestionnaire($currentUser->getId()); 
 
-		$questions = $questionnaire->getQuestions($questionnaire->getId()); 
+		$questions = $questionnaire->getQuestionsInData($questionnaire->getId()); 
 		$nbQuestion = sizeof($questions);
 		
 		//echo $nbQuestion;
@@ -115,11 +113,10 @@ class UserController extends AnonymousController{
 			$view->renderMilieu(); 
 			$view = new UserView($this, 'debutDeLigne',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i)); 
 			$view->renderMilieu(); 
-			$questionModel = new Question($question['id'],$question['type'],$question['intitule']);
 			
 			if($type!='ouverte'){
 				
-				$reponses = $questionModel->gerReponses($questionModel->getId()); 
+				$reponses = Question::gerReponses($question['id']); 
 				$nbReponse = sizeof($reponses);
 				for($j = 0; $j < $nbReponse ;$j++){
 					$reponse = $reponses[$j];

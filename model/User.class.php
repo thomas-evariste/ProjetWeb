@@ -204,8 +204,8 @@ class User extends Model{
     }
 	
 	
-    public static function getQuestionnaire($idUser){
-        $sql = "SELECT * FROM QUESTIONNAIRE";
+    public static function getQuestionnaireAFaire($idUser){
+        $sql = "SELECT * FROM QUESTIONNAIRE WHERE (ETAT = 'Public') AND (ID_QUESTIONNAIRE NOT IN (SELECT ID_QUESTIONNAIRE FROM NOTE WHERE ID_USER = '$idUser')) ";
         $sth = static::query($sql);
         $data = $sth->fetch(PDO::FETCH_OBJ);
         $questionnaires = array();
