@@ -239,9 +239,44 @@ class Question extends Model{
                 WHERE ID_PROPOSITION = $idReponse
                 ";
         $sth=parent::query($sql);
-        
     }
 
+    public static function supprimer($idQuestion){
+        $sql = "SELECT ID_PROPOSITION FROM DISPOSER WHERE ID_QUESTION=:idQuestion";
+        $sth=parent::prepare($sql);
+        $sth->bindParam('idQuestion',$idQuestion);
+        $sth->execute();
+        $datas= $sth->fetchAll(PDO::FETCH_OBJ);
+
+        $sql = "DELETE FROM CONTENIR WHERE ID_QUESTION=:idQuestion";
+        $sth=parent::prepare($sql);
+        $sth->bindParam('idQuestion',$idQuestion);
+        $sth->execute();
+
+        $sql = "DELETE FROM DISPOSER WHERE ID_QUESTION=:idQuestion";
+        $sth=parent::prepare($sql);
+        $sth->bindParam('idQuestion',$idQuestion);
+        $sth->execute();
+
+        $sql = "DELETE FROM ASSOCIER WHERE ID_QUESTION=:idQuestion";
+        $sth=parent::prepare($sql);
+        $sth->bindParam('idQuestion',$idQuestion);
+        $sth->execute();
+
+        foreach($datas as $data){
+            $sql = "DELETE FROM REPONSE_DISPONIBLE WHERE ID_PROPOSITION=:idReponse";
+            $sth=parent::prepare($sql);
+            $sth->bindParam('idReponse',$data->ID_PROPOSITION);
+            $sth->execute();
+        }
+
+
+        
+        $sql = "DELETE FROM QUESTION WHERE ID_QUESTION=:idQuestion";
+        $sth=parent::prepare($sql);
+        $sth->bindParam('idQuestion',$idQuestion);
+        $sth->execute();
+    }
 }
 
 ?> 

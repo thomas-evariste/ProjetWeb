@@ -1,48 +1,113 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
-
-<table id="questionList">
-<!--
-    <thead id="questionListHead">
-    
-        <tr>
-            <th>ID</th>
-            <th>TYPE</th>
-            <th>INTITULE</th>
-        </tr>
-    </thead>
--->
-    <tbody id="questionListBody">
     
         <?php 
 
             foreach($questionnaire->getQuestions() as $question){
+                $idQuestion = $question->getId();
                 echo "<ul class=\"niveau2\">".  
                 //<th>" . $question['id'] ." </th>
                 //<th>" . $question['type']."</th>
-                "<li>" . $question->getIntitule() ."</li>";
+                "<li id=\"question".$idQuestion."\"><div style=\"margin:0;display:flex\"><a id=\"intitule".$idQuestion."\">" . $question->getIntitule() ."</a><button class=\"suppression\" onclick=supprimerQuestion(".$idQuestion.")></button><button class=\"modification\" onclick=modifierQuestion(".$idQuestion.")></button></div>";
                 echo "<ul class=\"niveau3\">";
                 foreach($question->getReponses() as $reponse){
-                    echo "<li><a class=\"" .($reponse->getReponseCorrecte() ? "ReponseCorrecte":"ReponseFausse") ."\">". $reponse->getIntitule() ."</a></li>";
+                    $r = $reponse->getId();
+                    echo "<li id=\"reponse".$r."Question".$idQuestion."\"><div style=\"margin:0;display:flex\"><a id=\"intituleRep".$r."\" class=\"" .($reponse->getReponseCorrecte() ? "ReponseCorrecte":"ReponseFausse") ."\" >". $reponse->getIntitule() ."</a><button class=\"suppression\" onclick=supprimerReponse(".$r.",".$idQuestion.")></button><button class=\"modification\" onclick=modifierReponse(".$r.",".$idQuestion.",&quot;".($reponse->getReponseCorrecte() ? "ReponseCorrecte":"ReponseFausse") ."&quot;)></button></div></li>";
                 }
                 echo "</ul>";
+                echo "</li>";
                 echo "</ul>";
 
                 //<th><form action=\"index.php?action=modifierQuestion&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$question['id']."'><input type='submit' value='Modifier'></form></th>
 
             }
-        
         ?>
 
-    </tbody>
 
-</table>
 
 <script>
 
     var questionEnCours=false;
     var nbRep = 0;
     var nbTag=0;
+
+    function supprimerQuestion(idQuestion){
+        var dataAJAX = {};
+        dataAJAX['idQuestion']=idQuestion;
+        $.ajax({
+                type:'POST',
+                url:'index.php?action=suppressionQuestion&controller=Prof',
+                data:dataAJAX,
+                }).done(function(data){
+                    removeElement("question"+idQuestion);
+                    $('#Error').html("La question a été supprimée avec succès !");
+                });
+    }
+
+    function supprimerReponse(idReponse,idQuestion){
+        var dataAJAX = {};
+        dataAJAX['idReponse']=idReponse;
+        $.ajax({
+            type:'POST',
+            url:'index.php?action=suppressionReponse&controller=Prof',
+            data:dataAJAX,
+            }).done(function(data){
+                removeElement("reponse"+idReponse+"Question"+idQuestion);
+                $('#Error').html("La réponse a été supprimée avec succès !");
+            });
+    }
+
+    function modifierQuestion(idQuestion){
+        intitule = $('#question'+idQuestion).children().first().children().first().html();
+        $('#question'+idQuestion).children().first().remove();
+        $('#question'+idQuestion).prepend("<div id=\"modifDivQuestion"+idQuestion +"\"><input type=\"text\" class=\"modificationForm\" id=\"modifier"+idQuestion+"\" value=\""+intitule+"\"><button class=\"validerChangement\" onclick=\"validerModificationQuestion("+idQuestion+")\"></button><button class=\"annulerChangement\" onclick=\"annulerModificationQuestion("+idQuestion+",&quot;"+intitule+"&quot;)\"></button></div>");
+
+    }
+
+    function modifierReponse(idReponse,idQuestion,classe){
+        intitule=$('#reponse'+idReponse+'Question'+idQuestion).children().first().children().first().html();
+        $('#reponse'+idReponse+'Question'+idQuestion).children().first().remove();
+        $('#reponse'+idReponse+'Question'+idQuestion).prepend("<div id=\"modifDivRep"+ idReponse +"\"><input type=\"text\" class=\"modificationForm\" id=\"modifierReponse"+idReponse+"\" value=\""+intitule+"\"><button class=\"validerChangement\" onclick=\"validerModificationReponse("+idReponse+","+idQuestion+",&quot;"+classe+"&quot;)\"></button><button class=\"annulerChangement\" onclick=\"annulerModificationReponse("+idQuestion+","+idReponse+",&quot;"+intitule+"&quot;,&quot;"+classe+"&quot;)\"></button></div>");
+        
+    }
+
+    function validerModificationQuestion(idQuestion){
+        var dataAJAX = {};
+        dataAJAX['intituleQuestion']= $('#modifier'+idQuestion).val();
+        dataAJAX['idQuestion']=idQuestion;
+        $.ajax({
+            type:'POST',
+            url:'index.php?action=modifierQuestion&controller=Prof',
+            data:dataAJAX,
+            }).done(function(data){
+                removeElement('modifDivQuestion'+idQuestion);
+                $('#question'+idQuestion).prepend("<div style=\"margin:0;display:flex\"><a id=\"intitule"+idQuestion+"\">" + dataAJAX['intituleQuestion'] +"</a><button class=\"suppression\" onclick=supprimerQuestion("+idQuestion+")></button><button class=\"modification\" onclick=modifierQuestion("+idQuestion+")></button></div>");
+            });
+    }
+
+    function validerModificationReponse(idReponse,idQuestion,classe){
+        var dataAJAX = {};
+        dataAJAX['intituleReponse']= $('#modifierReponse'+idReponse).val();
+        dataAJAX['idReponse']=idReponse;
+        $.ajax({
+            type:'POST',
+            url:'index.php?action=modifierReponse&controller=Prof',
+            data:dataAJAX,
+            }).done(function(data){
+                removeElement('modifDivRep'+idReponse);
+                $('#reponse'+idReponse+'Question'+idQuestion).prepend("<div style=\"margin:0;display:flex\"><a id=\"intituleRep"+ idReponse+"\" class=\"" + classe +"\" >" + dataAJAX['intituleReponse'] +"</a><button class=\"suppression\" onclick=supprimerReponse("+idReponse+","+idQuestion+")></button><button class=\"modification\" onclick=modifierReponse("+idReponse+","+idQuestion+",&quot;"+classe+"&quot;)></button></div>");
+            });
+    }
+
+    function annulerModificationQuestion(idQuestion,intitule){
+        $('#question'+idQuestion).children().first().remove();
+        $('#question'+idQuestion).prepend("<div style=\"margin:0;display:flex\"><a id=\"intitule"+idQuestion+"\">" +intitule +"</a><button class=\"suppression\" onclick=supprimerQuestion("+idQuestion+")></button><button class=\"modification\" onclick=modifierQuestion("+idQuestion+")></button></div>");
+    }
+
+    function annulerModificationReponse(idQuestion,idReponse,intitule,classe){
+        $('#reponse'+idReponse+'Question'+idQuestion).children().first().remove();
+        $('#reponse'+idReponse+'Question'+idQuestion).prepend("<div style=\"margin:0;display:flex\"><a class=\"" + classe +"\" >"+ intitule +"</a><button class=\"suppression\" onclick=supprimerReponse("+idReponse+","+idQuestion+")></button><button class=\"modification\" onclick=modifierReponse("+idReponse+","+idQuestion+",&quot;"+classe+"&quot;)></button></div>");
+    }
 
     function creerQuestion(selecter){
         removeElement("question");
@@ -149,7 +214,6 @@
                     }
                 }
             }            
-            alert((dataAJAX));
             $.ajax({
                 type:'POST',
                 url:'index.php?action=insertionQuestion&controller=Prof',
