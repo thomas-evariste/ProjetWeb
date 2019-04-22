@@ -24,6 +24,32 @@ class Note extends Model{
             return 1;
         }
     }
+	
+	public static function getResultats($id_questionnaire){
+		$sql = "SELECT * FROM NOTE WHERE ID_QUESTIONNAIRE = '$id_questionnaire'";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+		
+        $resultats = array();
+        while(!empty($data)){
+			
+			$sql2 = "SELECT * FROM PARTICIPANT WHERE ID_USER = '$data->ID_USER'";
+			$sth2 = parent::query($sql2);
+			$data2= $sth2->fetch(PDO::FETCH_OBJ);
+			
+            array_push($resultats,Array(
+                    'id_user'=>$data->ID_USER,
+                    'ens_id_user'=>$data->ENS_ID_USER,
+                    'valeur'=>$data->VALEUR,
+                    'login'=>$data2->LOGIN,
+                    'nom'=>$data2->NOM,
+                    'prenom'=>$data2->PRENOM
+                )
+            );
+            $data = $sth->fetch(PDO::FETCH_OBJ);
+        }
+		return $resultats;
+	}
 
 }
 

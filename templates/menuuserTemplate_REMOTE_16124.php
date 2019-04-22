@@ -20,6 +20,12 @@
           Profil
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="index.php?action=deconnexion&controller=user">
+          <i class="fa fa-sign-out-alt"></i>
+          Déconnexion
+        </a>
+      </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-question-circle"></i>
@@ -27,14 +33,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="index.php?action=voirQuestionnaires&controller=user">Répondre à un nouveau quiz</a>
-          <a class="dropdown-item" href="index.php?action=voirResultatQuestionnaires&controller=user">Voir résultats</a>
         </div>
-      </li>
-	  <li class="nav-item">
-        <a class="nav-link" href="index.php?action=deconnexion&controller=user">
-          <i class="fa fa-sign-out-alt"></i>
-          Déconnexion
-        </a>
       </li>
     </ul>
   </div>

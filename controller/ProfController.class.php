@@ -169,6 +169,8 @@ class ProfController extends UserController{
         $description = $request->read('description');
         $dateOuverture = $request->read('dateOuverture');
         $dateFermeture = $request->read('dateFermeture');
+        $bonus = $request->read('bonus');
+        $malus = $request->read('malus');
         $etat = $request->read('etat');
         $connexionRequise = $request->read('connexionRequise');
         if ($dateOuverture==''){
@@ -176,6 +178,12 @@ class ProfController extends UserController{
         }
         if ($dateFermeture==''){
             $dateFermeture=NULL;
+        }
+        if ($bonus==''){
+            $bonus=1;
+        }
+        if ($malus==''){
+            $malus=0;
         }
 
         if (trim($titre)=='' || strlen($titre)>50){
@@ -187,6 +195,7 @@ class ProfController extends UserController{
         else{
             $idQuestionnaire = Questionnaire::createId();
             Questionnaire::create($idQuestionnaire,$titre,$description,$dateOuverture,$dateFermeture,$connexionRequise,$etat,NULL,$this->currentUser->getId());
+			Regle::setRegle($idQuestionnaire,$bonus,$malus);
             $view = new View($this,'questionnairevalide',array('user'=>$this->currentUser));
             $view->render();
         }
@@ -255,5 +264,40 @@ class ProfController extends UserController{
         $intituleReponse=$request->read('intituleReponse');
         Reponse::modify("INTITULE_PROPOSITION",$intituleReponse,$idReponse);
     }
+	
+	
+	public function classementQuiz($request){
+		$currentUser = Prof::getById($_SESSION['id']);
+		$id_questionnaire = $_POST['questionnaireId'];
+		$resultats = NOTE::getResultats($id_questionnaire);
+		$nbResultats = count($resultats);
+		
+		$permut =true;
+		while($permut){
+			$permut =false;
+			for($i=0;$i<$nbResultats-1;$i++){
+				if($resultats[$i]['valeur']>$resultats[$i+1]['valeur']){
+					$permut = true;
+					$int = resultats[$i]['valeur'];
+					$resultats[$i]['valeur']=$resultats[$i+1]['valeur'];
+					$resultats[$i+1]['valeur'] = $int;
+				}
+			}
+		}
+		
+		for($i=0;$i<$nbResultats;$i++){
+			$resultats[$i]['classement']=$i+1;
+			if(!array_key_exists ('nom',$resultats[$i])){
+				$resultats[$i]['nom']="";
+			}
+			if(!array_key_exists ('prenom',$resultats[$i])){
+				$resultats[$i]['prenom']="";
+			}
+		}
+		
+        $view = new UserView($this,'classementQuestionnaires',array('user'=>$this->currentUser, 'resultats'=>$resultats));
+        $view->render();
+    }
+	
 }
 ?> 

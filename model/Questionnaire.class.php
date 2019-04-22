@@ -197,6 +197,24 @@ class Questionnaire extends Model{
         }*/
 		return $data;
     }
+	
+	public static function getQuestionsInData($idQuestionnaire){
+        $sql = "SELECT * FROM QUESTION WHERE ID_QUESTION IN (SELECT ID_QUESTION FROM CONTENIR WHERE ID_QUESTIONNAIRE = '$idQuestionnaire' )";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+		$questions = array();
+        while(!empty($data)){
+            array_push($questions,Array(
+                    'id'=>$data->ID_QUESTION,
+                    'type'=>$data->TYPE,
+                    'intitule'=>$data->INTITULE_QUESTION,
+                )
+            );
+            $data = $sth->fetch(PDO::FETCH_OBJ);
+        }
+		return $questions;
+        
+    }
     
     public static function getQuestionsOuvertes($idQuestionnaire){
         $sql = "SELECT * FROM QUESTION 
@@ -216,7 +234,24 @@ class Questionnaire extends Model{
         }
         return $questions;
     }
+	
+	public static function getCorrige($idQuestionnaire){
+		
+        $sql = "SELECT * FROM TENTER 
+                WHERE (A_CORRIGER = 1) AND (ID_PROPOSITION IN (SELECT ID_QUESTION FROM CONTENIR WHERE ID_QUESTIONNAIRE = '$idQuestionnaire' ))";
 
+        $sth = parent::query($sql);
+        $data=$sth->fetch(PDO::FETCH_OBJ);
+		
+		if(!empty($data)){
+			print_r($data);
+			return 1;
+		}
+		else{
+			return 0;
+		}
+		
+	}
 }
 
 ?> 

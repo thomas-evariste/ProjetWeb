@@ -77,21 +77,19 @@ class UserController extends AnonymousController{
     
     public function voirQuestionnaires($request){
 		$currentUser = User::getById($_SESSION['id']);
-        $questionnaires = User::getQuestionnaire($currentUser->getId());
+        $questionnaires = User::getQuestionnaireAFaire($currentUser->getId());
         $view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
         $view->render();
     }
 	
 	public function repondreQuiz($request){
-		//pour l'instant je charge que le dernier;
 		$currentUser = User::getById($_SESSION['id']);
         $idQuest = $request->read('questionnaireId');
 		
 		$questionnaire = $currentUser->getQuestionnaireById($idQuest);
 		
-		$allQuiz = $currentUser->getQuestionnaire($currentUser->getId()); 
 
-		$questions = $questionnaire->getQuestions($questionnaire->getId()); 
+		$questions = $questionnaire->getQuestionsInData($questionnaire->getId()); 
 		$nbQuestion = sizeof($questions);
 		
 		//echo $nbQuestion;
@@ -115,11 +113,10 @@ class UserController extends AnonymousController{
 			$view->renderMilieu(); 
 			$view = new UserView($this, 'debutDeLigne',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i)); 
 			$view->renderMilieu(); 
-			$questionModel = new Question($question['id'],$question['type'],$question['intitule']);
 			
 			if($type!='ouverte'){
 				
-				$reponses = $questionModel->gerReponses($questionModel->getId()); 
+				$reponses = Question::gerReponses($question['id']); 
 				$nbReponse = sizeof($reponses);
 				for($j = 0; $j < $nbReponse ;$j++){
 					$reponse = $reponses[$j];
@@ -155,6 +152,7 @@ class UserController extends AnonymousController{
 		$args = array();
 		$argsQO = array();
 		$id_reponse=1;
+		print_r($_POST);
 		foreach($_POST as $key => $value){
 			if(strpos($key,"button")){
 				$args[$key] = $value;
@@ -166,6 +164,8 @@ class UserController extends AnonymousController{
 			}
 			
 		}
+		print_r($args);
+		print_r($argsQO);
 		$currentUser->tenterQO($id_user,$argsQO);
 		$currentUser->tenterQCM_QCU($id_user,$args);
 		$view = new UserView($this, 'merci',array('user' =>$this->currentUser)); 
@@ -184,7 +184,7 @@ class UserController extends AnonymousController{
 	
 	public function correctionAuto($request){
 		$questionnaire = $_POST["questionnaire"];
-		$args = $_POST["args"];		
+		$args = $_POST["args"];	
 		
 		$currentUser = User::getById($_SESSION['id']);
 		$id_questionnaire = $questionnaire->getId();
@@ -253,6 +253,49 @@ class UserController extends AnonymousController{
 		$currentUser->attribuNote($_SESSION['id'],$id_questionnaire,$note);
 		
 	}
+	
+    public function voirResultatQuestionnaires($request){
+		$currentUser = User::getById($_SESSION['id']);
+        $questionnaires = User::getQuestionnaireFait($currentUser->getId());
+		foreach($questionnaires as $key => $questionnaire){
+			$questionnaires[$key]['corrige']=Questionnaire::getCorrige($questionnaire['id']);
+		}
+        $view = new UserView($this,'resultatQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+        $view->render();
+    }
+	
+	public function classementQuiz($request){
+		$currentUser = User::getById($_SESSION['id']);
+		$id_questionnaire = $_POST['questionnaireId'];
+		$resultats = NOTE::getResultats($id_questionnaire);
+		$nbResultats = count($resultats);
+		
+		$permut =true;
+		while($permut){
+			$permut =false;
+			for($i=0;$i<$nbResultats-1;$i++){
+				if($resultats[$i]['valeur']>$resultats[$i+1]['valeur']){
+					$permut = true;
+					$int = resultats[$i]['valeur'];
+					$resultats[$i]['valeur']=$resultats[$i+1]['valeur'];
+					$resultats[$i+1]['valeur'] = $int;
+				}
+			}
+		}
+		
+		for($i=0;$i<$nbResultats;$i++){
+			$resultats[$i]['classement']=$i+1;
+			if(!array_key_exists ('nom',$resultats[$i])){
+				$resultats[$i]['nom']="";
+			}
+			if(!array_key_exists ('prenom',$resultats[$i])){
+				$resultats[$i]['prenom']="";
+			}
+		}
+		
+        $view = new UserView($this,'classementQuestionnaires',array('user'=>$this->currentUser, 'resultats'=>$resultats));
+        $view->render();
+    }
 	
 }
 ?>
