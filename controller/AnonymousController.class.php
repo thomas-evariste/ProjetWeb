@@ -159,9 +159,9 @@ class AnonymousController extends Controller{
 			$newRequest = $request->getCurrentRequest();
 			$newRequest->write('controller','prof');
 			$newRequest->write('user',$prof->getLogin()); 
-			$newRequest->write('action','validateConnexionProf');
+			$newRequest->write('action','validateConnexionToInvitation');
 			$newController = Dispatcher::dispatch($newRequest);
-			$newController->validateConnexion($newRequest);
+			$newController->voirQuestionnairesInvite($newRequest);
 		}
 		else{ 
 			$view = new View($this,'login'); 
