@@ -227,12 +227,8 @@ class ProfController extends UserController{
 
     public function corrigerQuestionnaire($request){
         $idQuest = $request->read('questionnaireId');
-        $questions = Prof::getQuestionsOuvertes($idQuest);
-        $reponses = Array();
-        foreach ($questions as $question){
-            array_push($reponses,Question::getReponsesQO($question['id']));
-        }
-        $view = new View($this, 'correctionQuestionnaire',array('user'=>$this->currentUser,'questionnaireId'=>$idQuest,'questions'=>$questions,'reponses'=>$reponses));
+        $questionnaire = Questionnaire::getACorrigerById($idQuest);
+        $view = new View($this, 'correctionQuestionnaire',array('user'=>$this->currentUser,'questionnaire'=>$questionnaire));
         $view->render();
     }
 
