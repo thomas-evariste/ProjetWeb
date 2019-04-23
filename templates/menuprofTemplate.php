@@ -61,8 +61,8 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="index.php?action=voirQuestionnaires&controller=prof">Répondre à un nouveau quiz</a>
-          <a class="dropdown-item" href="index.php?action=voirQuestionnairesInvite&controller=prof">Quiz Invitation</a>
-          <a class="dropdown-item" href="index.php?action=voirResultatQuestionnaires&controller=prof">Voir résultats</a>
+          <a class="dropdown-item" href="index.php?action=voirQuestionnairesInvite&controller=prof">Mes invitations à des quiz</a>
+          <a class="dropdown-item" href="index.php?action=voirResultatQuestionnaires&controller=prof">Voir mes résultats</a>
         </div>
       </li>
 	  <li class="nav-item">

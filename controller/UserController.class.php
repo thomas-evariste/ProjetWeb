@@ -9,7 +9,7 @@ class UserController extends AnonymousController{
 	}
 
   public function defaultAction($request) { 
-		$view = new UserView($this, 'connected',array('user' =>$this->currentUser)); 
+		$view = new UserView($this, 'home', array('user' =>$this->currentUser)); 
 		$view->render(); 
 	}
 
@@ -30,7 +30,7 @@ class UserController extends AnonymousController{
 	public function validateConnexion($request){
 		$mail = $this->currentUser->getMail();
 		$id = $this->currentUser->getId();
-		$questionnaires = USER::getQuestionnaireAFaireInvite($id,$mail);
+		$questionnaires = User::getQuestionnaireAFaireInvite($id,$mail);
 		$nomDePage='Invitations aux questionnaires';
 		$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires,'nomDePage'=>$nomDePage));
 		$view->render();

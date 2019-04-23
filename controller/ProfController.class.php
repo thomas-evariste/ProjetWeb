@@ -11,7 +11,7 @@ class ProfController extends UserController{
 
     
     public function defaultAction($request) { 
-        $view = new ProfView($this, 'connected',array('user' =>$this->currentUser)); 
+		$view = new ProfView($this, 'home',array('user' =>$this->currentUser)); 
         $view->render(); 
     }
 
@@ -31,7 +31,11 @@ class ProfController extends UserController{
     }
 
     public function validateConnexion($request){
-        $view = new ProfView($this,'connected',array('user'=>$this->currentUser));
+		$mail = $this->currentUser->getMail();
+		$id = $this->currentUser->getId();
+		$questionnaires = User::getQuestionnaireAFaireInvite($id,$mail);
+		$nomDePage = 'Invitations aux questionnaires';
+		$view = new ProfView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires ,'nomDePage'=>$nomDePage));
         $view->render();
     }
 
@@ -537,7 +541,8 @@ class ProfController extends UserController{
 		}
 		else{
 			$questionnaires = Prof::getQuestionnaireAFaireInvite($currentUser->getId(),$userEmail);
-			$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+			$nomDePage = 'Invitations aux questionnaires';
+			$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires,'nomDePage'=>$nomDePage));
 			$view->render();
 		}
     }

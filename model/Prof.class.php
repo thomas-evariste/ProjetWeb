@@ -51,7 +51,7 @@ class Prof extends User{
         $this->nom = $nom;
         $this->prenom = $prenom;
         $this->interne = $interne;
-        $this->description = $description;
+        $this->description = utf8_encode($description);
     }
 
     public static function create($id,$login,$password,$interne,$description,$nom,$prenom,$mail){
@@ -118,7 +118,7 @@ class Prof extends User{
         while(!empty($data)){
             array_push($questionnaires,Array(
                     'id'=>$data->ID_QUESTIONNAIRE,
-                    'titre'=>$data->TITRE,
+                    'titre'=>utf8_encode($data->TITRE),
                     'description'=>$data->DESCRIPTION_QUESTIONNAIRE,
                     'dateOuverture'=>$data->DATE_OUVERTURE,
                     'dateFermeture'=>$data->DATE_FERMETURE,
