@@ -285,12 +285,17 @@ class Prof extends User{
 	
 	
 	public static function setEstInvite($emailUser,$id_questionnaire){
+		$sql = "SELECT * FROM EST_INVITE WHERE EMAIL = '$emailUser' AND ID_QUESTIONNAIRE = '$id_questionnaire' ";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+		
+		if(empty($data)){
 		$sth = parent::prepare("INSERT INTO EST_INVITE VALUES(:emailUser,:id_questionnaire,:aParticipe)");
 		$zero=0;
 		$sth->bindParam(':emailUser',$emailUser);
 		$sth->bindParam(':id_questionnaire',$id_questionnaire);
 		$sth->bindParam(':aParticipe',$zero);
-		$sth->execute();
+		$sth->execute();}
 	}
 }
 ?>
