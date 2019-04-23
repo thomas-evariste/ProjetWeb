@@ -17,12 +17,18 @@
 						<tr class="input-group mb-3">
 							<td><input type="text" name="loginLogin" class="form-control input_user" value="" placeholder="Login :"></td>
 						</tr>
-						<tr class="input-group mb-2">
+						<tr class="input-group mb-3">
 							<td><input type="password" name="loginPassword" class="form-control input_user" value="" placeholder="Mot de passe :"></td>
 						</tr>
 						<tr class="d-flex justify-content-center mt-3 login_container">
 							
 							<th /><td> <input type="submit" value="Se connecter" /></td>
+						</tr>
+						<tr class="input-group mb-3">
+							<th /><td>pas encore de compte?</td>
+						</tr><tr class="input-group mb-3">
+							<td><a href="index.php?action=inscription"  > <input type="button" value="Inscription Eleve"> </a></td>
+							<td><a href="index.php?action=inscriptionprof" > <input type="button" value="Inscription Prof"> </a></td>
 						</tr>
 						</table>
 					</form>
