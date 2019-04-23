@@ -75,7 +75,7 @@ class AnonymousController extends Controller{
 				$mail = $request->read('mail');
 				$majeure = $request->read('majeure');
 				$promotion = $request->read('promotion');
-				if(strlen($mail)>70){
+				if(strlen($mail)>200){
 					AnonymousController::generateInscError('Merci d\'utiliser un mail de moins de 70 caractères');
 				}
 				else if(strlen($nom)>50){
@@ -134,7 +134,7 @@ class AnonymousController extends Controller{
 		}
 		else{ 
 			$view = new View($this,'login'); 
-			$view->setArg('inscErrorText', 'Cannot complete connexion'); 
+			$view->setArg('inscErrorText', 'Login ou Mot de passe incorrect'); 
 			$view->render(); 
 		} 
 	}
@@ -240,7 +240,7 @@ class AnonymousController extends Controller{
 				//$interne = ($request->read('interne') == "yes") ? 1 : 0; 
 				$interne = $request->read('interne');
 				$description = $request->read('description');
-				if(strlen($mail)>70){
+				if(strlen($mail)>200){
 					AnonymousController::generateInscErrorProf('Merci d\'utiliser un mail de moins de 70 caractères');
 				}
 				else if(strlen($nom)>50){
@@ -248,6 +248,9 @@ class AnonymousController extends Controller{
 				}
 				else if(strlen($prenom)>50){
 					AnonymousController::generateInscErrorProf('Merci d\'utiliser un prenom de moins de 50 caractères');
+				}
+				else if(strlen($description)>200){
+					AnonymousController::generateInscErrorProf('Merci d\'utiliser un titre de moins de 200 caractères');
 				}
 				else{
 					Prof::create(User::createId(),$login, $password,$interne,$description ,$nom,$prenom,$mail);
