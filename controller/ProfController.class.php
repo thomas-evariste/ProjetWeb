@@ -448,7 +448,7 @@ class ProfController extends UserController{
 		foreach($questionnaires as $key => $questionnaire){
 			$questionnaires[$key]['corrige']=Questionnaire::getCorrige($questionnaire['id']);
 		}
-        $view = new UserView($this,'resultatQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+        $view = new UserView($this,'resultatQuestionnairesProf',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
         $view->render();
     }
 	
@@ -462,11 +462,11 @@ class ProfController extends UserController{
 		while($permut){
 			$permut =false;
 			for($i=0;$i<$nbResultats-1;$i++){
-				if($resultats[$i]['valeur']>$resultats[$i+1]['valeur']){
+				if($resultats[$i]['valeur']<$resultats[$i+1]['valeur']){
 					$permut = true;
-					$int = resultats[$i]['valeur'];
-					$resultats[$i]['valeur']=$resultats[$i+1]['valeur'];
-					$resultats[$i+1]['valeur'] = $int;
+					$int = $resultats[$i];
+					$resultats[$i]=$resultats[$i+1];
+					$resultats[$i+1] = $int;
 				}
 			}
 		}

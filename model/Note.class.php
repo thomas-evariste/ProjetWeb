@@ -36,6 +36,12 @@ class Note extends Model{
 			$sql2 = "SELECT * FROM PARTICIPANT WHERE ID_USER = '$data->ID_USER'";
 			$sth2 = parent::query($sql2);
 			$data2= $sth2->fetch(PDO::FETCH_OBJ);
+			if(empty($data2)){
+				$sql2 = "SELECT * FROM ENSEIGNANT WHERE ID_USER = '$data->ID_USER'";
+				$sth2 = parent::query($sql2);
+				$data2= $sth2->fetch(PDO::FETCH_OBJ);
+			}
+			
 			
             array_push($resultats,Array(
                     'id_user'=>$data->ID_USER,

@@ -489,14 +489,6 @@ class User extends Model{
 		}
     }
 	
-	public static function setEstInvite($emailUser,$id_questionnaire){
-		$sth = parent::prepare("INSERT INTO EST_INVITE VALUES(:emailUser,:id_questionnaire,:aParticipe)");
-		$zero=0;
-		$sth->bindParam(':emailUser',$emailUser);
-		$sth->bindParam(':id_questionnaire',$id_questionnaire);
-		$sth->bindParam(':aParticipe',$zero);
-		$sth->execute();
-	}
 }
 
 ?> 
