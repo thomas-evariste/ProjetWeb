@@ -1,5 +1,7 @@
 
-<table>
+<?php echo'<h2>'. $nomDePage .'</h2>'   ?>
+
+<table class='table_espacee'>
 
     <thead>
     

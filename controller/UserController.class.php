@@ -28,7 +28,11 @@ class UserController extends AnonymousController{
 		}
 
 	public function validateConnexion($request){
-		$view = new UserView($this,'connected',array('user'=>$this->currentUser));
+		$mail = $this->currentUser->getMail();
+		$id = $this->currentUser->getId();
+		$questionnaires = USER::getQuestionnaireAFaireInvite($id,$mail);
+		$nomDePage='Invitations aux questionnaires';
+		$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires,'nomDePage'=>$nomDePage));
 		$view->render();
 	}
 	
@@ -78,7 +82,8 @@ class UserController extends AnonymousController{
     public function voirQuestionnaires($request){
 		$currentUser = User::getById($_SESSION['id']);
 		$questionnaires = User::getQuestionnaireAFaire($currentUser->getId());
-        $view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+		$nomDePage = 'Quiz Disponibles';
+        $view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires,'nomDePage' =>$nomDePage));
         $view->render();
     }
 	
@@ -309,7 +314,8 @@ class UserController extends AnonymousController{
 		}
 		else{
 			$questionnaires = User::getQuestionnaireAFaireInvite($currentUser->getId(),$userEmail);
-			$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+			$nomDePage = 'Invitations aux questionnaires';
+			$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires, 'nomDePage'=>$nomDePage));
 			$view->render();
 		}
     }

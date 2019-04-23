@@ -10,7 +10,7 @@ class User extends Model{
     protected $majeure;
     protected $nom;
     protected $prenom;
-    protected $mail;
+    protected $mail; //OBLIGATOIRE (Pas encore implémenté)
 
 /*    public static function __construct(){
 
@@ -442,7 +442,7 @@ class User extends Model{
     public static function getQuestionnaireAFaireInvite($idUser,$emailUser){
 		date_default_timezone_set('Europe/Paris');
 		
-        $sql = "SELECT * FROM QUESTIONNAIRE WHERE (ETAT = 'Prive') AND (ID_QUESTIONNAIRE NOT IN (SELECT ID_QUESTIONNAIRE FROM NOTE WHERE ID_USER = '$idUser')) 
+        $sql = "SELECT * FROM QUESTIONNAIRE WHERE (ID_QUESTIONNAIRE NOT IN (SELECT ID_QUESTIONNAIRE FROM NOTE WHERE ID_USER = '$idUser')) 
 		AND (ID_QUESTIONNAIRE in (SELECT ID_QUESTIONNAIRE FROM EST_INVITE WHERE EMAIL = '$emailUser')) ";
         $sth = static::query($sql);
         $data = $sth->fetch(PDO::FETCH_OBJ);
@@ -464,7 +464,7 @@ class User extends Model{
 			if($add){
 				array_push($questionnaires,Array(
                     'id'=>$data->ID_QUESTIONNAIRE,
-                    'titre'=>$data->TITRE,
+                    'titre'=>utf8_encode($data->TITRE), 
                     'description'=>$data->DESCRIPTION_QUESTIONNAIRE,
                     'dateOuverture'=>$data->DATE_OUVERTURE,
                     'dateFermeture'=>$data->DATE_FERMETURE,
@@ -489,6 +489,30 @@ class User extends Model{
 		else{
 			return "" ;
 		}
+    }
+
+    public static function getQuestionnaires($mail){
+        /*$sql = "SELECT * FROM QUESTIONNAIRE WHERE ID_CREATEUR='$idUser'";*/
+        $sql = "SELECT * FROM QUESTIONNAIRE WHERE QUESTIONNAIRE.ID_QUESTIONNAIRE IN (SELECT ID_QUESTIONNAIRE FROM EST_INVITE WHERE EMAIL='$mail')";
+        $sth = parent::query($sql);
+        $data = $sth->fetch(PDO::FETCH_OBJ);
+        $questionnaires = array();
+        while(!empty($data)){
+            array_push($questionnaires,Array(
+                    'id'=>$data->ID_QUESTIONNAIRE,
+                    'titre'=>utf8_encode($data->TITRE), 
+                    'description'=>$data->DESCRIPTION_QUESTIONNAIRE,
+                    'dateOuverture'=>$data->DATE_OUVERTURE,
+                    'dateFermeture'=>$data->DATE_FERMETURE,
+                    'connexionRequise'=>$data->CONNEXION_REQUISE,
+                    'etat'=>$data->ETAT,
+                    'url'=>$data->URL,
+                    'createur'=>$data->ID_CREATEUR
+                )
+            );
+            $data = $sth->fetch(PDO::FETCH_OBJ);
+        }
+        return $questionnaires;
     }
 	
 }
