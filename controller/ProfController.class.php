@@ -199,13 +199,28 @@ class ProfController extends UserController{
             $view = new View($this,'questionnairevalide',array('user'=>$this->currentUser));
             $view->render();
         }
-    }
-    
+	}
+	
+	function sortByACorriger($a,$b){
+		if ($a['aCorriger'] == $b['aCorriger']) {
+			return 0;
+		}
+		return ($a['aCorriger'] < $b['aCorriger']);
+	}
+
     public function voirMesQuestionnaires($request){
-        $questionnaires = Prof::getQuestionnaire($this->currentUser->getId());
+		$questionnaires = Prof::getQuestionnaire($this->currentUser->getId());
+		usort($questionnaires, function($a,$b){
+			if ($a['aCorriger'] == $b['aCorriger']) {
+				return 0;
+			}
+			return ($a['aCorriger'] < $b['aCorriger']);
+		});
         $view = new ProfView($this,'visuquestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
         $view->render();
-    }
+	}
+	
+
 /*
     public function modifierQuestionnaire($request){
         $idQuest = $request->read('questionnaireId');

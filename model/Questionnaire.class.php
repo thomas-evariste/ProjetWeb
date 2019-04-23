@@ -232,6 +232,25 @@ class Questionnaire extends Model{
         }
     }*/
     
+    public static function needCorrecting($idQuestionnaire){
+        $sth = parent::prepare("SELECT COUNT(DISTINCT QUESTION.ID_QUESTION) AS nb FROM QUESTION, DISPOSER, REPONSE_DISPONIBLE, TENTER 
+        WHERE QUESTION.ID_QUESTION IN (SELECT ID_QUESTION FROM CONTENIR WHERE ID_QUESTIONNAIRE =:idQuestionnaire)
+        AND QUESTION.TYPE='QO'
+        AND DISPOSER.ID_PROPOSITION = REPONSE_DISPONIBLE.ID_PROPOSITION
+        AND QUESTION.ID_QUESTION = QUESTION.ID_QUESTION 
+        AND TENTER.ID_PROPOSITION = REPONSE_DISPONIBLE.ID_PROPOSITION
+        AND TENTER.A_CORRIGER=1");
+        $sth->bindParam(':idQuestionnaire',$idQuestionnaire);
+        $sth->execute();
+        $data= $sth->fetch(PDO::FETCH_OBJ)->nb;
+        if (isset($data) && $data>0){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+
     public static function ajouterQuestion($idQuestion,$idQuestionnaire,$bareme){
         $sth = parent::prepare("INSERT INTO CONTENIR VALUES(:idQuestion,:idQuestionnaire,:bareme)");
         $sth->bindParam(':idQuestion',$idQuestion);

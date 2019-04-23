@@ -125,7 +125,8 @@ class Prof extends User{
                     'connexionRequise'=>$data->CONNEXION_REQUISE,
                     'etat'=>$data->ETAT,
                     'url'=>$data->URL,
-                    'createur'=>$data->ID_CREATEUR
+                    'createur'=>$data->ID_CREATEUR,
+                    'aCorriger'=>Questionnaire::needCorrecting($data->ID_QUESTIONNAIRE)
                 )
             );
             $data = $sth->fetch(PDO::FETCH_OBJ);
