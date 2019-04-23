@@ -34,13 +34,19 @@
           Profil
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="index.php?action=envoiEmail&controller=prof">
+          <i class="fa fa-user"></i>
+          Email
+        </a>
+      </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-question-circle"></i>
-          Quiz
+          Mes Quiz
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="index.php?action=voirQuestionnaires&controller=prof">
+        <a class="dropdown-item" href="index.php?action=voirMesQuestionnaires&controller=prof">
           <i class="fa fa-check-circle"></i>
           Mes questionnaires
         </a>
@@ -52,6 +58,17 @@
           <i class="fa fa-plus-circle"></i>
           Créer une question
         </a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-question-circle"></i>
+          Quiz
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="index.php?action=voirQuestionnaires&controller=prof">Répondre à un nouveau quiz</a>
+          <a class="dropdown-item" href="index.php?action=voirQuestionnairesInvite&controller=prof">Quiz Invitation</a>
+          <a class="dropdown-item" href="index.php?action=voirResultatQuestionnaires&controller=prof">Voir résultats</a>
         </div>
       </li>
 	  <li class="nav-item">

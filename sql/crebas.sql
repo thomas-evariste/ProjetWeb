@@ -102,10 +102,10 @@ create table ENSEIGNANT
 /*==============================================================*/
 create table EST_INVITE
 (
-   ID_USER              int not null,
+   EMAIL                varchar(50) not null,
    ID_QUESTIONNAIRE     int not null,
    A_PARTICIPE          bool,
-   primary key (ID_USER, ID_QUESTIONNAIRE)
+   primary key (EMAIL, ID_QUESTIONNAIRE)
 );
 
 /*==============================================================*/
@@ -248,9 +248,6 @@ alter table DISPOSER add constraint FK_DISPOSER foreign key (ID_QUESTION)
 alter table DISPOSER add constraint FK_DISPOSER2 foreign key (ID_PROPOSITION)
       references REPONSE_DISPONIBLE (ID_PROPOSITION) on delete restrict on update cascade;
 
-alter table EST_INVITE add constraint FK_EST_INVITE foreign key (ID_USER)
-      references PARTICIPANT (ID_USER) on delete restrict on update cascade;
-
 alter table EST_INVITE add constraint FK_EST_INVITE2 foreign key (ID_QUESTIONNAIRE)
       references QUESTIONNAIRE (ID_QUESTIONNAIRE) on delete restrict on update cascade;
 
@@ -259,9 +256,6 @@ alter table NOTE add constraint FK_CORRESPONDRE foreign key (ID_QUESTIONNAIRE)
 
 alter table NOTE add constraint FK_GERER foreign key (ENS_ID_USER)
       references ENSEIGNANT (ID_USER) on delete restrict on update cascade;
-
-alter table NOTE add constraint FK_OBTENIR foreign key (ID_USER)
-      references PARTICIPANT (ID_USER) on delete restrict on update cascade;
 
 alter table REPONSE_DISPONIBLE add constraint FK_APPAREILLER foreign key (REP_ID_PROPOSITION2)
       references REPONSE_DISPONIBLE (ID_PROPOSITION) on delete restrict on update cascade;
@@ -277,9 +271,6 @@ alter table SPECIFIER add constraint FK_SPECIFIER foreign key (ID_QUESTIONNAIRE)
 
 alter table SPECIFIER add constraint FK_SPECIFIER2 foreign key (ID_REGLE)
       references REGLE (ID_REGLE) on delete restrict on update cascade;
-
-alter table TENTER add constraint FK_TENTER foreign key (ID_USER)
-      references PARTICIPANT (ID_USER) on delete restrict on update cascade;
 
 alter table TENTER add constraint FK_TENTER2 foreign key (ID_PROPOSITION)
       references REPONSE_DISPONIBLE (ID_PROPOSITION) on delete restrict on update restrict;

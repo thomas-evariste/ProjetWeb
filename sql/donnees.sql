@@ -35,7 +35,7 @@ INSERT INTO `ENSEIGNANT` (`ID_USER`, `LOGIN`, `PASSWORD`, `INTERNE`, `DESCRIPTIO
 (6, 'c', 'c', 0, 'Professeur de mathématiques', 'ATALI', 'Jack', 'test@mail.com'),
 (7, 'd', 'd', 1, 'Doctorant', 'NEWTON', 'Isaac', 'op@mail.com'),
 (2, 'e', 'e', 1, 'Professeur de mathématiques', 'COQUEREL', 'Quentin', 'qc@mail.com'),
-(1, 'f', 'f', 1, 'Professeur de mathématiques', 'COQUEREL', 'Quentin', 'qc@mail.com');
+(1, 'f', 'f', 1, 'Professeur de mathématiques', 'COQUEREL', 'Quentin', 'cc@gmail.com');
 
 
 --
@@ -636,14 +636,9 @@ INSERT INTO `ASSOCIER` (`LIBELLE`, `ID_QUESTION`) VALUES
 -- Contenu de la table `EST_INVITE`
 --
 
-INSERT INTO `EST_INVITE` (`ID_USER`, `ID_QUESTIONNAIRE`, `A_PARTICIPE`) VALUES
-(1, 1, 1),
-(1, 2, 1),
-(2, 1, 1),
-(3, 1, 1),
-(3, 2, 0),
-(4, 2, 1),
-(5, 1, 1);
+INSERT INTO `EST_INVITE` (`EMAIL`, `ID_QUESTIONNAIRE`, `A_PARTICIPE`) VALUES
+('cc@gmail.com', 1, 1),
+('cc@gmail.com', 2, 1);
 
 --
 -- Contenu de la table `CONTENIR`

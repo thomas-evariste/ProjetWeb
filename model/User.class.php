@@ -356,6 +356,18 @@ class User extends Model{
 		}
 	}
 	
+	public static function getBareme($tentative){
+        $sql = "SELECT BAREME FROM CONTENIR WHERE ID_QUESTION = (SELECT ID_QUESTION FROM DISPOSER WHERE ID_PROPOSITION = '$tentative') ";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+        if (!empty($data)){
+			return $data->BAREME;
+		}
+		else{
+			return 1 ;
+		}
+	}
+	
 	public static function verifiReponseQCM($argsTentative){
 		$id_reponse = $argsTentative[0];
 		
@@ -424,6 +436,58 @@ class User extends Model{
         return $questionnaires;
     }
 	
+	
+    public static function getQuestionnaireAFaireInvite($idUser,$emailUser){
+		date_default_timezone_set('Europe/Paris');
+		
+        $sql = "SELECT * FROM QUESTIONNAIRE WHERE (ETAT = 'Prive') AND (ID_QUESTIONNAIRE NOT IN (SELECT ID_QUESTIONNAIRE FROM NOTE WHERE ID_USER = '$idUser')) 
+		AND (ID_QUESTIONNAIRE in (SELECT ID_QUESTIONNAIRE FROM EST_INVITE WHERE EMAIL = '$emailUser')) ";
+        $sth = static::query($sql);
+        $data = $sth->fetch(PDO::FETCH_OBJ);
+        $questionnaires = array();
+        while(!empty($data)){
+			$add=true;
+			if(!is_null($data->DATE_OUVERTURE)){
+				$dateString=substr($data->DATE_OUVERTURE,-2,2).'-'.substr($data->DATE_OUVERTURE,5,2).'-'.substr($data->DATE_OUVERTURE,2,2);
+				if(strtotime($dateString) > strtotime(date("d-m-y"))){
+					$add=false;
+				}
+			}
+			if(!is_null($data->DATE_FERMETURE)){
+				$dateString=substr($data->DATE_FERMETURE,-2,2).'-'.substr($data->DATE_FERMETURE,5,2).'-'.substr($data->DATE_FERMETURE,2,2);
+				if(strtotime($dateString) < strtotime(date("d-m-y"))){
+					$add=false;
+				}
+			}
+			if($add){
+				array_push($questionnaires,Array(
+                    'id'=>$data->ID_QUESTIONNAIRE,
+                    'titre'=>$data->TITRE,
+                    'description'=>$data->DESCRIPTION_QUESTIONNAIRE,
+                    'dateOuverture'=>$data->DATE_OUVERTURE,
+                    'dateFermeture'=>$data->DATE_FERMETURE,
+                    'connexionRequise'=>$data->CONNEXION_REQUISE,
+                    'etat'=>$data->ETAT,
+                    'url'=>$data->URL,
+                    'createur'=>$data->ID_CREATEUR
+                )
+				);
+			}
+            $data = $sth->fetch(PDO::FETCH_OBJ);
+        }
+        return $questionnaires;
+    }
+    public function getEmail($id){
+		$sql = "SELECT MAIL FROM PARTICIPANT WHERE ID_USER = '$id' ";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+        if (!empty($data)){
+			return $data->MAIL;
+		}
+		else{
+			return "" ;
+		}
+    }
 }
 
 ?> 

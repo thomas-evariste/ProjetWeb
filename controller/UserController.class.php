@@ -210,11 +210,12 @@ class UserController extends AnonymousController{
 		foreach ($args as $key => $tentative) {
 			if(strpos($key,"adio")){
 				$justesse = $currentUser->verifiReponseQCU($tentative);
+				$bareme = $currentUser->getBareme($tentative);
 				if($justesse==1){
-					$note=$note+$bonus;
+					$note=$note+$bonus*$bareme;
 				}
 				else{
-					$note=$note+$malus;
+					$note=$note+$malus*$bareme;
 				}
 			}
 			else{
@@ -238,14 +239,13 @@ class UserController extends AnonymousController{
 			}
 			$justesse =0;
 			if(!empty($argsTentative)){
+				$bareme = $currentUser->getBareme($argsTentative[0]);
 				$justesse = $currentUser->verifiReponseQCM($argsTentative,$id_questionnaire);
-				echo 'justesse : ' . $justesse . '<br>';
 				if($justesse==0){
-					$note=$note+$malus;
+					$note=$note+$malus*$bareme;
 				}
 				else{
-					echo 'pt :' . $bonus*$justesse . '<br>';
-					$note=$note+$bonus*$justesse;
+					$note=$note+$bonus*$justesse*$bareme;
 				}
 			}
 		}
@@ -296,6 +296,32 @@ class UserController extends AnonymousController{
         $view = new UserView($this,'classementQuestionnaires',array('user'=>$this->currentUser, 'resultats'=>$resultats));
         $view->render();
     }
+    
+    public function voirQuestionnairesInvite($request){
+		$currentUser = User::getById($_SESSION['id']);
+		$userEmail=$currentUser->getEmail($_SESSION['id']);
+		echo ' cc: '.$userEmail.' :cc ';
+		if( $userEmail==""){
+			$view = new UserView($this,'ajoutEmail',array('user'=>$this->currentUser));
+			$view->render();
+		}
+		else{
+			$questionnaires = User::getQuestionnaireAFaireInvite($currentUser->getId(),$userEmail);
+			$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+			$view->render();
+		}
+    }
+	
+	public function ajoutEmail($request){
+		$currentUser = User::getById($_SESSION['id']);
+		$userEmail = $_POST['mail'];
+		echo $userEmail;
+		User::modify('MAIL',$userEmail,$_SESSION['id']);
+		$questionnaires = User::getQuestionnaireAFaireInvite($currentUser->getId(),$userEmail);
+		$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+		$view->render();
+	}
+	
 	
 }
 ?>

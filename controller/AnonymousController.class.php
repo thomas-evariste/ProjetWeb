@@ -138,6 +138,37 @@ class AnonymousController extends Controller{
 			$view->render(); 
 		} 
 	}
+	public function tryLoginToInvitation($request){
+		$login = $request->read('loginLogin');
+		$password = $request->read('loginPassword');
+		$user = User::tryLogin($login,$password);
+		$prof = Prof::tryLogin($login,$password);
+		if (isset($user)){
+			$_SESSION['id'] = $user->getId();
+			$request->resetRequest();
+			$newRequest = $request->getCurrentRequest();
+			$newRequest->write('controller','user');
+			$newRequest->write('user',$user->getLogin()); 
+			$newRequest->write('action','validateConnexionToInvitation');
+			$newController = Dispatcher::dispatch($newRequest);
+			$newController->voirQuestionnairesInvite($newRequest);
+		}
+		else if (isset($prof)){
+			$_SESSION['id'] = $prof->getId();
+			$request->resetRequest();
+			$newRequest = $request->getCurrentRequest();
+			$newRequest->write('controller','prof');
+			$newRequest->write('user',$prof->getLogin()); 
+			$newRequest->write('action','validateConnexionToInvitation');
+			$newController = Dispatcher::dispatch($newRequest);
+			$newController->voirQuestionnairesInvite($newRequest);
+		}
+		else{ 
+			$view = new View($this,'login'); 
+			$view->setArg('inscErrorText', 'Cannot complete connexion'); 
+			$view->render(); 
+		} 
+	}
 
 
 
@@ -262,5 +293,12 @@ class AnonymousController extends Controller{
 		} 
 	}
 */
+
+
+
+	public function loginToInvitation($request){
+		$view = new AnonymousView($this,'loginToInvitation');
+		$view->render();
+	}
 }
 ?>

@@ -201,7 +201,7 @@ class ProfController extends UserController{
         }
     }
     
-    public function voirQuestionnaires($request){
+    public function voirMesQuestionnaires($request){
         $questionnaires = Prof::getQuestionnaire($this->currentUser->getId());
         $view = new ProfView($this,'visuquestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
         $view->render();
@@ -266,6 +266,192 @@ class ProfController extends UserController{
     }
 	
 	
+    public function voirQuestionnaires($request){
+		$currentUser = Prof::getById($_SESSION['id']);
+        $questionnaires = Prof::getQuestionnaireAFaire($currentUser->getId());
+        $view = new UserView($this,'choixQuestionnairesProf',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+        $view->render();
+    }
+	
+	public function repondreQuiz($request){
+		$currentUser = Prof::getById($_SESSION['id']);
+        $idQuest = $request->read('questionnaireId');
+		
+		$questionnaire = $currentUser->getQuestionnaireById($idQuest);
+		
+
+		$questions = $questionnaire->getQuestionsInData($questionnaire->getId()); 
+		$nbQuestion = sizeof($questions);
+		
+		//echo $nbQuestion;
+		
+		$view = new UserView($this, 'quizReponseInteractifDebutProf',array('user' =>$this->currentUser)); 
+		$view->renderDebut(); 
+		$view->renderMilieu(); 
+		for($i = 0; $i < $nbQuestion  ;$i++){
+			$question = $questions[$i];
+			if($question['type']=='QCU'){
+				$type='radio';
+			}
+			else if($question['type']=='QCM'){
+				$type='checkbox';
+			}
+			else{
+				$type='ouverte';
+			}
+			
+			$view = new UserView($this, 'quizReponseInteractifDebutDUneQuestion',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i, 'type' => $question['type'])); 
+			$view->renderMilieu(); 
+			$view = new UserView($this, 'debutDeLigne',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i)); 
+			$view->renderMilieu(); 
+			
+			if($type!='ouverte'){
+				
+				$reponses = Question::gerReponses($question['id']); 
+				$nbReponse = sizeof($reponses);
+				for($j = 0; $j < $nbReponse ;$j++){
+					$reponse = $reponses[$j];
+					$view = new UserView($this, 'quizReponseInteractifUneReponse',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i, 'reponse' => $reponse, 'numero_reponse' => $j, 'type' => $type)); 
+					$view->renderMilieu(); 
+				
+					//recuperer les reponse possible
+				}
+			}
+			
+			else{
+				$view = new UserView($this, 'quizReponseInteractifUneReponseOuverte',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i, 'type' => $type));
+				$view->renderMilieu();
+			}
+			
+			$view = new UserView($this, 'finDeLigne',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i)); 
+			$view->renderMilieu(); 
+			if($i<$nbQuestion-1){
+				$view = new UserView($this, 'quizReponseInteractifFinDUneQuestion',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i, 'type' => $type)); 
+			}
+			else{
+				$view = new UserView($this, 'quizReponseInteractifFin',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i, 'type' => $type));
+			}
+			$view->renderMilieu(); 
+		}
+		
+		$view->renderFin(); 
+	}
+	
+	public function tenter($request){
+		$currentUser = Prof::getById($_SESSION['id']);
+		$id_user = $currentUser->getId();
+		$args = array();
+		$argsQO = array();
+		$id_reponse=1;
+		foreach($_POST as $key => $value){
+			if(strpos($key,"button")){
+				$args[$key] = $value;
+				$id_reponse=$value;
+			}
+			if(is_numeric($key)){
+				$argsQO[$key] = $value;
+				$id_reponse=$key;
+			}
+			
+		}
+		$currentUser->tenterQO($id_user,$argsQO);
+		$currentUser->tenterQCM_QCU($id_user,$args);
+		$view = new UserView($this, 'merci',array('user' =>$this->currentUser)); 
+		$view->render(); 
+		
+		$questionnaire = $currentUser->getQuestionnaireByReponse($id_reponse);
+		
+		unset($_POST);
+		$_POST["questionnaire"] = $questionnaire;
+		$_POST["args"] = $args;
+		
+		$this->correctionAuto($request);
+		
+		
+	}
+	
+	public function correctionAuto($request){
+		$questionnaire = $_POST["questionnaire"];
+		$args = $_POST["args"];	
+		
+		$currentUser = Prof::getById($_SESSION['id']);
+		$id_questionnaire = $questionnaire->getId();
+		
+		$note=0;
+		$bonus=0;
+		$malus=0;
+		
+		$regle = $currentUser->getRegle($id_questionnaire);
+		
+		print_r($args);
+		foreach ($regle as $nom => $valeur) {
+			if($nom=='BONUS'){
+				$bonus=$valeur;
+			}
+			if($nom=='MALUS'){
+				$malus=$valeur;
+			}
+		}
+		
+		$argsQCM = array();
+		$numQestionQCM = array();
+		foreach ($args as $key => $tentative) {
+			if(strpos($key,"adio")){
+				$justesse = $currentUser->verifiReponseQCU($tentative);
+				if($justesse==1){
+					$note=$note+$bonus;
+				}
+				else{
+					$note=$note+$malus;
+				}
+			}
+			else{
+				$q = substr($key, -3, 1);
+				$r = substr($key, -1, 1);
+				$newKey = intval($q) * 1000 + intval($r);
+				$argsQCM[$newKey]=$tentative;
+				
+				if(!in_array($q,$numQestionQCM)){
+					$numQestionQCM[]=$q;
+				}
+			}
+		}
+		
+		foreach ($numQestionQCM as $q) {
+			$argsTentative = array();
+			foreach ($argsQCM as $key => $tentative){
+				if(intval($key/1000)==$q){
+					$argsTentative[] = $tentative;
+				}
+			}
+			$justesse =0;
+			if(!empty($argsTentative)){
+				$justesse = $currentUser->verifiReponseQCM($argsTentative,$id_questionnaire);
+				echo 'justesse : ' . $justesse . '<br>';
+				if($justesse==0){
+					$note=$note+$malus;
+				}
+				else{
+					echo 'pt :' . $bonus*$justesse . '<br>';
+					$note=$note+$bonus*$justesse;
+				}
+			}
+		}
+		echo 'note : ' . $note;
+		$currentUser->attribuNote($_SESSION['id'],$id_questionnaire,$note);
+		
+	}
+	
+    public function voirResultatQuestionnaires($request){
+		$currentUser = Prof::getById($_SESSION['id']);
+        $questionnaires = Prof::getQuestionnaireFait($currentUser->getId());
+		foreach($questionnaires as $key => $questionnaire){
+			$questionnaires[$key]['corrige']=Questionnaire::getCorrige($questionnaire['id']);
+		}
+        $view = new UserView($this,'resultatQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+        $view->render();
+    }
+	
 	public function classementQuiz($request){
 		$currentUser = Prof::getById($_SESSION['id']);
 		$id_questionnaire = $_POST['questionnaireId'];
@@ -299,5 +485,77 @@ class ProfController extends UserController{
         $view->render();
     }
 	
-}
+	
+	public function envoiEmail($request){
+		$to=$_POST['email'];
+		$from='quiz.imt.lille.douai@gmail.com';
+		$idQuestionnaire = $_POST['idQestionnaire'];
+		$currentUser = Prof::getById($_SESSION['id']);
+		$Questionnaire = Questionnaire::getById($idQuestionnaire);
+		$prenomProf = $currentUser->getprenom();
+		$nomProf = $currentUser->getNom();
+		$titreQuestionnaire = $Questionnaire->getTitre();
+		
+		
+		$sujet = 'Invitation a un quiz';
+		$message = $prenomProf.' '.$nomProf.' vous invite a vous connecter au site de quiz pour repondre au quiz: '.$titreQuestionnaire. ' click : http://localhost/ProjetWeb/index.php?action=loginToInvitation' ;
+		$mdp = 'imtLilleDouai';
+		
+		
+		Prof::smtpmailer($to,$sujet,$message,$from,$mdp);
+		
+		
+		$view = new UserView($this, 'home',array('user' =>$this->currentUser)); 
+		$view->render(); 
+	}
+	
+	public function inviterQuiz($request){
+		$idQestionnaire = $_POST['questionnaireId'];
+		
+		
+		$view = new UserView($this, 'inviter',array('user' =>$this->currentUser , 'idQestionnaire' => $idQestionnaire)); 
+		$view->render(); 
+	}
+    
+    public function voirQuestionnairesInvite($request){
+		$currentUser = Prof::getById($_SESSION['id']);
+		$userEmail=$currentUser->getMail();
+		echo ' cc: '.$userEmail.' :cc ';
+		if( $userEmail==""){
+			$view = new UserView($this,'ajoutEmailProf',array('user'=>$this->currentUser));
+			$view->render();
+		}
+		else{
+			$questionnaires = Prof::getQuestionnaireAFaireInvite($currentUser->getId(),$userEmail);
+			$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+			$view->render();
+		}
+    }
+	
+	public function ajoutEmail($request){
+		$currentUser = Prof::getById($_SESSION['id']);
+		$userEmail = $_POST['mail'];
+		echo $userEmail;
+		Prof::modify('MAIL',$userEmail,$_SESSION['id']);
+		$questionnaires = Prof::getQuestionnaireAFaireInvite($currentUser->getId(),$userEmail);
+		$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+		$view->render();
+	}
+	
+	public function voirInviterQuiz($request){
+		$idQestionnaire = $_POST['questionnaireId'];
+		
+		$emailInvite=Prof::getEmailInvite($idQestionnaire);
+		$invites=array();
+		foreach($emailInvite as $email){
+			$invites[]=Prof::getInviteByEmail($email);
+		}
+		
+		$view = new UserView($this,'listeInvite',array('user'=>$this->currentUser,'invites'=>$invites));
+		$view->render();
+	}
+
+} 
+	
+
 ?> 

@@ -1,4 +1,7 @@
 <?php 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require (__ROOT_DIR .'\composer\vendor\autoload.php');
 
 class Prof extends User{
 
@@ -172,5 +175,112 @@ class Prof extends User{
         }
         return $questions;
     }
+	
+	
+	public static function smtpmailer($to,$sujet,$message,$from,$mdp){
+		
+				
+		
+
+		$mail = new PHPMailer(TRUE);
+
+		/* Open the try/catch block. */
+		try {
+		   /* Set the mail sender. */
+		   $mail->setFrom($from);
+
+		   /* Add a recipient. */
+		   $mail->addAddress($to);
+
+		   /* Set the subject. */
+		   $mail->Subject = $sujet;
+
+		   /* Set the mail message body. */
+		   $mail->Body = $message;
+
+
+
+		   /* SMTP parameters. */
+		   
+		   /* Tells PHPMailer to use SMTP. */
+		   $mail->isSMTP();
+		   
+		   /* SMTP server address. */
+		   $mail->Host = 'smtp.gmail.com';
+
+		   /* Use SMTP authentication. */
+		   $mail->SMTPAuth = TRUE;
+		   
+		   /* Set the encryption system. */
+		   $mail->SMTPSecure = 'tls';
+		   
+		   /* SMTP authentication username. */
+		   $mail->Username = $from;
+		   
+		   /* SMTP authentication password. */
+		   $mail->Password = $mdp;
+		   
+		   /* Set the SMTP port. */
+		   $mail->Port = 587;
+		   
+		   /* Disable some SSL checks. */
+		   $mail->SMTPOptions = array(
+			  'ssl' => array(
+			  'verify_peer' => false,
+			  'verify_peer_name' => false,
+			  'allow_self_signed' => true
+			  )
+		   );
+		   
+		   /* Finally send the mail. */
+		   $mail->send();
+		}
+		catch (Exception $e)
+		{
+		   /* PHPMailer exception. */
+		   echo $e->errorMessage();
+		}
+		catch (\Exception $e)
+		{
+		   /* PHP exception (note the backslash to select the global namespace Exception class). */
+		   echo $e->getMessage();
+		}
+	}
+	
+	public static function getEmailInvite($idQuestionnaire){
+		$sql = "SELECT EMAIL FROM EST_INVITE WHERE ID_QUESTIONNAIRE = '$idQuestionnaire' ";
+        $sth = parent::query($sql);
+        $data=$sth->fetch(PDO::FETCH_OBJ);
+        $emailInvite=array();
+        while (!empty($data)){
+            $emailInvite[]=$data->EMAIL;
+            $data=$sth->fetch(PDO::FETCH_OBJ);
+        }
+        return $emailInvite;
+	}
+	
+	public static function getInviteByEmail($email){
+		$invite= array( 'nom' => '', 'prenom' => '', 'idUser' => null, 'email' => $email);
+		
+		$sql = "SELECT NOM, PRENOM, ID_USER, EMAIL FROM ENSEIGNANT WHERE EMAIL = '$email'";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+        if (!empty($data)){
+            $invite['nom']=$data->NOM;
+            $invite['prenom']=$data->PRENOM;
+            $invite['idUser']=$data->ID_USER;
+        }
+		
+		$sql = "SELECT NOM, PRENOM, ID_USER, EMAIL FROM PARTICIPANT WHERE EMAIL = '$email'";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+        if (!empty($data)){
+            $invite['nom']=$data->NOM;
+            $invite['prenom']=$data->PRENOM;
+            $invite['idUser']=$data->ID_USER;
+        }
+		
+		return $invite;
+	}
 }
 ?>
