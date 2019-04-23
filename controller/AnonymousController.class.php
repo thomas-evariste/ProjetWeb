@@ -12,7 +12,7 @@ class AnonymousController extends Controller{
 	}
 	
 	public function defaultAction($request) { 
-		$view = new AnonymousView($this, null); 
+		$view = new AnonymousView($this, 'home'); 
 		$view->render(); 
 	}
 	
