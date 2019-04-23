@@ -1,7 +1,7 @@
 <?php 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-require (__ROOT_DIR .'\composer\vendor\autoload.php');
+require (__ROOT_DIR .'/composer/vendor/autoload.php');
 
 class Prof extends User{
 
@@ -125,7 +125,8 @@ class Prof extends User{
                     'connexionRequise'=>$data->CONNEXION_REQUISE,
                     'etat'=>$data->ETAT,
                     'url'=>$data->URL,
-                    'createur'=>$data->ID_CREATEUR
+                    'createur'=>$data->ID_CREATEUR,
+                    'aCorriger'=>Questionnaire::needCorrecting($data->ID_QUESTIONNAIRE)
                 )
             );
             $data = $sth->fetch(PDO::FETCH_OBJ);
@@ -285,12 +286,17 @@ class Prof extends User{
 	
 	
 	public static function setEstInvite($emailUser,$id_questionnaire){
+		$sql = "SELECT * FROM EST_INVITE WHERE EMAIL = '$emailUser' AND ID_QUESTIONNAIRE = '$id_questionnaire' ";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+		
+		if(empty($data)){
 		$sth = parent::prepare("INSERT INTO EST_INVITE VALUES(:emailUser,:id_questionnaire,:aParticipe)");
 		$zero=0;
 		$sth->bindParam(':emailUser',$emailUser);
 		$sth->bindParam(':id_questionnaire',$id_questionnaire);
 		$sth->bindParam(':aParticipe',$zero);
-		$sth->execute();
+		$sth->execute();}
 	}
 }
 ?>

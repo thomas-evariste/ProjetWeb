@@ -1,4 +1,9 @@
 <?php
+
+if (!ini_get('display_errors')) {
+    ini_set('display_errors', '1');
+}
+
 // define __ROOT_DIR constant which contains the absolute path on disk 
 // of the directory that contains this file (index.php) 
 // e.g. for http://eden.imt-lille-douai.fr/~luc.fabresse/index.php 
@@ -40,7 +45,6 @@ catch (Exception $e) {
 	echo 'Error : ' . $e->getMessage() . "\n"; 
 }
 
-echo $request->getControllerName();
 
 
 ?>

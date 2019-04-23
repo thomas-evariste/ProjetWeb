@@ -15,7 +15,7 @@
 							<td><input type="email" name="email" class="form-control input_user" value="" placeholder="email: "></td>
 						</tr>
 						<tr class="input-group mb-3">
-							<td>idQestionnaire:<input type="number" name="idQestionnaire" class="form-control input_user" value="<?php echo $idQestionnaire;?>" readonly></td>
+							<td>idQuestionnaire:<input type="number" name="idQestionnaire" class="form-control input_user" value="<?php echo $idQestionnaire;?>" readonly></td>
 						</tr>
 						<tr class="d-flex justify-content-center mt-3 login_container">
 							
