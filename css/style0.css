@@ -21,3 +21,7 @@ body{
 	transform: translate(0%, -50%);
 	overflow-x: auto;
 }
+
+input{
+	background-color: #F39C12;
+}
