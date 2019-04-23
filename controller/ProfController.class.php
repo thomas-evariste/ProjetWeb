@@ -485,25 +485,39 @@ class ProfController extends UserController{
         $view->render();
     }
 	
-	/*
+	
 	public function envoiEmail($request){
-		$to='loupt4@gmail.com';
-		$sujet = 'Inscription';
-		$message = 'Message';
-		$entete = 'From: imt.lille.douai@gmail.com';
-		$entete.= 'Return-Path: imt.lille.douai@gmail.com';
-		$entete.= 'MIME-Version: 1.0'.'\n';
-		$entete.= 'Content-Type: text/html; charset=UTF=8\r\n';
-		$entete.= 'X-Mailer: PHP/' . phpversion();
+		$to=$_POST['email'];
+		$from='quiz.imt.lille.douai@gmail.com';
+		$idQuestionnaire = $_POST['idQestionnaire'];
+		$currentUser = Prof::getById($_SESSION['id']);
+		$Questionnaire = Questionnaire::getById($idQuestionnaire);
+		$prenomProf = $currentUser->getprenom();
+		$nomProf = $currentUser->getNom();
+		$titreQuestionnaire = $Questionnaire->getTitre();
 		
-		Prof::smtpmailer($to,$sujet,$message,$entete);
+		
+		$sujet = 'Invitation a un quiz';
+		$message = $prenomProf.' '.$nomProf.' vous invite a vous connecter au site de quiz pour repondre au quiz: '.$titreQuestionnaire;
+		$mdp = 'imtLilleDouai';
+		
+		
+		Prof::smtpmailer($to,$sujet,$message,$from,$mdp);
 		
 		
 		$view = new UserView($this, 'home',array('user' =>$this->currentUser)); 
 		$view->render(); 
-	}*/
+	}
+	
+	public function inviterQuiz($request){
+		$idQestionnaire = $_POST['questionnaireId'];
+		
+		
+		$view = new UserView($this, 'inviter',array('user' =>$this->currentUser , 'idQestionnaire' => $idQestionnaire)); 
+		$view->render(); 
+	}
 
 } 
 	
-}
+
 ?> 

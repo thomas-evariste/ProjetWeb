@@ -1,4 +1,7 @@
 <?php 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require 'C:\UwAmp\www\ProjetWeb\composer\vendor\autoload.php';
 
 class Prof extends User{
 
@@ -173,43 +176,75 @@ class Prof extends User{
         return $questions;
     }
 	
-	/*
-	public static function smtpmailer($to,$sujet,$message,$entete){
+	
+	public static function smtpmailer($to,$sujet,$message,$from,$mdp){
 		
-		use PHPMailer\PHPMailer\PHPMailer;
-		use PHPMailer\PHPMailer\Exception;
-		require '.\composer\vendor\autoload.php';
+				
+		
 
-		
-		
-		//require_once("./class.phpmailer.php");
-		//require_once("./class.smtp.php");
-		$mail = new PHPMailer();
-		$mail->SMTPOptions = array('ssl' => 
-   array(
-      'verify_peer' => false,
-      'verify_peer_name' => false,
-      'allow_self_signed' => true));
-   		$mail->IsSMTP();
-    	$mail->IsHTML();    
-    	$mail->Host='localhost';
-    	$mail->SMTPDebug=0;
-    	$mail->SMTPAuth=true;
-    	$mail->SMTPSecure='ssl';
-    	$mail->Host='smtp.gmail.com';
-	    $mail->Port=465;
-	    $mail->Username='imt.lille.douai@gmail.com';
-	    $mail->Password='imtLilleDouai'; //ton mdp gmail
-	    $mail->CharSet="utf-8";
-	    $mail->Subject = $sujet;
-	    $mail->Body = $message;
-	    $mail->AddAddress($to);
-	                 
-	    if(!$mail->Send()){
-	        echo 'E-mail non envoyé';
-	        echo 'Mailer error:'.$mail->Errorinfo;
-	    }else{
-	        echo 'Message envoyé';
-	    }*/
+		$mail = new PHPMailer(TRUE);
+
+		/* Open the try/catch block. */
+		try {
+		   /* Set the mail sender. */
+		   $mail->setFrom($from);
+
+		   /* Add a recipient. */
+		   $mail->addAddress($to);
+
+		   /* Set the subject. */
+		   $mail->Subject = $sujet;
+
+		   /* Set the mail message body. */
+		   $mail->Body = $message;
+
+
+
+		   /* SMTP parameters. */
+		   
+		   /* Tells PHPMailer to use SMTP. */
+		   $mail->isSMTP();
+		   
+		   /* SMTP server address. */
+		   $mail->Host = 'smtp.gmail.com';
+
+		   /* Use SMTP authentication. */
+		   $mail->SMTPAuth = TRUE;
+		   
+		   /* Set the encryption system. */
+		   $mail->SMTPSecure = 'tls';
+		   
+		   /* SMTP authentication username. */
+		   $mail->Username = $from;
+		   
+		   /* SMTP authentication password. */
+		   $mail->Password = $mdp;
+		   
+		   /* Set the SMTP port. */
+		   $mail->Port = 587;
+		   
+		   /* Disable some SSL checks. */
+		   $mail->SMTPOptions = array(
+			  'ssl' => array(
+			  'verify_peer' => false,
+			  'verify_peer_name' => false,
+			  'allow_self_signed' => true
+			  )
+		   );
+		   
+		   /* Finally send the mail. */
+		   $mail->send();
+		}
+		catch (Exception $e)
+		{
+		   /* PHPMailer exception. */
+		   echo $e->errorMessage();
+		}
+		catch (\Exception $e)
+		{
+		   /* PHP exception (note the backslash to select the global namespace Exception class). */
+		   echo $e->getMessage();
+		}
+	}
 }
 ?>
