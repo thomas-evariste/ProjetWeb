@@ -549,6 +549,9 @@ class ProfController extends UserController{
 		foreach($emailInvite as $email){
 			$invites[]=Prof::getInviteByEmail($email);
 		}
+		foreach($invites as $i => $invite){
+			$invites[$i]['note']=Note::getValeurIfExist($idQestionnaire,$_SESSION['id']);
+		}
 		
 		$view = new UserView($this,'listeInvite',array('user'=>$this->currentUser,'invites'=>$invites));
 		$view->render();

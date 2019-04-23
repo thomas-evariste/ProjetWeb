@@ -56,6 +56,17 @@ class Note extends Model{
         }
 		return $resultats;
 	}
+	
+	
+	public static function getValeurIfExist($id_questionnaire,$id_user){
+		$sql = "SELECT VALEUR FROM NOTE WHERE ID_QUESTIONNAIRE = '$id_questionnaire'  AND ID_USER='$id_user'";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+        if (!empty($data)){
+            return $data->VALEUR;
+        }
+		return null;
+	}
 
 }
 
