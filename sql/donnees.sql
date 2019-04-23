@@ -146,8 +146,6 @@ INSERT INTO `QUESTION` (`ID_QUESTION`, `TYPE`, `INTITULE_QUESTION`) VALUES
 --
 
 INSERT INTO `QUESTIONNAIRE` (`ID_QUESTIONNAIRE`, `TITRE`, `DESCRIPTION_QUESTIONNAIRE`, `DATE_OUVERTURE`, `DATE_FERMETURE`, `CONNEXION_REQUISE`, `ETAT`, `URL`,`ID_CREATEUR`) VALUES
-(1, ' ad Mesopotamiam missus a socero per militares', 'Ideoque fertur neminem aliquando ob haec vel similia poenae addictum oblato de more elogio revocari iussisse, quod inexorabiles quoque principes factitarunt. et exitiale hoc vitium, quod in aliis non ', '2019-03-13', '2019-03-30', 1, 'ouvert', 'AdclivitasdefendentibusquoniamIsauriaetriduum.com',2),
-(2, 'Inpetraverim est multos statuas non.', 'Pacataeque et et redierit partes Romani pacataeque sunt securitas patrum partes sint nomen omnes Romani partes securitas securitas domina circumspectum canities suscipitur set quotquot licet tribus et', '0000-00-00', '0000-00-00', 0, 'ouvert', 'Suntplurimum.com',2),
 (3, 'QCU Nature', NULL, NULL, NULL, 0, 'Public', NULL, 2),
 (4, 'QCU Littérature', NULL, NULL, NULL, 0, 'Public', NULL, 2),
 (5, 'QCU Histoire', NULL, NULL, NULL, 0, 'Public', NULL, 2),
@@ -529,8 +527,7 @@ INSERT INTO `TAG` (`LIBELLE`, `COULEUR`) VALUES
 --
 
 INSERT INTO `SPECIFIER` (`ID_QUESTIONNAIRE`, `ID_REGLE`) VALUES
-(1, 3),
-(2, 1);
+(3, 1);
 
 
 
@@ -645,11 +642,6 @@ INSERT INTO `EST_INVITE` (`EMAIL`, `ID_QUESTIONNAIRE`, `A_PARTICIPE`) VALUES
 --
 
 INSERT INTO `CONTENIR` (`ID_QUESTION`, `ID_QUESTIONNAIRE`, `BAREME`) VALUES
-(1, 1, '1'),
-(1, 2, '0'),
-(2, 1, '1'),
-(2, 2, '0'),
-(3, 2, '0'),
 (6, 3, '1'),
 (19, 3, '1'),
 (20, 3, '1'),
