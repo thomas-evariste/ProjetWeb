@@ -1,7 +1,7 @@
 <?php 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-require 'C:\UwAmp\www\ProjetWeb\composer\vendor\autoload.php';
+require (__ROOT_DIR .'\composer\vendor\autoload.php');
 
 class Prof extends User{
 
