@@ -45,7 +45,6 @@ catch (Exception $e) {
 	echo 'Error : ' . $e->getMessage() . "\n"; 
 }
 
-echo $request->getControllerName();
 
 
 ?>

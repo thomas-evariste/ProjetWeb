@@ -263,9 +263,6 @@ alter table REPONSE_DISPONIBLE add constraint FK_APPAREILLER foreign key (REP_ID
 alter table REPONSE_DISPONIBLE add constraint FK_APPAREILLER2 foreign key (REP_ID_PROPOSITION)
       references REPONSE_DISPONIBLE (ID_PROPOSITION) on delete restrict on update cascade;
 
-alter table REPONSE_DISPONIBLE add constraint FK_SUPERVISER foreign key (ID_USER)
-      references PARTICIPANT (ID_USER) on delete restrict on update cascade;
-
 alter table SPECIFIER add constraint FK_SPECIFIER foreign key (ID_QUESTIONNAIRE)
       references QUESTIONNAIRE (ID_QUESTIONNAIRE) on delete restrict on update cascade;
 
