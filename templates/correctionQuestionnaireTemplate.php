@@ -10,7 +10,7 @@
                 url:'index.php?action=corrigerQuestion&controller=Prof',
                 data:dataAJAX,
                 }).done(function(data){
-                    alert(data);
+                    $("#reponse"+idReponse).attr('class', 'ReponseCorrecte');
                 })
     }
 
@@ -24,7 +24,7 @@
                 url:'index.php?action=corrigerQuestion&controller=Prof',
                 data:dataAJAX,
                 }).done(function(data){
-                    alert(data);
+                    $("#reponse"+idReponse).attr('class', 'ReponseFausse');
                 })
     }
 
@@ -46,25 +46,27 @@
     <tbody id="questionListBody">
     
         <?php 
-            $i = 0;
-
-            foreach($questions as $question){
-                echo "<ul class=\"intituleQuestion\">".  
-                //<th>" . $question['id'] ." </th>
-                //<th>" . $question['type']."</th>
-                "<li>" . $question['intitule'] ."</li>";
-                echo "<ul class=\"reponseQO\">";
-                foreach($reponses[$i] as $reponse){
-                    echo "<li><a>". $reponse['intitule'] . "</a></li>";
-                    echo "<input type='submit' value='Réponse valide' onclick='validerReponse(".$reponse['id'].", ".$reponse['id_user'].")'>";
-                    echo "<input type='submit' value='Mauvaise réponse' onclick='invaliderReponse(".$reponse['id'].", ".$reponse['id_user'].")'>";
+        $compte = 0;
+            foreach($questionnaire->getQuestions() as $question){
+                if (sizeof($question->getReponses())>0){
+                    echo "<ul class=\"intituleQuestion\">".  
+                    //<th>" . $question['id'] ." </th>
+                    //<th>" . $question['type']."</th>
+                    "<li>" . $question->getIntitule() ."</li>";
+                    echo "<ul class=\"reponseQO\">";
+                    foreach($question->getReponses() as $reponse){
+                        echo "<li><a id=\"reponse".$reponse->getId()."\">". $reponse->getIntitule() . "</a></li>";
+                        echo "<input type='submit' value='Réponse valide' onclick='validerReponse(".$reponse->getId().", ".$reponse->getIdUser().")'>";
+                        echo "<input type='submit' value='Mauvaise réponse' onclick='invaliderReponse(".$reponse->getId().", ".$reponse->getIdUser().")'>";
+                    }
+                    echo "</ul>";
+                    echo "</ul>";
+                    $compte=$compte+1;
+                    //<th><form action=\"index.php?action=modifierQuestion&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$question['id']."'><input type='submit' value='Modifier'></form></th>
                 }
-                echo "</ul>";
-                echo "</ul>";
-
-                //<th><form action=\"index.php?action=modifierQuestion&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$question['id']."'><input type='submit' value='Modifier'></form></th>
-
-                $i++;
+            }
+            if ($compte == 0){
+                echo "<div>Il n'y a aucune question à corriger !</div>";
             }
         
         ?>

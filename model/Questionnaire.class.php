@@ -71,6 +71,12 @@ class Questionnaire extends Model{
         $this->questions=Questionnaire::obtainQuestions($id);
     }
 
+    public static function constructWithQOOnly($id,$titre,$description,$date_ouverture,$date_fermeture,$connexion_requise,$etat,$url,$createur){
+        $questionnaire = new Questionnaire($id,$titre,$description,$date_ouverture,$date_fermeture,$connexion_requise,$etat,$url,$createur);
+        $questionnaire->setQuestions(Questionnaire::obtainQuestionsOuvertes($id));
+        return $questionnaire;
+    }
+
     public function getTitre(){
         return $this->titre;
     }
@@ -109,6 +115,43 @@ class Questionnaire extends Model{
         return $this->questions;
     }
 
+    public function setQuestions($questions){
+        $this->questions = $questions;
+    }
+
+    public function setTitre($titre){
+        $this->titre=$titre;
+    }
+    public function setDescription($description){
+        $this->description=$description;
+    }
+
+    public function setId($id){
+        $this->id=$id;
+    }
+
+    public function setDate_Ouverture($date_ouverte){
+        $this->date_ouverture=$date_ouverture;
+    }
+    public function setDate_Fermeture($date_fermeture){
+        $this->date_fermeture=$date_fermeture;
+    }
+
+    public function setConnexion_Requise(){
+        $this->connexion_requise=$connexion_requise;
+    }
+
+    public function setEtat($etat){
+        $this->etat=$etat;
+    }
+
+    public function setUrl($url){
+        $this->url=$url;
+    }
+
+    public function setCreateur($createur){
+        $this->createur=$createur;
+    }
 
 /*
     public static function logLenght($login){
@@ -137,6 +180,24 @@ class Questionnaire extends Model{
         if (!empty($data)){
             $questionnaire = new Questionnaire($data->ID_QUESTIONNAIRE,$data->TITRE,$data->DESCRIPTION_QUESTIONNAIRE,
                                           $data->DATE_OUVERTURE,$data->DATE_FERMETURE,$data->CONNEXION_REQUISE,$data->ETAT,$data->URL,$data->ID_CREATEUR);
+            return $questionnaire;
+        }
+        else{
+            return null;
+        }
+    }
+
+    public static function getACorrigerById($id){
+        $sql = "SELECT * FROM QUESTIONNAIRE WHERE ID_QUESTIONNAIRE = :id";
+        $sth = parent::prepare($sql);
+        $sth->bindParam(':id',$id);
+        $sth->execute();
+
+        $data=$sth->fetch(PDO::FETCH_OBJ);
+
+        if (!empty($data)){
+            $questionnaire = Questionnaire::constructWithQOOnly($data->ID_QUESTIONNAIRE,$data->TITRE,$data->DESCRIPTION_QUESTIONNAIRE,
+                                                $data->DATE_OUVERTURE,$data->DATE_FERMETURE,$data->CONNEXION_REQUISE,$data->ETAT,$data->URL,$data->ID_CREATEUR);
             return $questionnaire;
         }
         else{
@@ -185,6 +246,29 @@ class Questionnaire extends Model{
         $data= $sth->fetchAll(PDO::FETCH_CLASS,'Question');
         foreach($data as $question){
             $question->setReponses(Question::obtainReponses($question->getId()));
+        }
+        /*while(!empty($data)){
+            array_push($questions,Array(
+                    'id'=>$data->ID_QUESTION,
+                    'type'=>$data->TYPE,
+                    'intitule'=>$data->INTITULE_QUESTION,
+                )
+            );
+            $data = $sth->fetch(PDO::FETCH_OBJ);
+        }*/
+		return $data;
+    }
+
+    public static function obtainQuestionsOuvertes($idQuestionnaire){
+        $sql = "SELECT * FROM QUESTION 
+        WHERE ID_QUESTION IN (SELECT ID_QUESTION FROM CONTENIR WHERE ID_QUESTIONNAIRE = :idQuestionnaire )
+        AND TYPE='QO'";
+        $sth = parent::prepare($sql);
+        $sth->bindParam(':idQuestionnaire',$idQuestionnaire);
+        $sth->execute();
+        $data= $sth->fetchAll(PDO::FETCH_CLASS,'Question');
+        foreach($data as $question){
+            $question->setReponses(Question::obtainReponsesQO($question->getId()));
         }
         /*while(!empty($data)){
             array_push($questions,Array(

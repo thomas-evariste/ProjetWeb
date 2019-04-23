@@ -2,25 +2,30 @@
 
     
         <?php 
-
+            echo "<div id=\"listeQuestion\">";
             foreach($questionnaire->getQuestions() as $question){
                 $idQuestion = $question->getId();
+                
                 echo "<ul class=\"niveau2\">".  
                 //<th>" . $question['id'] ." </th>
                 //<th>" . $question['type']."</th>
                 "<li id=\"question".$idQuestion."\"><div style=\"margin:0;display:flex\"><a id=\"intitule".$idQuestion."\">" . $question->getIntitule() ."</a><button class=\"suppression\" onclick=supprimerQuestion(".$idQuestion.")></button><button class=\"modification\" onclick=modifierQuestion(".$idQuestion.")></button></div>";
                 echo "<ul class=\"niveau3\">";
                 foreach($question->getReponses() as $reponse){
-                    $r = $reponse->getId();
-                    echo "<li id=\"reponse".$r."Question".$idQuestion."\"><div style=\"margin:0;display:flex\"><a id=\"intituleRep".$r."\" class=\"" .($reponse->getReponseCorrecte() ? "ReponseCorrecte":"ReponseFausse") ."\" >". $reponse->getIntitule() ."</a><button class=\"suppression\" onclick=supprimerReponse(".$r.",".$idQuestion.")></button><button class=\"modification\" onclick=modifierReponse(".$r.",".$idQuestion.",&quot;".($reponse->getReponseCorrecte() ? "ReponseCorrecte":"ReponseFausse") ."&quot;)></button></div></li>";
+                    if($question->getType()=="QCM" | $question->getType()=="QCU" ){
+                        $r = $reponse->getId();
+                        echo "<li id=\"reponse".$r."Question".$idQuestion."\"><div style=\"margin:0;display:flex\"><a id=\"intituleRep".$r."\" class=\"" .($reponse->getReponseCorrecte() ? "ReponseCorrecte":"ReponseFausse") ."\" >". $reponse->getIntitule() ."</a><button class=\"suppression\" onclick=supprimerReponse(".$r.",".$idQuestion.")></button><button class=\"modification\" onclick=modifierReponse(".$r.",".$idQuestion.",&quot;".($reponse->getReponseCorrecte() ? "ReponseCorrecte":"ReponseFausse") ."&quot;)></button></div></li>";
+                    }
                 }
                 echo "</ul>";
                 echo "</li>";
                 echo "</ul>";
+                
 
                 //<th><form action=\"index.php?action=modifierQuestion&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$question['id']."'><input type='submit' value='Modifier'></form></th>
 
             }
+            echo "</div>";
         ?>
 
 
@@ -30,6 +35,13 @@
     var questionEnCours=false;
     var nbRep = 0;
     var nbTag=0;
+    var idQuestionL = <?=Question::createId()?>;
+    var idReponseL = <?=Reponse::createId()?>;
+
+    function supprimerQuestionDecrement(idQuestion){
+        supprimerQuestion(idQuestion);
+        idQuestionL=idQuestionL-1;
+    }
 
     function supprimerQuestion(idQuestion){
         var dataAJAX = {};
@@ -55,6 +67,12 @@
                 removeElement("reponse"+idReponse+"Question"+idQuestion);
                 $('#Error').html("La réponse a été supprimée avec succès !");
             });
+    }
+
+    function modifierNvleQuestion(idQuestion){
+        intitule = $('#question'+idQuestion).children().first().children().first().html();
+        $('#question'+idQuestion).children().first().remove();
+        $('#question'+idQuestion).prepend("<div id=\"modifDivQuestion"+idQuestion +"\"><input type=\"text\" class=\"modificationForm\" id=\"modifier"+idQuestion+"\" value=\""+intitule+"\"><button class=\"validerChangement\" onclick=\"validerModificationQuestion("+idQuestion+")\"></button><button class=\"annulerChangement\" onclick=\"annulerModificationNvleQuestion("+idQuestion+",&quot;"+intitule+"&quot;)\"></button></div>");
     }
 
     function modifierQuestion(idQuestion){
@@ -97,6 +115,11 @@
                 removeElement('modifDivRep'+idReponse);
                 $('#reponse'+idReponse+'Question'+idQuestion).prepend("<div style=\"margin:0;display:flex\"><a id=\"intituleRep"+ idReponse+"\" class=\"" + classe +"\" >" + dataAJAX['intituleReponse'] +"</a><button class=\"suppression\" onclick=supprimerReponse("+idReponse+","+idQuestion+")></button><button class=\"modification\" onclick=modifierReponse("+idReponse+","+idQuestion+",&quot;"+classe+"&quot;)></button></div>");
             });
+    }
+
+    function annulerModificationNvleQuestion(idQuestion,intitule){
+        $('#question'+idQuestion).children().first().remove();
+        $('#question'+idQuestion).prepend("<div style=\"margin:0;display:flex\"><a id=\"intitule"+idQuestion+"\">" +intitule +"</a><button class=\"suppression\" onclick=supprimerQuestionDecrement("+idQuestion+")></button><button class=\"modification\" onclick=modifierNvleQuestion("+idQuestion+")></button></div>");
     }
 
     function annulerModificationQuestion(idQuestion,intitule){
@@ -145,10 +168,12 @@
 
 
     function validateQuestion(){
+        
         var dataAJAX = {};
         var checked = $("#Form input:checked").length>0;
         var erreurPresente=false;
         var reponseList = [];
+        var reponseCorrecte=[];
         $("#Error").empty();
         if ($('#intitule').val().trim() == "" || $('#intitule').val().length > 100){
             $("#Error").append("<p>Merci de ne pas excéder 100 caractères et de ne pas laisser l'intitulé de la question vide</p>")
@@ -199,9 +224,11 @@
                     if (questionEnCours=="QCM"){
                         if ($('#repCorrecteCheckBox'+i).prop('checked')){
                             dataAJAX['repCorrecte'+i]=$('#repCorrecteCheckBox'+i).val();
+                            reponseCorrecte[i]="ReponseCorrecte";
                         }
                         else{
                             dataAJAX['repCorrecte'+i]=0;
+                            reponseCorrecte[i]="ReponseFausse";
                         }
                     }
                     if (questionEnCours=="QCU"){
@@ -219,13 +246,17 @@
                 url:'index.php?action=insertionQuestion&controller=Prof',
                 data:dataAJAX,
                 }).done(function(data){
-                    alert(data);
-                    $('#Error').append("La question a été ajoutée avec succès !");
-                    addToQuestionList("",""+questionEnCours,$('#intitule').val());
+                    $('#Error').append("La question a été ajoutée avec succès ! Si vous voulez modifier les réponses, merci d'actualiser la page");
+                    $('#listeQuestion').append("<ul class=\"niveau2\"><li id=\"question"+idQuestionL+"\"><div style=\"margin:0;display:flex\"><a id=\"intitule"+idQuestionL+"\">"+($('#intitule').val())+"</a><button class=\"suppression\" onclick=supprimerQuestionDecrement("+idQuestionL+")></button><button class=\"modification\" onclick=modifierNvleQuestion("+idQuestionL+")></button></div><ul id=\"reponsesList"+idQuestionL+"\" class=\"niveau3\"></ul></li></ul>");
+                    for(var i=0;i<nbRep;i++){
+                        $('#reponsesList'+idQuestionL).append("<li id=\"reponse"+idReponseL+"Question"+idQuestionL+"\"><div style=\"margin:0;display:flex\"><a id=\"intituleRep"+idReponseL+"\" class=\""+reponseCorrecte[i]+"\">"+$('#rep'+i).val()+"</a></div></li>")
+                        idReponseL=idReponseL+1;
+                    }
                     removeChildren("Form");
                     questionEnCours=false;
                     nbRep=0;
                     nbTag=0;
+                    idQuestionL=idQuestionL+1;
                 })
         }
         return false;
