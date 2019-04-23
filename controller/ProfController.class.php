@@ -448,7 +448,7 @@ class ProfController extends UserController{
 		foreach($questionnaires as $key => $questionnaire){
 			$questionnaires[$key]['corrige']=Questionnaire::getCorrige($questionnaire['id']);
 		}
-        $view = new UserView($this,'resultatQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+        $view = new UserView($this,'resultatQuestionnairesProf',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
         $view->render();
     }
 	
@@ -462,11 +462,11 @@ class ProfController extends UserController{
 		while($permut){
 			$permut =false;
 			for($i=0;$i<$nbResultats-1;$i++){
-				if($resultats[$i]['valeur']>$resultats[$i+1]['valeur']){
+				if($resultats[$i]['valeur']<$resultats[$i+1]['valeur']){
 					$permut = true;
-					$int = resultats[$i]['valeur'];
-					$resultats[$i]['valeur']=$resultats[$i+1]['valeur'];
-					$resultats[$i+1]['valeur'] = $int;
+					$int = $resultats[$i];
+					$resultats[$i]=$resultats[$i+1];
+					$resultats[$i+1] = $int;
 				}
 			}
 		}
@@ -485,7 +485,6 @@ class ProfController extends UserController{
         $view->render();
     }
 	
-	
 	public function envoiEmail($request){
 		$to=$_POST['email'];
 		$from='quiz.imt.lille.douai@gmail.com';
@@ -495,7 +494,7 @@ class ProfController extends UserController{
 		$prenomProf = $currentUser->getprenom();
 		$nomProf = $currentUser->getNom();
 		$titreQuestionnaire = $Questionnaire->getTitre();
-		
+		Prof::setEstInvite($to,$idQuestionnaire);
 		
 		$sujet = 'Invitation a un quiz';
 		$message = $prenomProf.' '.$nomProf.' vous invite a vous connecter au site de quiz pour repondre au quiz: '.$titreQuestionnaire. ' click : http://localhost/ProjetWeb/index.php?action=loginToInvitation' ;
@@ -539,6 +538,22 @@ class ProfController extends UserController{
 		Prof::modify('MAIL',$userEmail,$_SESSION['id']);
 		$questionnaires = Prof::getQuestionnaireAFaireInvite($currentUser->getId(),$userEmail);
 		$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+		$view->render();
+	}
+	
+	public function voirInviterQuiz($request){
+		$idQestionnaire = $_POST['questionnaireId'];
+		
+		$emailInvite=Prof::getEmailInvite($idQestionnaire);
+		$invites=array();
+		foreach($emailInvite as $email){
+			$invites[]=Prof::getInviteByEmail($email);
+		}
+		foreach($invites as $i => $invite){
+			$invites[$i]['note']=Note::getValeurIfExist($idQestionnaire,$_SESSION['id']);
+		}
+		
+		$view = new UserView($this,'listeInvite',array('user'=>$this->currentUser,'invites'=>$invites));
 		$view->render();
 	}
 

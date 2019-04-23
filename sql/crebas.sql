@@ -129,11 +129,11 @@ create table PARTICIPANT
    ID_USER              int not null auto_increment,
    LOGIN                varchar(200) not null,
    PASSWORD             varchar(200) not null,
-   MAJEURE              varchar(50),
    PROMOTION            varchar(50),
-   MAIL                 varchar(200),
+   MAJEURE              varchar(50),
    NOM                  varchar(50),
    PRENOM               varchar(50),
+   MAIL                 varchar(200),
 
 
    primary key (ID_USER)

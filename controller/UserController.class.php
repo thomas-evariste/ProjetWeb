@@ -264,8 +264,9 @@ class UserController extends AnonymousController{
         $view->render();
     }
 	
+	
 	public function classementQuiz($request){
-		$currentUser = User::getById($_SESSION['id']);
+		$currentUser = Prof::getById($_SESSION['id']);
 		$id_questionnaire = $_POST['questionnaireId'];
 		$resultats = NOTE::getResultats($id_questionnaire);
 		$nbResultats = count($resultats);
@@ -274,11 +275,11 @@ class UserController extends AnonymousController{
 		while($permut){
 			$permut =false;
 			for($i=0;$i<$nbResultats-1;$i++){
-				if($resultats[$i]['valeur']>$resultats[$i+1]['valeur']){
+				if($resultats[$i]['valeur']<$resultats[$i+1]['valeur']){
 					$permut = true;
-					$int = resultats[$i]['valeur'];
-					$resultats[$i]['valeur']=$resultats[$i+1]['valeur'];
-					$resultats[$i+1]['valeur'] = $int;
+					$int = $resultats[$i];
+					$resultats[$i]=$resultats[$i+1];
+					$resultats[$i+1] = $int;
 				}
 			}
 		}
@@ -296,6 +297,7 @@ class UserController extends AnonymousController{
         $view = new UserView($this,'classementQuestionnaires',array('user'=>$this->currentUser, 'resultats'=>$resultats));
         $view->render();
     }
+	
     
     public function voirQuestionnairesInvite($request){
 		$currentUser = User::getById($_SESSION['id']);

@@ -246,5 +246,51 @@ class Prof extends User{
 		   echo $e->getMessage();
 		}
 	}
+	
+	public static function getEmailInvite($idQuestionnaire){
+		$sql = "SELECT EMAIL FROM EST_INVITE WHERE ID_QUESTIONNAIRE = '$idQuestionnaire' ";
+        $sth = parent::query($sql);
+        $data=$sth->fetch(PDO::FETCH_OBJ);
+        $emailInvite=array();
+        while (!empty($data)){
+            $emailInvite[]=$data->EMAIL;
+            $data=$sth->fetch(PDO::FETCH_OBJ);
+        }
+        return $emailInvite;
+	}
+	
+	public static function getInviteByEmail($email){
+		$invite= array( 'nom' => '', 'prenom' => '', 'idUser' => null, 'email' => $email);
+		
+		$sql = "SELECT NOM, PRENOM, ID_USER, MAIL FROM ENSEIGNANT WHERE MAIL = '$email'";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+        if (!empty($data)){
+            $invite['nom']=$data->NOM;
+            $invite['prenom']=$data->PRENOM;
+            $invite['idUser']=$data->ID_USER;
+        }
+		
+		$sql = "SELECT NOM, PRENOM, ID_USER, MAIL FROM PARTICIPANT WHERE MAIL = '$email'";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+        if (!empty($data)){
+            $invite['nom']=$data->NOM;
+            $invite['prenom']=$data->PRENOM;
+            $invite['idUser']=$data->ID_USER;
+        }
+		
+		return $invite;
+	}
+	
+	
+	public static function setEstInvite($emailUser,$id_questionnaire){
+		$sth = parent::prepare("INSERT INTO EST_INVITE VALUES(:emailUser,:id_questionnaire,:aParticipe)");
+		$zero=0;
+		$sth->bindParam(':emailUser',$emailUser);
+		$sth->bindParam(':id_questionnaire',$id_questionnaire);
+		$sth->bindParam(':aParticipe',$zero);
+		$sth->execute();
+	}
 }
 ?>
