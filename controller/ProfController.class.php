@@ -356,7 +356,7 @@ class ProfController extends UserController{
 		}
 		$currentUser->tenterQO($id_user,$argsQO);
 		$currentUser->tenterQCM_QCU($id_user,$args);
-		$view = new UserView($this, 'home',array('user' =>$this->currentUser)); 
+		$view = new UserView($this, 'merci',array('user' =>$this->currentUser)); 
 		$view->render(); 
 		
 		$questionnaire = $currentUser->getQuestionnaireByReponse($id_reponse);
@@ -485,6 +485,25 @@ class ProfController extends UserController{
         $view->render();
     }
 	
+	/*
+	public function envoiEmail($request){
+		$to='loupt4@gmail.com';
+		$sujet = 'Inscription';
+		$message = 'Message';
+		$entete = 'From: imt.lille.douai@gmail.com';
+		$entete.= 'Return-Path: imt.lille.douai@gmail.com';
+		$entete.= 'MIME-Version: 1.0'.'\n';
+		$entete.= 'Content-Type: text/html; charset=UTF=8\r\n';
+		$entete.= 'X-Mailer: PHP/' . phpversion();
+		
+		Prof::smtpmailer($to,$sujet,$message,$entete);
+		
+		
+		$view = new UserView($this, 'home',array('user' =>$this->currentUser)); 
+		$view->render(); 
+	}*/
+
+} 
 	
 }
 ?> 

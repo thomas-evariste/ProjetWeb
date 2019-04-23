@@ -34,6 +34,12 @@
           Profil
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="index.php?action=envoiEmail&controller=prof">
+          <i class="fa fa-user"></i>
+          Email
+        </a>
+      </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-question-circle"></i>
