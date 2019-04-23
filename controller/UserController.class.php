@@ -330,6 +330,15 @@ class UserController extends AnonymousController{
 		$view->render();
 	}
 	
+	public function questionnairesParTag($request){
+		$currentUser = User::getById($_SESSION['id']);
+		$tag = $_GET['tag'];
+		$questionnaires = User::getQuestionnairesParTag($currentUser->getId(),$tag);
+		$nomDePage = 'Questionnaires liés à : '.$tag;
+		$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires,'nomDePage' =>$nomDePage));
+        $view->render();
+
+	}
 	
 }
 ?>
