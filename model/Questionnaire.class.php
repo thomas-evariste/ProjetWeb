@@ -178,7 +178,7 @@ class Questionnaire extends Model{
         $data= $sth->fetch(PDO::FETCH_OBJ);
 
         if (!empty($data)){
-            $questionnaire = new Questionnaire($data->ID_QUESTIONNAIRE,$data->TITRE,$data->DESCRIPTION_QUESTIONNAIRE,
+            $questionnaire = new Questionnaire($data->ID_QUESTIONNAIRE,utf8_encode($data->TITRE),$data->DESCRIPTION_QUESTIONNAIRE,
                                           $data->DATE_OUVERTURE,$data->DATE_FERMETURE,$data->CONNEXION_REQUISE,$data->ETAT,$data->URL,$data->ID_CREATEUR);
             return $questionnaire;
         }
