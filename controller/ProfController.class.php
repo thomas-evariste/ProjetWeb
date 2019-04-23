@@ -485,7 +485,6 @@ class ProfController extends UserController{
         $view->render();
     }
 	
-	
 	public function envoiEmail($request){
 		$to=$_POST['email'];
 		$from='quiz.imt.lille.douai@gmail.com';
@@ -495,7 +494,7 @@ class ProfController extends UserController{
 		$prenomProf = $currentUser->getprenom();
 		$nomProf = $currentUser->getNom();
 		$titreQuestionnaire = $Questionnaire->getTitre();
-		
+		Prof::setEstInvite($to,$idQuestionnaire);
 		
 		$sujet = 'Invitation a un quiz';
 		$message = $prenomProf.' '.$nomProf.' vous invite a vous connecter au site de quiz pour repondre au quiz: '.$titreQuestionnaire. ' click : http://localhost/ProjetWeb/index.php?action=loginToInvitation' ;
