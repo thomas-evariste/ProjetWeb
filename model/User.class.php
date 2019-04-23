@@ -514,6 +514,29 @@ class User extends Model{
         }
         return $questionnaires;
     }
+
+    public static function getQuestionnairesParTag($id, $tag){
+        $sql = "SELECT * FROM QUESTIONNAIRE WHERE QUESTIONNAIRE.ID_QUESTIONNAIRE IN (SELECT CONTENIR.ID_QUESTIONNAIRE FROM CONTENIR WHERE CONTENIR.ID_QUESTION IN (SELECT ASSOCIER.ID_QUESTION FROM ASSOCIER WHERE ASSOCIER.LIBELLE=".$tag."))";
+        $sth = parent::query($sql);
+        $data = $sth->fetch(PDO::FETCH_OBJ);
+        $questionnaires = array();
+        while(!empty($data)){
+            array_push($questionnaires,Array(
+                    'id'=>$data->ID_QUESTIONNAIRE,
+                    'titre'=>utf8_encode($data->TITRE), 
+                    'description'=>$data->DESCRIPTION_QUESTIONNAIRE,
+                    'dateOuverture'=>$data->DATE_OUVERTURE,
+                    'dateFermeture'=>$data->DATE_FERMETURE,
+                    'connexionRequise'=>$data->CONNEXION_REQUISE,
+                    'etat'=>$data->ETAT,
+                    'url'=>$data->URL,
+                    'createur'=>$data->ID_CREATEUR
+                )
+            );
+            $data = $sth->fetch(PDO::FETCH_OBJ);
+        }
+        return $questionnaires;
+    }
 	
 }
 
