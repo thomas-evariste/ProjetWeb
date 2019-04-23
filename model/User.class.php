@@ -284,7 +284,7 @@ class User extends Model{
 		foreach ($args as $key => $tentative) {
 			$zero =0;
 			$null = null;
-			$id_reponse = REPONSE::createId();
+			$id_reponse = Reponse::createId();
 			$sth = parent::prepare("INSERT INTO REPONSE_DISPONIBLE VALUES(:id_reponse,:rep_id_reponse,:rep_id_reponse2,:id_user,:intitule_reponse,:reponse_correcte)");
 			$sth->bindParam(':id_reponse',$id_reponse);
 			$sth->bindParam(':rep_id_reponse',$null);

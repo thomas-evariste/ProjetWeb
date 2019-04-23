@@ -48,10 +48,6 @@
           <i class="fa fa-plus-circle"></i>
           Créer un questionnaire
         </a>
-        <a class="dropdown-item" href="index.php?action=creerQuestion&controller=prof">
-          <i class="fa fa-plus-circle"></i>
-          Créer une question
-        </a>
         </div>
       </li>
       <li class="nav-item dropdown">
@@ -65,12 +61,14 @@
           <a class="dropdown-item" href="index.php?action=voirResultatQuestionnaires&controller=prof">Voir mes résultats</a>
         </div>
       </li>
-	  <li class="nav-item">
+    <div class="alignRight">
+	  <li class="nav-item-to-the-right">
         <a class="nav-link" href="index.php?action=deconnexion&controller=prof">
           <i class="fa fa-sign-out-alt"></i>
           Déconnexion
         </a>
       </li>
+    </div>
     </ul>
   </div>
 </nav>
