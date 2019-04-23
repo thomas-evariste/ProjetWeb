@@ -516,6 +516,31 @@ class ProfController extends UserController{
 		$view = new UserView($this, 'inviter',array('user' =>$this->currentUser , 'idQestionnaire' => $idQestionnaire)); 
 		$view->render(); 
 	}
+    
+    public function voirQuestionnairesInvite($request){
+		$currentUser = Prof::getById($_SESSION['id']);
+		$userEmail=$currentUser->getMail();
+		echo ' cc: '.$userEmail.' :cc ';
+		if( $userEmail==""){
+			$view = new UserView($this,'ajoutEmailProf',array('user'=>$this->currentUser));
+			$view->render();
+		}
+		else{
+			$questionnaires = Prof::getQuestionnaireAFaireInvite($currentUser->getId(),$userEmail);
+			$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+			$view->render();
+		}
+    }
+	
+	public function ajoutEmail($request){
+		$currentUser = Prof::getById($_SESSION['id']);
+		$userEmail = $_POST['mail'];
+		echo $userEmail;
+		Prof::modify('MAIL',$userEmail,$_SESSION['id']);
+		$questionnaires = Prof::getQuestionnaireAFaireInvite($currentUser->getId(),$userEmail);
+		$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+		$view->render();
+	}
 
 } 
 	

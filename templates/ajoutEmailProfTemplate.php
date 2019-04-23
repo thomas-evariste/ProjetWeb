@@ -11,9 +11,8 @@
 					</div>
 				</div>
 				<div class="d-flex justify-content-center form_container">
-					<form  action="index.php?action=ajoutEmail&controller=user" method="post">
+					<form  action="index.php?action=ajoutEmail&controller=prof" method="post">
 						<table>
-
                         <tr class="input-group mb-3">
 							<td>vous avez besoin d'un email pour être invité a des questionnaire<input type="email" name="mail" class="form-control input_user" value="" placeholder="Mail :"></td>
 						</tr>
