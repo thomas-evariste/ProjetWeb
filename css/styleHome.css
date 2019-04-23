@@ -70,7 +70,7 @@
     width: calc(100% + 1px);
     height: 100%;
     height: calc(100% + 1px);
-    color:#fff;
+    color: white;
     position: absolute;
     text-align: center;
     text-transform: uppercase;
@@ -88,12 +88,24 @@
     vertical-align: middle;
 }
 
-.grid-item:hover .content{
+.grid-item:hover .content1{
     opacity:1;
+	background-color: #00B8DE;
 } 
 
-.grid-item:hover .content .caption{
+.grid-item:hover .content1 .caption{
     opacity:1;
+	background-color: #00B8DE;
+}
+
+.grid-item:hover .content2{
+    opacity:1;
+	background-color: #F39C12;
+} 
+
+.grid-item:hover .content2 .caption{
+    opacity:1;
+	background-color: #F39C12
 }
 
 /*tamanho dos itens da grid - termina*/
