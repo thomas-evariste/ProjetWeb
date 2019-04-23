@@ -202,12 +202,12 @@ class Questionnaire extends Model{
         $sql = "SELECT * FROM QUESTION WHERE ID_QUESTION IN (SELECT ID_QUESTION FROM CONTENIR WHERE ID_QUESTIONNAIRE = '$idQuestionnaire' )";
         $sth = parent::query($sql);
         $data= $sth->fetch(PDO::FETCH_OBJ);
-		$questions = array();
+        $questions = array();
         while(!empty($data)){
             array_push($questions,Array(
                     'id'=>$data->ID_QUESTION,
                     'type'=>$data->TYPE,
-                    'intitule'=>$data->INTITULE_QUESTION,
+                    'intitule'=>utf8_encode($data->INTITULE_QUESTION),
                 )
             );
             $data = $sth->fetch(PDO::FETCH_OBJ);

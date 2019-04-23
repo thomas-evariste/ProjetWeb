@@ -228,7 +228,7 @@ class User extends Model{
 			if($add){
 				array_push($questionnaires,Array(
                     'id'=>$data->ID_QUESTIONNAIRE,
-                    'titre'=>$data->TITRE,
+                    'titre'=>utf8_encode($data->TITRE),
                     'description'=>$data->DESCRIPTION_QUESTIONNAIRE,
                     'dateOuverture'=>$data->DATE_OUVERTURE,
                     'dateFermeture'=>$data->DATE_FERMETURE,

@@ -135,7 +135,7 @@ class Question extends Model{
                     'rep_id_proposition'=>$data->REP_ID_PROPOSITION,
                     'rep_id_proposition2'=>$data->REP_ID_PROPOSITION2,
                     'id_user'=>$data->ID_USER,
-                    'intitule_proposition'=>$data->INTITULE_PROPOSITION,
+                    'intitule_proposition'=>utf8_encode($data->INTITULE_PROPOSITION),
                     'reponse_correcte'=>$data->REPONSE_CORRECTE,
                 )
             );

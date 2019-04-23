@@ -14,6 +14,7 @@ class DatabasePDO{
 		$mysql_password="root";
 		
     $PDO = new PDO($mysql_adresse,$mysql_user,$mysql_password);
+		$PDO->exec("SET CHARACTER SET utf8"); 
 		if(is_null(self::$pdo)){
 			self::$pdo = new PDO($mysql_adresse,$mysql_user,$mysql_password);
 			self::$pdo-> setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
