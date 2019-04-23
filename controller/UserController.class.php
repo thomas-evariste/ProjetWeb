@@ -296,6 +296,30 @@ class UserController extends AnonymousController{
         $view = new UserView($this,'classementQuestionnaires',array('user'=>$this->currentUser, 'resultats'=>$resultats));
         $view->render();
     }
+    
+    public function voirQuestionnairesInvite($request){
+		$currentUser = User::getById($_SESSION['id']);
+		$userEmail=$currentUser->getMail();
+		if( $userEmail==""){
+			$view = new UserView($this,'ajoutEmail',array('user'=>$this->currentUser));
+			$view->render();
+		}
+		else{
+			$questionnaires = User::getQuestionnaireAFaireInvite($currentUser->getId(),$userEmail);
+			$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+			$view->render();
+		}
+    }
+	
+	public function ajoutEmail($request){
+		$currentUser = User::getById($_SESSION['id']);
+		$userEmail = $_POST['mail'];
+		echo $userEmail;
+		User::modify('MAIL',$userEmail,$_SESSION['id']);
+		$questionnaires = User::getQuestionnaireAFaireInvite($currentUser->getId(),$userEmail);
+		$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+		$view->render();
+	}
 	
 }
 ?>

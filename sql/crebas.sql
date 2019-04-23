@@ -102,10 +102,10 @@ create table ENSEIGNANT
 /*==============================================================*/
 create table EST_INVITE
 (
-   ID_USER              int not null,
+   EMAIL                varchar(50) not null,
    ID_QUESTIONNAIRE     int not null,
    A_PARTICIPE          bool,
-   primary key (ID_USER, ID_QUESTIONNAIRE)
+   primary key (EMAIL, ID_QUESTIONNAIRE)
 );
 
 /*==============================================================*/
@@ -247,9 +247,6 @@ alter table DISPOSER add constraint FK_DISPOSER foreign key (ID_QUESTION)
 
 alter table DISPOSER add constraint FK_DISPOSER2 foreign key (ID_PROPOSITION)
       references REPONSE_DISPONIBLE (ID_PROPOSITION) on delete restrict on update cascade;
-
-alter table EST_INVITE add constraint FK_EST_INVITE foreign key (ID_USER)
-      references PARTICIPANT (ID_USER) on delete restrict on update cascade;
 
 alter table EST_INVITE add constraint FK_EST_INVITE2 foreign key (ID_QUESTIONNAIRE)
       references QUESTIONNAIRE (ID_QUESTIONNAIRE) on delete restrict on update cascade;
