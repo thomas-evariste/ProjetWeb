@@ -1,12 +1,9 @@
 <?php
 
-echo ini_get('display_errors');
-
 if (!ini_get('display_errors')) {
     ini_set('display_errors', '1');
 }
 
-echo ini_get('display_errors');
 // define __ROOT_DIR constant which contains the absolute path on disk 
 // of the directory that contains this file (index.php) 
 // e.g. for http://eden.imt-lille-douai.fr/~luc.fabresse/index.php 
