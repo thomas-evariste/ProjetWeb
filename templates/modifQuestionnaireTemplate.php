@@ -36,6 +36,7 @@
     var nbRep = 0;
     var nbTag=0;
     var idQuestionL = <?=Question::createId()?>;
+    var idReponseL = <?=Reponse::createId()?>;
 
     function supprimerQuestionDecrement(idQuestion){
         supprimerQuestion(idQuestion);
@@ -172,6 +173,7 @@
         var checked = $("#Form input:checked").length>0;
         var erreurPresente=false;
         var reponseList = [];
+        var reponseCorrecte=[];
         $("#Error").empty();
         if ($('#intitule').val().trim() == "" || $('#intitule').val().length > 100){
             $("#Error").append("<p>Merci de ne pas excéder 100 caractères et de ne pas laisser l'intitulé de la question vide</p>")
@@ -222,9 +224,11 @@
                     if (questionEnCours=="QCM"){
                         if ($('#repCorrecteCheckBox'+i).prop('checked')){
                             dataAJAX['repCorrecte'+i]=$('#repCorrecteCheckBox'+i).val();
+                            reponseCorrecte[i]="ReponseCorrecte";
                         }
                         else{
                             dataAJAX['repCorrecte'+i]=0;
+                            reponseCorrecte[i]="ReponseFausse";
                         }
                     }
                     if (questionEnCours=="QCU"){
@@ -242,8 +246,12 @@
                 url:'index.php?action=insertionQuestion&controller=Prof',
                 data:dataAJAX,
                 }).done(function(data){
-                    $('#Error').append("La question a été ajoutée avec succès !");
-                    $('#listeQuestion').append("<ul class=\"niveau2\"><li id=\"question"+idQuestionL+"\"><div style=\"margin:0;display:flex\"><a id=\"intitule"+idQuestionL+"\">"+($('#intitule').val())+"</a><button class=\"suppression\" onclick=supprimerQuestionDecrement("+idQuestionL+")></button><button class=\"modification\" onclick=modifierNvleQuestion("+idQuestionL+")></button></div></li></ul>");
+                    $('#Error').append("La question a été ajoutée avec succès ! Si vous voulez modifier les réponses, merci d'actualiser la page");
+                    $('#listeQuestion').append("<ul class=\"niveau2\"><li id=\"question"+idQuestionL+"\"><div style=\"margin:0;display:flex\"><a id=\"intitule"+idQuestionL+"\">"+($('#intitule').val())+"</a><button class=\"suppression\" onclick=supprimerQuestionDecrement("+idQuestionL+")></button><button class=\"modification\" onclick=modifierNvleQuestion("+idQuestionL+")></button></div><ul id=\"reponsesList"+idQuestionL+"\" class=\"niveau3\"></ul></li></ul>");
+                    for(var i=0;i<nbRep;i++){
+                        $('#reponsesList'+idQuestionL).append("<li id=\"reponse"+idReponseL+"Question"+idQuestionL+"\"><div style=\"margin:0;display:flex\"><a id=\"intituleRep"+idReponseL+"\" class=\""+reponseCorrecte[i]+"\">"+$('#rep'+i).val()+"</a></div></li>")
+                        idReponseL=idReponseL+1;
+                    }
                     removeChildren("Form");
                     questionEnCours=false;
                     nbRep=0;
