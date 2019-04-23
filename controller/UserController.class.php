@@ -77,7 +77,7 @@ class UserController extends AnonymousController{
     
     public function voirQuestionnaires($request){
 		$currentUser = User::getById($_SESSION['id']);
-        $questionnaires = User::getQuestionnaireAFaire($currentUser->getId());
+		$questionnaires = User::getQuestionnaireAFaire($currentUser->getId());
         $view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
         $view->render();
     }
@@ -123,7 +123,7 @@ class UserController extends AnonymousController{
 					$view = new UserView($this, 'quizReponseInteractifUneReponse',array('user' =>$this->currentUser,'question' => $question, 'numero' => $i, 'reponse' => $reponse, 'numero_reponse' => $j, 'type' => $type)); 
 					$view->renderMilieu(); 
 				
-					//recuperer les reponse possible
+					//recuperer les reponses possibles
 				}
 			}
 			

@@ -146,7 +146,7 @@ create table QUESTION
 (
    ID_QUESTION          int not null auto_increment,
    TYPE                 char(10) not null,
-   INTITULE_QUESTION    varchar(100) not null,
+   INTITULE_QUESTION    varchar(150) not null,
    primary key (ID_QUESTION)
 );
 
