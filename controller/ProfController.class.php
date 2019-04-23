@@ -498,7 +498,7 @@ class ProfController extends UserController{
 		
 		
 		$sujet = 'Invitation a un quiz';
-		$message = $prenomProf.' '.$nomProf.' vous invite a vous connecter au site de quiz pour repondre au quiz: '.$titreQuestionnaire;
+		$message = $prenomProf.' '.$nomProf.' vous invite a vous connecter au site de quiz pour repondre au quiz: '.$titreQuestionnaire. ' click : http://localhost/ProjetWeb/index.php?action=loginToInvitation' ;
 		$mdp = 'imtLilleDouai';
 		
 		

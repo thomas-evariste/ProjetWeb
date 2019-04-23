@@ -465,6 +465,17 @@ class User extends Model{
         }
         return $questionnaires;
     }
+    public function getEmail($id){
+		$sql = "SELECT MAIL FROM PARTICIPANT WHERE ID_USER = '$id' ";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+        if (!empty($data)){
+			return $data->MAIL;
+		}
+		else{
+			return "" ;
+		}
+    }
 }
 
 ?> 
