@@ -412,6 +412,8 @@ class User extends Model{
 		$sth->execute();
 	}
 	
+	
+	
 	public static function getQuestionnaireFait($idUser){
         $sql = "SELECT * FROM QUESTIONNAIRE WHERE (ID_QUESTIONNAIRE IN (SELECT ID_QUESTIONNAIRE FROM NOTE WHERE ID_USER = '$idUser')) ";
         $sth = static::query($sql);
@@ -488,6 +490,7 @@ class User extends Model{
 			return "" ;
 		}
     }
+	
 }
 
 ?> 

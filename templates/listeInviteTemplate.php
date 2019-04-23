@@ -19,9 +19,9 @@
                 echo "<tr>   
                 <th>" . $invite['prenom'] ." </th>
                 <th>" . $invite['nom']."</th>
-                <th>" . $invite['email'] ."</th>"
-              //  <th>" . $invite['note'] ."</th> 
-				."</tr>";
+                <th>" . $invite['email'] ."</th>
+                <th>" . $invite['note'] ."</th> 
+				</tr>";
 				
             }
         

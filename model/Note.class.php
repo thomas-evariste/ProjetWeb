@@ -36,6 +36,12 @@ class Note extends Model{
 			$sql2 = "SELECT * FROM PARTICIPANT WHERE ID_USER = '$data->ID_USER'";
 			$sth2 = parent::query($sql2);
 			$data2= $sth2->fetch(PDO::FETCH_OBJ);
+			if(empty($data2)){
+				$sql2 = "SELECT * FROM ENSEIGNANT WHERE ID_USER = '$data->ID_USER'";
+				$sth2 = parent::query($sql2);
+				$data2= $sth2->fetch(PDO::FETCH_OBJ);
+			}
+			
 			
             array_push($resultats,Array(
                     'id_user'=>$data->ID_USER,
@@ -49,6 +55,17 @@ class Note extends Model{
             $data = $sth->fetch(PDO::FETCH_OBJ);
         }
 		return $resultats;
+	}
+	
+	
+	public static function getValeurIfExist($id_questionnaire,$id_user){
+		$sql = "SELECT VALEUR FROM NOTE WHERE ID_QUESTIONNAIRE = '$id_questionnaire'  AND ID_USER='$id_user'";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+        if (!empty($data)){
+            return $data->VALEUR;
+        }
+		return null;
 	}
 
 }
