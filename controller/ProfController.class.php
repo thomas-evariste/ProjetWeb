@@ -541,6 +541,19 @@ class ProfController extends UserController{
 		$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
 		$view->render();
 	}
+	
+	public function voirInviterQuiz($request){
+		$idQestionnaire = $_POST['questionnaireId'];
+		
+		$emailInvite=Prof::getEmailInvite($idQestionnaire);
+		$invites=array();
+		foreach($emailInvite as $email){
+			$invites[]=Prof::getInviteByEmail($email);
+		}
+		
+		$view = new UserView($this,'listeInvite',array('user'=>$this->currentUser,'invites'=>$invites));
+		$view->render();
+	}
 
 } 
 	

@@ -246,5 +246,41 @@ class Prof extends User{
 		   echo $e->getMessage();
 		}
 	}
+	
+	public static function getEmailInvite($idQuestionnaire){
+		$sql = "SELECT EMAIL FROM EST_INVITE WHERE ID_QUESTIONNAIRE = '$idQuestionnaire' ";
+        $sth = parent::query($sql);
+        $data=$sth->fetch(PDO::FETCH_OBJ);
+        $emailInvite=array();
+        while (!empty($data)){
+            $emailInvite[]=$data->EMAIL;
+            $data=$sth->fetch(PDO::FETCH_OBJ);
+        }
+        return $emailInvite;
+	}
+	
+	public static function getInviteByEmail($email){
+		$invite= array( 'nom' => '', 'prenom' => '', 'idUser' => null, 'email' => $email);
+		
+		$sql = "SELECT NOM, PRENOM, ID_USER, EMAIL FROM ENSEIGNANT WHERE EMAIL = '$email'";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+        if (!empty($data)){
+            $invite['nom']=$data->NOM;
+            $invite['prenom']=$data->PRENOM;
+            $invite['idUser']=$data->ID_USER;
+        }
+		
+		$sql = "SELECT NOM, PRENOM, ID_USER, EMAIL FROM PARTICIPANT WHERE EMAIL = '$email'";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+        if (!empty($data)){
+            $invite['nom']=$data->NOM;
+            $invite['prenom']=$data->PRENOM;
+            $invite['idUser']=$data->ID_USER;
+        }
+		
+		return $invite;
+	}
 }
 ?>

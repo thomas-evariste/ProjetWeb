@@ -35,6 +35,7 @@
                 ";
 				if($questionnaire['etat']=='Prive'){
 				echo "<th><form action=\"index.php?action=inviterQuiz&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$questionnaire['id']."'><input type='submit' value='Inviter'></form></th>";
+                echo "<th><form action=\"index.php?action=voirInviterQuiz&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$questionnaire['id']."'><input type='submit' value='Voir invités'></form></th>";
                 }
 				echo "</tr>";
             }
