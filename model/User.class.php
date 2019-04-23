@@ -356,6 +356,18 @@ class User extends Model{
 		}
 	}
 	
+	public static function getBareme($tentative){
+        $sql = "SELECT BAREME FROM CONTENIR WHERE ID_QUESTION = (SELECT ID_QUESTION FROM DISPOSER WHERE ID_PROPOSITION = '$tentative') ";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+        if (!empty($data)){
+			return $data->BAREME;
+		}
+		else{
+			return 1 ;
+		}
+	}
+	
 	public static function verifiReponseQCM($argsTentative){
 		$id_reponse = $argsTentative[0];
 		
