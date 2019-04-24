@@ -515,7 +515,7 @@ class ProfController extends UserController{
 	public function classementQuiz($request){
 		$currentUser = Prof::getById($_SESSION['id']);
 		$id_questionnaire = $_POST['questionnaireId'];
-		$resultats = NOTE::getResultats($id_questionnaire);
+		$resultats = Note::getResultats($id_questionnaire);
 		$nbResultats = count($resultats);
 		
 		
