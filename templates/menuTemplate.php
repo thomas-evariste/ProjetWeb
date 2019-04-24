@@ -1,47 +1,38 @@
-<?php 
-	if (isset($_SESSION['id'])){
-		
-	
-		echo "
-		<nav>
-		
-			<ul>
-				<li><a href=\"index.php?action=home&controller=user\">Home</a></li>
-				<li><a href=\"index.php?action=profil&controller=user\">Profil</a></li>
-				<li><a href=\"index.php?action=deconnexion&controller=user\">Deconnecter</a></li>
-				
-			</ul>
-			
-		</nav>";
-	}
 
 
-	else{
-		echo "
-		<nav>
-	
-			<ul>
-				<li><a href=\"index.php?action=home\">Home</a></li>
-				<li><a href=\"index.php?action=login\">Login</a></li>
-				<li><a href=\"index.php?action=inscription\">Inscription</a></li>
-				
-			</ul>
-		
-		</nav>";
-	}
+<nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-?>
-
-<?php /* 	<form id="style_form" action="<?php $_SERVER['REQUEST_URI']; ?>" method="POST"> 
-		<select name="css"> 
-			<option value="style1">style1</option> 
-			<option value="style2">style2</option> 
-		</select> 
-
-		<input type="submit" value="Appliquer" /> 
-	</form> 
-	
-	
-	ENLEVER BLOC <?php?>
-	
-	*/?>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <img src="css/images/IMT_Lille_Douai_Logo_WEB.png" alt="logo imt lille douai" class="logo_imt_l_d">
+      </li>
+	  <li class="nav-item active">
+        <a class="nav-link" href="index.php?action=home">
+          <i class="fa fa-home"></i>
+          Home
+          <span class="sr-only">(current)</span>
+          </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="index.php?action=login">
+          <i class="fa fa-sign-in-alt"></i>
+          Login
+        </a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-user-plus"></i>
+          Inscription
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="index.php?action=inscription">Elève</a>
+          <a class="dropdown-item" href="index.php?action=inscriptionprof">Professeur</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>

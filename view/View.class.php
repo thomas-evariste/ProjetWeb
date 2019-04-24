@@ -14,18 +14,55 @@ class View{
 		$this->template = $template .'Template';
 
 	}
-
-
-	function render(){
-
+	
+	function renderDebut(){
 		extract($this->data);
 		require_once(__ROOT_DIR . '/templates/headTemplate.php');
 		require_once(__ROOT_DIR . '/templates/topTemplate.php');
+		if (get_class($this->currentController) == 'AnonymousController'){
 		require_once(__ROOT_DIR . '/templates/menuTemplate.php');
+		}
+		if (get_class($this->currentController) == 'UserController'){
+			require_once(__ROOT_DIR . '/templates/menuuserTemplate.php');
+		}
+		if (get_class($this->currentController) == 'ProfController'){
+			require_once(__ROOT_DIR . '/templates/menuprofTemplate.php');
+		}
+	}
+	
+	function renderMilieu(){
+		extract($this->data);
+		if($this->template != 'Template')
+		{
+			require(__ROOT_DIR . '/templates/' . $this->template .'.php');
+		}		
+	}
+		
+	
+	function renderFin(){
+		require_once(__ROOT_DIR . '/templates/footTemplate.php');
+	}
+		
+		
+
+
+	function render(){
+		extract($this->data);
+		require_once(__ROOT_DIR . '/templates/headTemplate.php');
+		require_once(__ROOT_DIR . '/templates/topTemplate.php');
+		if (get_class($this->currentController) == 'AnonymousController'){
+		require_once(__ROOT_DIR . '/templates/menuTemplate.php');
+		}
+		if (get_class($this->currentController) == 'UserController'){
+			require_once(__ROOT_DIR . '/templates/menuuserTemplate.php');
+		}
+		if (get_class($this->currentController) == 'ProfController'){
+			require_once(__ROOT_DIR . '/templates/menuprofTemplate.php');
+		}
 		if($this->template != 'Template')
 		{
 			require_once(__ROOT_DIR . '/templates/' . $this->template .'.php');
-		}
+		}		
 		require_once(__ROOT_DIR . '/templates/footTemplate.php');
 	}
 

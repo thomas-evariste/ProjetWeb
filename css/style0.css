@@ -2,4 +2,130 @@
 	
 body{
 	 background: #00B8DE; 
+	 font-family: Helvetica, Arial,  sans-serif;
 }
+
+.ReponseCorrecte{
+    color:green !important;
+}
+
+.ReponseFausse{
+    color:red !important;
+}
+
+.logo_imt_l_d{
+	width: 105px;
+}
+
+.merci 
+{
+    margin: 10 px;
+	position: absolute;
+	top: 33%; 
+	transform: translate(0%, -50%);
+	overflow-x: auto;
+}
+
+input{
+	background-color: #FF9900;
+}
+
+.table_espacee{
+	margin-top: 20px;
+}
+
+.lien_home{
+	color: white;
+}
+
+div.alignRight{
+	position: absolute; right: 0; 
+}
+
+
+
+#listeQuestion .niveau2{
+	display:block;
+}
+
+#listeQuestion .niveau2{
+	list-style-type:none;
+	background-color:#FF9900;
+	padding-bottom:0px;
+}
+
+#listeQuestion .niveau2 div div.niveau3 {
+	display:none;
+	list-style-type:none;
+}
+
+#listeQuestion .niveau2:hover div div.niveau3{
+	display:block;
+}
+
+#listeQuestion button.modification{
+	background-image:url(./images/modifyButton.png);
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	height: 25px;
+	width: 25px;
+	border: none;
+}
+
+#listeQuestion button.suppression{
+	background-image:url(./images/suppressButton.png);
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	height: 25px;
+	width: 25px;
+	border: none;
+}
+
+.bouton_col_ens{
+	width:100%;
+}
+
+.h2_centre{
+	text-align: center;
+}
+
+.questionnaire{
+	margin-left: auto;
+	margin-right: auto;
+	background-color:#FF9900;
+	text-align:center;
+	margin-top:25px;
+	margin-bottom:5px;
+	width:70%;
+	border-radius: 10px ;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.nomQuestionnaire{
+	margin-left: auto;
+	margin-right: auto;
+	background-color:#FF9900;
+	width:70%;
+	border-radius:10px ;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.classement{
+	font-size: 150%;
+}
+
+
+span.dateOuverture{
+	float:25%;
+}
+
+span.dateFermeture{
+
+	float:75%;
+}
+
+div.boutons form{
+	margin:5px;
+	display:inline-block;
+}
+

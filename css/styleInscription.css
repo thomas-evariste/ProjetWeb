@@ -1,7 +1,5 @@
 @charset "UTF-8";
 	
-	
-	/* Coded with love by Mutiullah Samim */
 		body,
 		html {
 			margin: 0;
@@ -9,9 +7,76 @@
 			height: 100%;
 		}
 		.user_card_insc {
-			height: 550px;
+			height: 600px;
 			width: 350px;
-			margin-top: auto;
+			margin-top: 80px;
+			margin-bottom: auto;
+			background: #f39c12;
+			position: relative;
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			padding: 10px;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			border-radius: 5px;
+
+		}
+		.user_card_mail_adapt {
+			width: 350px;
+			margin-top: 80px;
+			margin-bottom: auto;
+			background: #f39c12;
+			position: relative;
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			padding: 10px;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			border-radius: 5px;
+
+		}
+		.user_card_add_email_to_invitate {
+			height: 350px;
+			width: 350px;
+			margin-top: 80px;
+			margin-bottom: auto;
+			background: #f39c12;
+			position: relative;
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			padding: 10px;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			border-radius: 5px;
+
+		}
+		.user_card_creation_questionnaire {
+			height: 760px;
+			width: 350px;
+			margin-top: 80px;
+			margin-bottom: auto;
+			background: #f39c12;
+			position: relative;
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			padding: 10px;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			border-radius: 5px;
+
+		}
+		.user_card_insc_prof {
+			height: 650px;
+			width: 350px;
+			margin-top: 80px;
 			margin-bottom: auto;
 			background: #f39c12;
 			position: relative;
@@ -28,7 +93,7 @@
 		.user_card_log {
 			height: 350px;
 			width: 350px;
-			margin-top: auto;
+			margin-top: 80px;
 			margin-bottom: auto;
 			background: #f39c12;
 			position: relative;
@@ -42,13 +107,17 @@
 			border-radius: 5px;
 
 		}
+		.titre-insc{
+			text-align: center;
+			font-weight: bold;
+		}
 		.brand_logo_container {
 			position: absolute;
 			height: 170px;
 			width: 170px;
 			top: -75px;
 			border-radius: 50%;
-			background: #60a3bc;
+			background: #ffffff;
 			padding: 10px;
 			text-align: center;
 		}
@@ -56,7 +125,18 @@
 			height: 150px;
 			width: 150px;
 			border-radius: 50%;
-			border: 2px solid white;
+			border: 2px solid black;
+		}
+		
+		.interne_quest{
+			padding-left: 10px;
+			display: flex;
+			flex-direction: row;
+			width: 100%;
+		}
+		.interne_btn{
+			max-width:20px;
+			margin-left: 10px;
 		}
 		.form_container {
 			margin-top: 100px;
@@ -81,6 +161,12 @@
 		}
 		.input_user,
 		.input_pass:focus {
+			box-shadow: none !important;
+			outline: 0px !important;
+		}
+		
+		.input_user:focus{
+			background: #eeeeee;
 			box-shadow: none !important;
 			outline: 0px !important;
 		}

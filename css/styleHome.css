@@ -3,12 +3,12 @@
 
 .grids,
 .grids .row {
-    height: 100vh;
+    height: 88.5vh;
 	width: 100vw;
 }
 
 .brand-centered {
-     display: block;
+    display: block;
     position: relative;
     width: 100%; 
     height: 40vh;
@@ -18,57 +18,7 @@
     float: none;
 }
 
-a.navbar-brand {
-    position: absolute;
-    top: 0;
-    left: 0;
-    /* bottom: 0; */
-    /* right: 0; */
-    /* background: #fff; */
-    width: 100%;
-    padding: 30px;
-    line-height: 1em;
-    text-align: center;
-    vertical-align: center;
-    height: 100%;
-    text-transform: uppercase;
-    color: #fff;
-    /*background: url('http://bcsilva.com/images/logo-bcsilva.png') no-repeat center center;*/
-    background: url('http://placehold.it/350x350') no-repeat center center;
-    background-size: contain;
-}
-
 .brand-centered {}
-
-.navbar.navbar-default {
-    height: 60vh;
-}
-
-.navbar-collapse.collapse.sidebar-navbar-collapse,
-ul.nav.navbar-nav {
-    height: 100% !important;
-}
-
-.sidebar-nav .navbar li{
-    height:25%;
-}
-
-.sidebar-nav .navbar li a,
-.sidebar-nav .navbar li span{
-    width: 100%;
-    height: 100%;
-    font-size: 3rem;
-    padding-left: 1.5em;
-    /* display: block; */
-    /* line-height: 100%; */
-    display: flex;
-    align-items: center;
-    text-align: left;
-}
-
-a.navbar-brand h1{
-    visibility: hidden;
-}
 
 /*tamanho dos itens da grid - começa*/
 .grid-item {
@@ -99,7 +49,7 @@ a.navbar-brand h1{
     padding: 0px;
     height: 100%;
     line-height: 1em;
-    opacity: .5;
+    opacity: 1;
     display: block;
     cursor: pointer;
     overflow: hidden;
@@ -120,7 +70,7 @@ a.navbar-brand h1{
     width: calc(100% + 1px);
     height: 100%;
     height: calc(100% + 1px);
-    color:#fff;
+    color: white;
     position: absolute;
     text-align: center;
     text-transform: uppercase;
@@ -138,12 +88,24 @@ a.navbar-brand h1{
     vertical-align: middle;
 }
 
-.grid-item:hover .content{
+.grid-item:hover .content1{
     opacity:1;
+	background-color: #00B8DE;
 } 
 
-.grid-item:hover .content .caption{
+.grid-item:hover .content1 .caption{
     opacity:1;
+	background-color: #00B8DE;
+}
+
+.grid-item:hover .content2{
+    opacity:1;
+	background-color: #FF9900;
+} 
+
+.grid-item:hover .content2 .caption{
+    opacity:1;
+	background-color: #FF9900;
 }
 
 /*tamanho dos itens da grid - termina*/
