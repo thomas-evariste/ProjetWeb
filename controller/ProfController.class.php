@@ -545,7 +545,6 @@ class ProfController extends UserController{
 	
 	public function envoiEmail($request){
 		$to=array();
-		print_r($_POST);
 		foreach($_POST as $key => $value){
 			if(strpos($key,"mail-")){
 				$to[]=$value;
@@ -573,20 +572,70 @@ class ProfController extends UserController{
 		$view->render(); 
 	}
 	
-	public function nombreDInvitation($request){
-		$idQuestionnaire = $_POST['questionnaireId'];
+	
+	public function envoiEmailSansEmail($request){
+		$to=array();
+		foreach($_POST as $key => $value){
+			if(strpos($key,"mail-")){
+				$to[]=$value;
+			}
+		}
+		$idQuestionnaire = $_POST['idQuestionnaire'];
+		foreach($to as $t){
+			Prof::setEstInvite($t,$idQuestionnaire);
+		}
 		
-		
-		$view = new UserView($this, 'nombreDInvitation',array('user' =>$this->currentUser, 'idQuestionnaire' => $idQuestionnaire)); 
+		$view = new UserView($this, 'home',array('user' =>$this->currentUser)); 
 		$view->render(); 
 	}
+	
+	public function nombreDInvitation($request){
+		$idQuestionnaire = $_POST['questionnaireId'];
+		$mail = 1;
+		
+		$view = new UserView($this, 'nombreDInvitation',array('user' =>$this->currentUser, 'idQuestionnaire' => $idQuestionnaire, 'mail'=>$mail)); 
+		$view->render(); 
+	}
+	
+	public function nombreDInvitationSansMail($request){
+		$idQuestionnaire = $_POST['questionnaireId'];
+		$mail = 0;
+		
+		
+		$view = new UserView($this, 'nombreDInvitation',array('user' =>$this->currentUser, 'idQuestionnaire' => $idQuestionnaire, 'mail'=>$mail)); 
+		$view->render(); 
+	}
+	
+	
+	
 	
 	public function inviterQuiz($request){
 		$idQuestionnaire = $_POST['idQuestionnaire'];
 		$nbInvitation = $_POST['nbInvitation'];
+		$mail = 1;
 		
 		
-		$view = new UserView($this, 'inviterDebut',array('user' =>$this->currentUser , 'idQuestionnaire' => $idQuestionnaire)); 
+		$view = new UserView($this, 'inviterDebut',array('user' =>$this->currentUser , 'idQuestionnaire' => $idQuestionnaire, 'mail'=>$mail)); 
+		$view->renderDebut(); 
+		$view->renderMilieu(); 
+		
+		for($i=0;$i<$nbInvitation;$i++){
+			$view = new UserView($this, 'inviterMilieu',array('user' =>$this->currentUser , 'idQuestionnaire' => $idQuestionnaire, 'i'=>$i)); 
+			$view->renderMilieu(); 
+		}
+		
+		$view = new UserView($this, 'inviterFin',array('user' =>$this->currentUser , 'idQuestionnaire' => $idQuestionnaire)); 
+		$view->renderMilieu(); 
+	}
+	
+	
+	public function inviterQuizSansMail($request){
+		$idQuestionnaire = $_POST['idQuestionnaire'];
+		$nbInvitation = $_POST['nbInvitation'];
+		$mail = 0;
+		
+		
+		$view = new UserView($this, 'inviterDebut',array('user' =>$this->currentUser , 'idQuestionnaire' => $idQuestionnaire, 'mail'=>$mail)); 
 		$view->renderDebut(); 
 		$view->renderMilieu(); 
 		
