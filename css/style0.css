@@ -33,3 +33,74 @@ input{
 .lien_home{
 	color: white;
 }
+
+div.alignRight{
+	position: absolute; right: 0; 
+}
+
+#listeQuestion .niveau2{
+	display:block;
+}
+
+#listeQuestion .niveau2{
+	list-style-type:none;
+	background-color:#F39C12;
+	padding-bottom:0px;
+}
+
+#listeQuestion .niveau2 li ul.niveau3 {
+	display:none;
+	list-style-type:none;
+}
+
+#listeQuestion .niveau2:hover li ul.niveau3{
+	display:block;
+}
+
+#listeQuestion button.modification{
+	background-image:url(./images/modifyButton.png);
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	height: 25px;
+	width: 25px;
+	border: none;
+}
+
+#listeQuestion button.suppression{
+	background-image:url(./images/suppressButton.png);
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	height: 25px;
+	width: 25px;
+	border: none;
+}
+
+.questionnaire{
+	background-color:#FFFFFF;
+	text-align:center;
+	margin-bottom:5px;
+}
+
+.questionnaire div.nomQuestionnaire div{
+	display:none;
+	background-color:#FFFFFF;
+}
+
+.questionnaire div.nomQuestionnaire:hover div{
+	display:block;
+}
+
+span.dateOuverture{
+	float:25%;
+}
+
+span.dateFermeture{
+
+	float:75%;
+}
+
+div.boutons form{
+	margin:5px;
+	display:inline-block;
+}
+

@@ -284,7 +284,7 @@ class User extends Model{
 		foreach ($args as $key => $tentative) {
 			$zero =0;
 			$null = null;
-			$id_reponse = REPONSE::createId();
+			$id_reponse = Reponse::createId();
 			$sth = parent::prepare("INSERT INTO REPONSE_DISPONIBLE VALUES(:id_reponse,:rep_id_reponse,:rep_id_reponse2,:id_user,:intitule_reponse,:reponse_correcte)");
 			$sth->bindParam(':id_reponse',$id_reponse);
 			$sth->bindParam(':rep_id_reponse',$null);
@@ -537,6 +537,40 @@ class User extends Model{
         }
         return $questionnaires;
     }
+	
+	public static function getAllIdQuestionAndBaremeAtQuestionnaire($id_questionnaire){
+		$sql = "SELECT * FROM CONTENIR WHERE ID_QUESTIONNAIRE = '$id_questionnaire' ";
+		$sth = parent::query($sql);
+        $data = $sth->fetch(PDO::FETCH_OBJ);
+		$infoInterressante = array();
+		while(!empty($data)){
+            $infoInterressante[$data->ID_QUESTION]=$data->BAREME;
+            $data = $sth->fetch(PDO::FETCH_OBJ);
+		}
+		
+		$sql = "SELECT BONUS FROM REGLE WHERE ID_REGLE in (SELECT ID_REGLE FROM SPECIFIER WHERE ID_QUESTIONNAIRE = '$id_questionnaire' )";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+        if (!empty($data)){
+			$infoInterressante['bonus']=$data->BONUS;
+		}
+		else{
+			$infoInterressante['bonus']=1;
+		}
+		
+		return $infoInterressante;
+	}
+	
+	public static function calculNoteMax($dataMaxNote){
+		$bonus = $dataMaxNote['bonus'];
+		$noteMax=0;
+		foreach($dataMaxNote as $key => $value){
+			if($key!='bonus'){
+				$noteMax=$noteMax+$bonus*$value;
+			}
+		}
+		return $noteMax;
+	}
 	
 }
 

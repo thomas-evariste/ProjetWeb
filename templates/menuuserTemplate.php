@@ -31,12 +31,14 @@
           <a class="dropdown-item" href="index.php?action=voirResultatQuestionnaires&controller=user">Voir mes résultats</a>
         </div>
       </li>
+    <div class="alignRight">
 	  <li class="nav-item">
         <a class="nav-link" href="index.php?action=deconnexion&controller=user">
           <i class="fa fa-sign-out-alt"></i>
           Déconnexion
         </a>
       </li>
+</div>
     </ul>
   </div>
 </nav>

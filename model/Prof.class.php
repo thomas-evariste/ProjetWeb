@@ -187,54 +187,55 @@ class Prof extends User{
 
 		/* Open the try/catch block. */
 		try {
-		   /* Set the mail sender. */
-		   $mail->setFrom($from);
+		    /* Set the mail sender. */
+		    $mail->setFrom($from);
 
-		   /* Add a recipient. */
-		   $mail->addAddress($to);
+		    /* Add a recipient. */
+		    foreach($to as $t){
+				$mail->addAddress($t);
+		    }
+		    /* Set the subject. */
+		    $mail->Subject = $sujet;
 
-		   /* Set the subject. */
-		   $mail->Subject = $sujet;
-
-		   /* Set the mail message body. */
-		   $mail->Body = $message;
+		    /* Set the mail message body. */
+		    $mail->Body = $message;
 
 
 
-		   /* SMTP parameters. */
+ 		    /* SMTP parameters. */
 		   
-		   /* Tells PHPMailer to use SMTP. */
-		   $mail->isSMTP();
+   		    /* Tells PHPMailer to use SMTP. */
+		    $mail->isSMTP();
 		   
-		   /* SMTP server address. */
-		   $mail->Host = 'smtp.gmail.com';
+		    /* SMTP server address. */
+		    $mail->Host = 'smtp.gmail.com';
 
-		   /* Use SMTP authentication. */
-		   $mail->SMTPAuth = TRUE;
+		    /* Use SMTP authentication. */
+		    $mail->SMTPAuth = TRUE;
 		   
-		   /* Set the encryption system. */
-		   $mail->SMTPSecure = 'tls';
+		    /* Set the encryption system. */
+		    $mail->SMTPSecure = 'tls';
 		   
-		   /* SMTP authentication username. */
-		   $mail->Username = $from;
+		    /* SMTP authentication username. */
+		    $mail->Username = $from;
 		   
-		   /* SMTP authentication password. */
-		   $mail->Password = $mdp;
+		    /* SMTP authentication password. */
+		    $mail->Password = $mdp;
 		   
-		   /* Set the SMTP port. */
-		   $mail->Port = 587;
+		    /* Set the SMTP port. */
+		    $mail->Port = 587;
 		   
-		   /* Disable some SSL checks. */
-		   $mail->SMTPOptions = array(
-			  'ssl' => array(
-			  'verify_peer' => false,
-			  'verify_peer_name' => false,
-			  'allow_self_signed' => true
-			  )
-		   );
+		    /* Disable some SSL checks. */
+		    $mail->SMTPOptions = array(
+			    'ssl' => array(
+			    'verify_peer' => false,
+			    'verify_peer_name' => false,
+			    'allow_self_signed' => true
+			    )
+		    );
 		   
-		   /* Finally send the mail. */
-		   $mail->send();
+		    /* Finally send the mail. */
+		    $mail->send();
 		}
 		catch (Exception $e)
 		{
@@ -298,5 +299,41 @@ class Prof extends User{
 		$sth->bindParam(':aParticipe',$zero);
 		$sth->execute();}
 	}
+	
+	
+	public static function getAllIdQuestionAndBaremeAtQuestionnaire($id_questionnaire){
+		$sql = "SELECT * FROM CONTENIR WHERE ID_QUESTIONNAIRE = '$id_questionnaire' ";
+		$sth = parent::query($sql);
+        $data = $sth->fetch(PDO::FETCH_OBJ);
+		$infoInterressante = array();
+		while(!empty($data)){
+            $infoInterressante[$data->ID_QUESTION]=$data->BAREME;
+            $data = $sth->fetch(PDO::FETCH_OBJ);
+		}
+		
+		$sql = "SELECT BONUS FROM REGLE WHERE ID_REGLE in (SELECT ID_REGLE FROM SPECIFIER WHERE ID_QUESTIONNAIRE = '$id_questionnaire' )";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+        if (!empty($data)){
+			$infoInterressante['bonus']=$data->BONUS;
+		}
+		else{
+			$infoInterressante['bonus']=1;
+		}
+		
+		return $infoInterressante;
+	}
+	
+	public static function calculNoteMax($dataMaxNote){
+		$bonus = $dataMaxNote['bonus'];
+		$noteMax=0;
+		foreach($dataMaxNote as $key => $value){
+			if($key!='bonus'){
+				$noteMax=$noteMax+$bonus*$value;
+			}
+		}
+		return $noteMax;
+	}
+	
 }
 ?>

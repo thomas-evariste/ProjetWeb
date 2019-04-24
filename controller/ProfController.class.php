@@ -107,7 +107,6 @@ class ProfController extends UserController{
         $nbTag = $request->read('nbTag');
         $idQuestionnaire=$request->read('idQuestionnaire');
         $bareme=$request->read('bareme_question');
-        print_r($_POST);
         if ($type=="QO"){
             echo "ON EST UN TYPE QO !";
             $idQuestion = Question::createId();
@@ -398,7 +397,6 @@ class ProfController extends UserController{
 		
 		$regle = $currentUser->getRegle($id_questionnaire);
 		
-		print_r($args);
 		foreach ($regle as $nom => $valeur) {
 			if($nom=='BONUS'){
 				$bonus=$valeur;
@@ -442,17 +440,14 @@ class ProfController extends UserController{
 			$justesse =0;
 			if(!empty($argsTentative)){
 				$justesse = $currentUser->verifiReponseQCM($argsTentative,$id_questionnaire);
-				echo 'justesse : ' . $justesse . '<br>';
 				if($justesse==0){
 					$note=$note+$malus;
 				}
 				else{
-					echo 'pt :' . $bonus*$justesse . '<br>';
 					$note=$note+$bonus*$justesse;
 				}
 			}
 		}
-		echo 'note : ' . $note;
 		$currentUser->attribuNote($_SESSION['id'],$id_questionnaire,$note);
 		
 	}
@@ -462,6 +457,9 @@ class ProfController extends UserController{
         $questionnaires = Prof::getQuestionnaireFait($currentUser->getId());
 		foreach($questionnaires as $key => $questionnaire){
 			$questionnaires[$key]['corrige']=Questionnaire::getCorrige($questionnaire['id']);
+			$dataMaxNote = $currentUser->getAllIdQuestionAndBaremeAtQuestionnaire($questionnaire['id']);
+			$noteMax = $currentUser->calculNoteMax($dataMaxNote);
+			$questionnaires[$key]['noteMax']=$noteMax;
 		}
         $view = new UserView($this,'resultatQuestionnairesProf',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
         $view->render();
@@ -472,6 +470,11 @@ class ProfController extends UserController{
 		$id_questionnaire = $_POST['questionnaireId'];
 		$resultats = NOTE::getResultats($id_questionnaire);
 		$nbResultats = count($resultats);
+		
+		
+		$dataMaxNote = $currentUser->getAllIdQuestionAndBaremeAtQuestionnaire($id_questionnaire);
+		$noteMax = $currentUser->calculNoteMax($dataMaxNote);
+		
 		
 		$permut =true;
 		while($permut){
@@ -496,21 +499,28 @@ class ProfController extends UserController{
 			}
 		}
 		
-        $view = new UserView($this,'classementQuestionnaires',array('user'=>$this->currentUser, 'resultats'=>$resultats));
+        $view = new UserView($this,'classementQuestionnaires',array('user'=>$this->currentUser, 'resultats'=>$resultats, 'noteMax'=>$noteMax));
         $view->render();
     }
 	
 	public function envoiEmail($request){
-		$to=$_POST['email'];
+		$to=array();
+		print_r($_POST);
+		foreach($_POST as $key => $value){
+			if(strpos($key,"mail-")){
+				$to[]=$value;
+			}
+		}
 		$from='quiz.imt.lille.douai@gmail.com';
-		$idQuestionnaire = $_POST['idQestionnaire'];
+		$idQuestionnaire = $_POST['idQuestionnaire'];
 		$currentUser = Prof::getById($_SESSION['id']);
 		$Questionnaire = Questionnaire::getById($idQuestionnaire);
 		$prenomProf = $currentUser->getprenom();
 		$nomProf = $currentUser->getNom();
 		$titreQuestionnaire = $Questionnaire->getTitre();
-		Prof::setEstInvite($to,$idQuestionnaire);
-		
+		foreach($to as $t){
+			Prof::setEstInvite($t,$idQuestionnaire);
+		}
 		$sujet = 'Invitation a un quiz';
 		$message = $prenomProf.' '.$nomProf.' vous invite a vous connecter au site de quiz pour repondre au quiz: '.$titreQuestionnaire. ' click : http://localhost/ProjetWeb/index.php?action=loginToInvitation' ;
 		$mdp = 'imtLilleDouai';
@@ -523,18 +533,35 @@ class ProfController extends UserController{
 		$view->render(); 
 	}
 	
-	public function inviterQuiz($request){
-		$idQestionnaire = $_POST['questionnaireId'];
+	public function nombreDInvitation($request){
+		$idQuestionnaire = $_POST['questionnaireId'];
 		
 		
-		$view = new UserView($this, 'inviter',array('user' =>$this->currentUser , 'idQestionnaire' => $idQestionnaire)); 
+		$view = new UserView($this, 'nombreDInvitation',array('user' =>$this->currentUser, 'idQuestionnaire' => $idQuestionnaire)); 
 		$view->render(); 
+	}
+	
+	public function inviterQuiz($request){
+		$idQuestionnaire = $_POST['idQuestionnaire'];
+		$nbInvitation = $_POST['nbInvitation'];
+		
+		
+		$view = new UserView($this, 'inviterDebut',array('user' =>$this->currentUser , 'idQuestionnaire' => $idQuestionnaire)); 
+		$view->renderDebut(); 
+		$view->renderMilieu(); 
+		
+		for($i=0;$i<$nbInvitation;$i++){
+			$view = new UserView($this, 'inviterMilieu',array('user' =>$this->currentUser , 'idQuestionnaire' => $idQuestionnaire, 'i'=>$i)); 
+			$view->renderMilieu(); 
+		}
+		
+		$view = new UserView($this, 'inviterFin',array('user' =>$this->currentUser , 'idQuestionnaire' => $idQuestionnaire)); 
+		$view->renderMilieu(); 
 	}
     
     public function voirQuestionnairesInvite($request){
 		$currentUser = Prof::getById($_SESSION['id']);
 		$userEmail=$currentUser->getMail();
-		echo ' cc: '.$userEmail.' :cc ';
 		if( $userEmail==""){
 			$view = new UserView($this,'ajoutEmailProf',array('user'=>$this->currentUser));
 			$view->render();
@@ -550,23 +577,23 @@ class ProfController extends UserController{
 	public function ajoutEmail($request){
 		$currentUser = Prof::getById($_SESSION['id']);
 		$userEmail = $_POST['mail'];
-		echo $userEmail;
 		Prof::modify('MAIL',$userEmail,$_SESSION['id']);
+		$nomDePage = 'Invitations aux questionnaires';
 		$questionnaires = Prof::getQuestionnaireAFaireInvite($currentUser->getId(),$userEmail);
-		$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+		$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires, 'nomDePage'=>$nomDePage));
 		$view->render();
 	}
 	
 	public function voirInviterQuiz($request){
-		$idQestionnaire = $_POST['questionnaireId'];
+		$idQuestionnaire = $_POST['questionnaireId'];
 		
-		$emailInvite=Prof::getEmailInvite($idQestionnaire);
+		$emailInvite=Prof::getEmailInvite($idQuestionnaire);
 		$invites=array();
 		foreach($emailInvite as $email){
 			$invites[]=Prof::getInviteByEmail($email);
 		}
 		foreach($invites as $i => $invite){
-			$invites[$i]['note']=Note::getValeurIfExist($idQestionnaire,$_SESSION['id']);
+			$invites[$i]['note']=Note::getValeurIfExist($idQuestionnaire,$_SESSION['id']);
 		}
 		
 		$view = new UserView($this,'listeInvite',array('user'=>$this->currentUser,'invites'=>$invites));

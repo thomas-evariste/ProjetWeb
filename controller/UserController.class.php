@@ -157,7 +157,6 @@ class UserController extends AnonymousController{
 		$args = array();
 		$argsQO = array();
 		$id_reponse=1;
-		print_r($_POST);
 		foreach($_POST as $key => $value){
 			if(strpos($key,"button")){
 				$args[$key] = $value;
@@ -169,8 +168,6 @@ class UserController extends AnonymousController{
 			}
 			
 		}
-		print_r($args);
-		print_r($argsQO);
 		$currentUser->tenterQO($id_user,$argsQO);
 		$currentUser->tenterQCM_QCU($id_user,$args);
 		$view = new UserView($this, 'merci',array('user' =>$this->currentUser)); 
@@ -199,6 +196,7 @@ class UserController extends AnonymousController{
 		$malus=0;
 		
 		$regle = $currentUser->getRegle($id_questionnaire);
+		
 		
 		
 		foreach ($regle as $nom => $valeur) {
@@ -254,7 +252,6 @@ class UserController extends AnonymousController{
 				}
 			}
 		}
-		echo 'note : ' . $note;
 		$currentUser->attribuNote($_SESSION['id'],$id_questionnaire,$note);
 		
 	}
@@ -264,6 +261,9 @@ class UserController extends AnonymousController{
         $questionnaires = User::getQuestionnaireFait($currentUser->getId());
 		foreach($questionnaires as $key => $questionnaire){
 			$questionnaires[$key]['corrige']=Questionnaire::getCorrige($questionnaire['id']);
+			$dataMaxNote = $currentUser->getAllIdQuestionAndBaremeAtQuestionnaire($questionnaire['id']);
+			$noteMax = $currentUser->calculNoteMax($dataMaxNote);
+			$questionnaires[$key]['noteMax']=$noteMax;
 		}
         $view = new UserView($this,'resultatQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
         $view->render();
@@ -271,10 +271,14 @@ class UserController extends AnonymousController{
 	
 	
 	public function classementQuiz($request){
-		$currentUser = Prof::getById($_SESSION['id']);
+		$currentUser = User::getById($_SESSION['id']);
 		$id_questionnaire = $_POST['questionnaireId'];
-		$resultats = NOTE::getResultats($id_questionnaire);
+		$resultats = Note::getResultats($id_questionnaire);
 		$nbResultats = count($resultats);
+		
+		$dataMaxNote = $currentUser->getAllIdQuestionAndBaremeAtQuestionnaire($id_questionnaire);
+		$noteMax = $currentUser->calculNoteMax($dataMaxNote);
+		
 		
 		$permut =true;
 		while($permut){
@@ -299,15 +303,14 @@ class UserController extends AnonymousController{
 			}
 		}
 		
-        $view = new UserView($this,'classementQuestionnaires',array('user'=>$this->currentUser, 'resultats'=>$resultats));
+        $view = new UserView($this,'classementQuestionnaires',array('user'=>$this->currentUser, 'resultats'=>$resultats, 'noteMax'=>$noteMax));
         $view->render();
     }
 	
     
     public function voirQuestionnairesInvite($request){
 		$currentUser = User::getById($_SESSION['id']);
-		$userEmail=$currentUser->getEmail($_SESSION['id']);
-		echo ' cc: '.$userEmail.' :cc ';
+		$userEmail=$currentUser->getMail();
 		if( $userEmail==""){
 			$view = new UserView($this,'ajoutEmail',array('user'=>$this->currentUser));
 			$view->render();
@@ -323,10 +326,10 @@ class UserController extends AnonymousController{
 	public function ajoutEmail($request){
 		$currentUser = User::getById($_SESSION['id']);
 		$userEmail = $_POST['mail'];
-		echo $userEmail;
 		User::modify('MAIL',$userEmail,$_SESSION['id']);
+		$nomDePage = 'Invitations aux questionnaires';
 		$questionnaires = User::getQuestionnaireAFaireInvite($currentUser->getId(),$userEmail);
-		$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+		$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires, 'nomDePage'=>$nomDePage));
 		$view->render();
 	}
 	

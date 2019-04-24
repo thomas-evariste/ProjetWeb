@@ -4,7 +4,7 @@
 
 	<div class="container h-100">
 		<div class="d-flex justify-content-center h-100">
-			<div class="user_card_insc">
+			<div class="user_card_add_email_to_invitate">
 				<div class="d-flex justify-content-center">
 					<div class="brand_logo_container">
 						<img src="css/images/user.png" class="brand_logo" alt="Logo">
