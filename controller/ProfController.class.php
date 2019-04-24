@@ -34,6 +34,9 @@ class ProfController extends UserController{
 		$mail = $this->currentUser->getMail();
 		$id = $this->currentUser->getId();
 		$questionnaires = User::getQuestionnaireAFaireInvite($id,$mail);
+		foreach($questionnaires as $key => $questionnaire){
+			$questionnaires[$key]['createur']=Prof::getLoginById($questionnaire['createur']);
+		}
 		$nomDePage = 'Invitations aux questionnaires';
 		$view = new ProfView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires ,'nomDePage'=>$nomDePage));
         $view->render();
@@ -284,6 +287,9 @@ class ProfController extends UserController{
     public function voirQuestionnaires($request){
 		$currentUser = Prof::getById($_SESSION['id']);
         $questionnaires = Prof::getQuestionnaireAFaire($currentUser->getId());
+		foreach($questionnaires as $key => $questionnaire){
+			$questionnaires[$key]['createur']=Prof::getLoginById($questionnaire['createur']);
+		}
 		$nomDePage = 'Quiz Disponibles';
         $view = new UserView($this,'choixQuestionnairesProf',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires,'nomDePage'=>$nomDePage));
         $view->render();
@@ -500,6 +506,7 @@ class ProfController extends UserController{
 			$dataMaxNote = $currentUser->getAllIdQuestionAndBaremeAtQuestionnaire($questionnaire['id']);
 			$noteMax = $currentUser->calculNoteMax($dataMaxNote);
 			$questionnaires[$key]['noteMax']=$noteMax;
+			$questionnaires[$key]['createur']=Prof::getLoginById($questionnaire['createur']);
 		}
         $view = new UserView($this,'resultatQuestionnairesProf',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
         $view->render();
@@ -508,7 +515,7 @@ class ProfController extends UserController{
 	public function classementQuiz($request){
 		$currentUser = Prof::getById($_SESSION['id']);
 		$id_questionnaire = $_POST['questionnaireId'];
-		$resultats = NOTE::getResultats($id_questionnaire);
+		$resultats = Note::getResultats($id_questionnaire);
 		$nbResultats = count($resultats);
 		
 		
@@ -657,6 +664,9 @@ class ProfController extends UserController{
 		}
 		else{
 			$questionnaires = Prof::getQuestionnaireAFaireInvite($currentUser->getId(),$userEmail);
+			foreach($questionnaires as $key => $questionnaire){
+				$questionnaires[$key]['createur']=Prof::getLoginById($questionnaire['createur']);
+			}
 			$nomDePage = 'Invitations aux questionnaires';
 			$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires,'nomDePage'=>$nomDePage));
 			$view->render();
