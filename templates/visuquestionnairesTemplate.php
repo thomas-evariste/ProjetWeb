@@ -61,8 +61,8 @@
                     </div>";
                 echo "<div class=\"etat\">Etat: ". $questionnaire['etat'] ." </div>";
                 echo "<div class=\"boutons\">
+                <form action=\"index.php?action=modifierDonneesQuestionnaire&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$questionnaire['id']."'><input type='submit' value='Modifier Questionnaire'></form>
                 <form action=\"index.php?action=modifierQuestionnaire&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$questionnaire['id']."'><input type='submit' value='Modifier Questions'></form>";
-                
                 if ($questionnaire['aCorriger']==1){
                     echo "<form action=\"index.php?action=corrigerQuestionnaire&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$questionnaire['id']."'><input type='submit' value='Corriger'></form>";
                 }

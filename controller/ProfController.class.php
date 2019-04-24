@@ -16,7 +16,7 @@ class ProfController extends UserController{
     }
 
     public function home($request){
-        $view = new ProfView($this, 'home',array('user' =>$this->currentUser)); 
+        $view = new ProfView($this, 'homeProf',array('user' =>$this->currentUser)); 
         $view->render(); 
     }
 
@@ -386,6 +386,44 @@ class ProfController extends UserController{
 		
 	}
 	
+	public function modifierDonneesQuestionnaire($request){
+		$idQuest = $request->read('questionnaireId');
+        $questionnaire = Questionnaire::getById($idQuest);
+        $view = new View($this,'modifDonneesQuestionnaire',array('user'=>$this->currentUser,'questionnaire'=>$questionnaire));
+        $view->render();
+	}
+
+	public function validateModificationQuestionnaire($request){
+		$idQuestionnaire = $request->read('idQuestionnaire');
+        $titre = $request->read('titre');
+        $description = $request->read('description');
+        $dateOuverture = $request->read('dateOuverture');
+        $dateFermeture = $request->read('dateFermeture');
+        //$bonus = $request->read('bonus');
+        //$malus = $request->read('malus');
+        $etat = $request->read('etat');
+        $connexionRequise = $request->read('connexionRequise');
+
+		if ($dateOuverture!=''){
+            Questionnaire::modify('DATE_OUVERTURE', $dateOuverture,$idQuestionnaire);
+        }
+        if ($dateFermeture!=''){
+            Questionnaire::modify('DATE_FERMETURE', $dateFermeture,$idQuestionnaire);
+        }
+        if (trim($titre)!='' && strlen($titre)<=50){
+            Questionnaire::modify('TITRE', $titre,$idQuestionnaire);
+        }
+        if(strlen($description)<=200 && trim($description)!=''){
+            Questionnaire::modify('DESCRIPTION_QUESTIONNAIRE', $description,$idQuestionnaire);
+		}
+		if(strlen($description)<=200 && trim($description)!=''){
+            Questionnaire::modify('DESCRIPTION_QUESTIONNAIRE', $description,$idQuestionnaire);
+		}
+		Questionnaire::modify('CONNEXION_REQUISE',$connexionRequise,$idQuestionnaire);
+		$currentUser = Prof::getById($_SESSION['id']); 
+        header("location: index.php?action=voirMesQuestionnaires&controller=prof");
+	}
+
 	public function correctionAuto($request){
 		$questionnaire = $_POST["questionnaire"];
 		$args = $_POST["args"];	

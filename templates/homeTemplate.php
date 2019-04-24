@@ -1,5 +1,5 @@
 
-	<div class="wrapper home">
+<div class="wrapper home">
 <section class="col-md-12 col-lg-10 grids">
     <div class="row">
     	<div class="grid-item item1">
