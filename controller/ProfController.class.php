@@ -16,7 +16,7 @@ class ProfController extends UserController{
     }
 
     public function home($request){
-        $view = new ProfView($this, 'home',array('user' =>$this->currentUser)); 
+        $view = new ProfView($this, 'homeProf',array('user' =>$this->currentUser)); 
         $view->render(); 
     }
 
