@@ -16,12 +16,25 @@
     </thead>
 
     <tbody>
-    -->
+    
+	<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    Button with data-target
+  </button>
+</p>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body">
+    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+  </div>
+</div>-->
+	
         <?php 
 
             foreach($questionnaires as $questionnaire){
-                echo "<div class=\"questionnaire\"><div class=\"nomQuestionnaire\">";
-                echo "<a>".$questionnaire['titre']."</a>" ;
+                echo "<div class=\"questionnaire\">";
+                echo "<button class=\"btn\" type=\"button\" data-toggle=\"collapse\" data-target=\"#collapseExample".$questionnaire['id']."\" aria-expanded=\"false\" aria-controls=\"collapseExample\">"
+				.$questionnaire['titre']."</button>" ;
+				 echo "</div>";
+				echo"<div class=\"nomQuestionnaire collapse\" id=\"collapseExample".$questionnaire['id']."\">";
                 echo "<div class=\"description\"><a class=\"descriptionQuestionnaire\">Description :";
                 echo $questionnaire['description'];
                 echo "</a></div>";
@@ -43,7 +56,7 @@
                 ";
 
 
-                echo "</div>";
+               
 
                 echo "</div></div>";
                 
