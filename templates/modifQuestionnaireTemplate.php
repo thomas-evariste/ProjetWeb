@@ -7,7 +7,7 @@
             echo "<div id=\"listeQuestion\">";
             foreach($questionnaire->getQuestions() as $question){
                 $idQuestion = $question->getId();
-                echo "<div class=\"questionnaire niveau2\">";
+                echo "<div id=\"".$idQuestion."panel\" class=\"questionnaire niveau2\">";
 				echo "<button class=\"btn bouton_col_ens\" type=\"button\" data-toggle=\"collapse\" data-target=\"#collapseExample".$idQuestion."\" aria-expanded=\"false\" aria-controls=\"collapseExample\">";
                 echo "<div id=\"question".$idQuestion."\"><a id=\"intitule".$idQuestion."\">" 
 				. $question->getIntitule() 
@@ -35,6 +35,8 @@
 
 <script>
 
+
+
     var questionEnCours=false;
     var nbRep = 0;
     var nbTag=0;
@@ -47,6 +49,7 @@
     }
 
     function supprimerQuestion(idQuestion){
+		$('#'+idQuestion+'panel').hide();
         var dataAJAX = {};
         dataAJAX['idQuestion']=idQuestion;
         $.ajax({
