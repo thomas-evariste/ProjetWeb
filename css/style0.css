@@ -41,6 +41,8 @@ div.alignRight{
 	position: absolute; right: 0; 
 }
 
+
+
 #listeQuestion .niveau2{
 	display:block;
 }
@@ -51,12 +53,12 @@ div.alignRight{
 	padding-bottom:0px;
 }
 
-#listeQuestion .niveau2 li ul.niveau3 {
+#listeQuestion .niveau2 div div.niveau3 {
 	display:none;
 	list-style-type:none;
 }
 
-#listeQuestion .niveau2:hover li ul.niveau3{
+#listeQuestion .niveau2:hover div div.niveau3{
 	display:block;
 }
 
@@ -105,6 +107,10 @@ div.alignRight{
 	width:70%;
 	border-radius:10px ;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.classement{
+	font-size: 150%;
 }
 
 

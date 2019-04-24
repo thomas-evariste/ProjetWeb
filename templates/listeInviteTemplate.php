@@ -1,34 +1,22 @@
 
-<table>
-
-    <thead>
-    
-        <tr>
-            <th>PRENOM</th>
-            <th>NOM</th>
-            <th>EMAIL</th>
-            <th>NOTE</th> 
-        </tr>
-    </thead>
-
-    <tbody>
-    
         <?php 
         
             foreach($invites as $invite){
-                echo "<tr>   
-                <th>" . $invite['prenom'] ." </th>
-                <th>" . $invite['nom']."</th>
-                <th>" . $invite['email'] ."</th>
-                <th>" . $invite['note'] ."</th> 
-				</tr>";
+				
+				
+				echo"<div class=\"questionnaire \" >";
+                echo "<div>Prenom: ". $invite['prenom'] ." Nom: ". $invite['nom'] ." </div>";
+                echo "<div>Email: ". $invite['email'] ." </div>";
+				if($invite['note']!=""){
+                echo "<div>Note: ". $invite['note']." sur ". $noteMax ." </div>";}
+				else{
+					echo "<div> cette utilisateur n'a pas encore répondu au questionnaire</div>";
+				}
+				echo "</div>";
+				
 				
             }
         
         ?>
-
-    </tbody>
-
-</table>
 
 

@@ -386,6 +386,44 @@ class ProfController extends UserController{
 		
 	}
 	
+	public function modifierDonneesQuestionnaire($request){
+		$idQuest = $request->read('questionnaireId');
+        $questionnaire = Questionnaire::getById($idQuest);
+        $view = new View($this,'modifDonneesQuestionnaire',array('user'=>$this->currentUser,'questionnaire'=>$questionnaire));
+        $view->render();
+	}
+
+	public function validateModificationQuestionnaire($request){
+		$idQuestionnaire = $request->read('idQuestionnaire');
+        $titre = $request->read('titre');
+        $description = $request->read('description');
+        $dateOuverture = $request->read('dateOuverture');
+        $dateFermeture = $request->read('dateFermeture');
+        //$bonus = $request->read('bonus');
+        //$malus = $request->read('malus');
+        $etat = $request->read('etat');
+        $connexionRequise = $request->read('connexionRequise');
+
+		if ($dateOuverture!=''){
+            Questionnaire::modify('DATE_OUVERTURE', $dateOuverture,$idQuestionnaire);
+        }
+        if ($dateFermeture!=''){
+            Questionnaire::modify('DATE_FERMETURE', $dateFermeture,$idQuestionnaire);
+        }
+        if (trim($titre)!='' && strlen($titre)<=50){
+            Questionnaire::modify('TITRE', $titre,$idQuestionnaire);
+        }
+        if(strlen($description)<=200 && trim($description)!=''){
+            Questionnaire::modify('DESCRIPTION_QUESTIONNAIRE', $description,$idQuestionnaire);
+		}
+		if(strlen($description)<=200 && trim($description)!=''){
+            Questionnaire::modify('DESCRIPTION_QUESTIONNAIRE', $description,$idQuestionnaire);
+		}
+		Questionnaire::modify('CONNEXION_REQUISE',$connexionRequise,$idQuestionnaire);
+		$currentUser = Prof::getById($_SESSION['id']); 
+        header("location: index.php?action=voirMesQuestionnaires&controller=prof");
+	}
+
 	public function correctionAuto($request){
 		$questionnaire = $_POST["questionnaire"];
 		$args = $_POST["args"];	
@@ -507,7 +545,6 @@ class ProfController extends UserController{
 	
 	public function envoiEmail($request){
 		$to=array();
-		print_r($_POST);
 		foreach($_POST as $key => $value){
 			if(strpos($key,"mail-")){
 				$to[]=$value;
@@ -535,20 +572,70 @@ class ProfController extends UserController{
 		$view->render(); 
 	}
 	
-	public function nombreDInvitation($request){
-		$idQuestionnaire = $_POST['questionnaireId'];
+	
+	public function envoiEmailSansEmail($request){
+		$to=array();
+		foreach($_POST as $key => $value){
+			if(strpos($key,"mail-")){
+				$to[]=$value;
+			}
+		}
+		$idQuestionnaire = $_POST['idQuestionnaire'];
+		foreach($to as $t){
+			Prof::setEstInvite($t,$idQuestionnaire);
+		}
 		
-		
-		$view = new UserView($this, 'nombreDInvitation',array('user' =>$this->currentUser, 'idQuestionnaire' => $idQuestionnaire)); 
+		$view = new UserView($this, 'home',array('user' =>$this->currentUser)); 
 		$view->render(); 
 	}
+	
+	public function nombreDInvitation($request){
+		$idQuestionnaire = $_POST['questionnaireId'];
+		$mail = 1;
+		
+		$view = new UserView($this, 'nombreDInvitation',array('user' =>$this->currentUser, 'idQuestionnaire' => $idQuestionnaire, 'mail'=>$mail)); 
+		$view->render(); 
+	}
+	
+	public function nombreDInvitationSansMail($request){
+		$idQuestionnaire = $_POST['questionnaireId'];
+		$mail = 0;
+		
+		
+		$view = new UserView($this, 'nombreDInvitation',array('user' =>$this->currentUser, 'idQuestionnaire' => $idQuestionnaire, 'mail'=>$mail)); 
+		$view->render(); 
+	}
+	
+	
+	
 	
 	public function inviterQuiz($request){
 		$idQuestionnaire = $_POST['idQuestionnaire'];
 		$nbInvitation = $_POST['nbInvitation'];
+		$mail = 1;
 		
 		
-		$view = new UserView($this, 'inviterDebut',array('user' =>$this->currentUser , 'idQuestionnaire' => $idQuestionnaire)); 
+		$view = new UserView($this, 'inviterDebut',array('user' =>$this->currentUser , 'idQuestionnaire' => $idQuestionnaire, 'mail'=>$mail)); 
+		$view->renderDebut(); 
+		$view->renderMilieu(); 
+		
+		for($i=0;$i<$nbInvitation;$i++){
+			$view = new UserView($this, 'inviterMilieu',array('user' =>$this->currentUser , 'idQuestionnaire' => $idQuestionnaire, 'i'=>$i)); 
+			$view->renderMilieu(); 
+		}
+		
+		$view = new UserView($this, 'inviterFin',array('user' =>$this->currentUser , 'idQuestionnaire' => $idQuestionnaire)); 
+		$view->renderMilieu(); 
+	}
+	
+	
+	public function inviterQuizSansMail($request){
+		$idQuestionnaire = $_POST['idQuestionnaire'];
+		$nbInvitation = $_POST['nbInvitation'];
+		$mail = 0;
+		
+		
+		$view = new UserView($this, 'inviterDebut',array('user' =>$this->currentUser , 'idQuestionnaire' => $idQuestionnaire, 'mail'=>$mail)); 
 		$view->renderDebut(); 
 		$view->renderMilieu(); 
 		
@@ -589,6 +676,8 @@ class ProfController extends UserController{
 	public function voirInviterQuiz($request){
 		$idQuestionnaire = $_POST['questionnaireId'];
 		
+		$dataMaxNote = $this->currentUser->getAllIdQuestionAndBaremeAtQuestionnaire($idQuestionnaire);
+		$noteMax = $this->currentUser->calculNoteMax($dataMaxNote);
 		$emailInvite=Prof::getEmailInvite($idQuestionnaire);
 		$invites=array();
 		foreach($emailInvite as $email){
@@ -598,7 +687,7 @@ class ProfController extends UserController{
 			$invites[$i]['note']=Note::getValeurIfExist($idQuestionnaire,$_SESSION['id']);
 		}
 		
-		$view = new UserView($this,'listeInvite',array('user'=>$this->currentUser,'invites'=>$invites));
+		$view = new UserView($this,'listeInvite',array('user'=>$this->currentUser,'invites'=>$invites,'noteMax'=>$noteMax));
 		$view->render();
 	}
 

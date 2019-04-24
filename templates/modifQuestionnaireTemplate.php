@@ -2,27 +2,30 @@
 
     
         <?php 
+		
+		
             echo "<div id=\"listeQuestion\">";
             foreach($questionnaire->getQuestions() as $question){
                 $idQuestion = $question->getId();
-                
-                echo "<ul class=\"niveau2\">".  
-                //<th>" . $question['id'] ." </th>
-                //<th>" . $question['type']."</th>
-                "<li id=\"question".$idQuestion."\"><div style=\"margin:0;display:flex\"><a id=\"intitule".$idQuestion."\">" . $question->getIntitule() ."</a><button class=\"suppression\" onclick=supprimerQuestion(".$idQuestion.")></button><button class=\"modification\" onclick=modifierQuestion(".$idQuestion.")></button></div>";
-                echo "<ul class=\"niveau3\">";
+                echo "<div class=\"questionnaire niveau2\">";
+				echo "<button class=\"btn bouton_col_ens\" type=\"button\" data-toggle=\"collapse\" data-target=\"#collapseExample".$idQuestion."\" aria-expanded=\"false\" aria-controls=\"collapseExample\">";
+                echo "<div id=\"question".$idQuestion."\"><a id=\"intitule".$idQuestion."\">" 
+				. $question->getIntitule() 
+				."</a><button class=\"suppression\" onclick=supprimerQuestion(".$idQuestion.")></button>"
+				."<button class=\"modification\" onclick=modifierQuestion(".$idQuestion.")></button>";
+				echo "</div>";
+				echo "</button>";
+                echo "<div class=\"niveau3\">";
+				echo"<div class=\"nomQuestionnaire collapse\" id=\"collapseExample".$idQuestion."\">";
                 foreach($question->getReponses() as $reponse){
                     if($question->getType()=="QCM" | $question->getType()=="QCU" ){
                         $r = $reponse->getId();
-                        echo "<li id=\"reponse".$r."Question".$idQuestion."\"><div style=\"margin:0;display:flex\"><a id=\"intituleRep".$r."\" class=\"" .($reponse->getReponseCorrecte() ? "ReponseCorrecte":"ReponseFausse") ."\" >". $reponse->getIntitule() ."</a><button class=\"suppression\" onclick=supprimerReponse(".$r.",".$idQuestion.")></button><button class=\"modification\" onclick=modifierReponse(".$r.",".$idQuestion.",&quot;".($reponse->getReponseCorrecte() ? "ReponseCorrecte":"ReponseFausse") ."&quot;)></button></div></li>";
+                        echo "<div id=\"reponse".$r."Question".$idQuestion."\"><div style=\"margin:0;display:flex\"><a id=\"intituleRep".$r."\" class=\"" .($reponse->getReponseCorrecte() ? "ReponseCorrecte":"ReponseFausse") ."\" >". $reponse->getIntitule() ."</a><button class=\"suppression\" onclick=supprimerReponse(".$r.",".$idQuestion.")></button><button class=\"modification\" onclick=modifierReponse(".$r.",".$idQuestion.",&quot;".($reponse->getReponseCorrecte() ? "ReponseCorrecte":"ReponseFausse") ."&quot;)></button></div></div>";
                     }
                 }
-                echo "</ul>";
-                echo "</li>";
-                echo "</ul>";
+                echo "</div>";
+                echo "</div>";
                 
-
-                //<th><form action=\"index.php?action=modifierQuestion&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$question['id']."'><input type='submit' value='Modifier'></form></th>
 
             }
             echo "</div>";

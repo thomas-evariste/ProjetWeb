@@ -8,6 +8,6 @@
 					</div>
 				</div>
 				<div class="d-flex justify-content-center form_container">
-					<form  action="index.php?action=envoiEmail&controller=prof" method="post">
+					<form  action="index.php?action=envoiEmail<?php if($mail==0){echo "SansEmail";} ?>&controller=prof" method="post">
 					<h2 class="titre-insc">Invitation</h2>
 						<table>
