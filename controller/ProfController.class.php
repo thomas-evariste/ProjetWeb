@@ -507,16 +507,23 @@ class ProfController extends UserController{
     }
 	
 	public function envoiEmail($request){
-		$to=$_POST['email'];
+		$to=array();
+		print_r($_POST);
+		foreach($_POST as $key => $value){
+			if(strpos($key,"mail-")){
+				$to[]=$value;
+			}
+		}
 		$from='quiz.imt.lille.douai@gmail.com';
-		$idQuestionnaire = $_POST['idQestionnaire'];
+		$idQuestionnaire = $_POST['idQuestionnaire'];
 		$currentUser = Prof::getById($_SESSION['id']);
 		$Questionnaire = Questionnaire::getById($idQuestionnaire);
 		$prenomProf = $currentUser->getprenom();
 		$nomProf = $currentUser->getNom();
 		$titreQuestionnaire = $Questionnaire->getTitre();
-		Prof::setEstInvite($to,$idQuestionnaire);
-		
+		foreach($to as $t){
+			Prof::setEstInvite($t,$idQuestionnaire);
+		}
 		$sujet = 'Invitation a un quiz';
 		$message = $prenomProf.' '.$nomProf.' vous invite a vous connecter au site de quiz pour repondre au quiz: '.$titreQuestionnaire. ' click : http://localhost/ProjetWeb/index.php?action=loginToInvitation' ;
 		$mdp = 'imtLilleDouai';
@@ -529,12 +536,30 @@ class ProfController extends UserController{
 		$view->render(); 
 	}
 	
-	public function inviterQuiz($request){
-		$idQestionnaire = $_POST['questionnaireId'];
+	public function nombreDInvitation($request){
+		$idQuestionnaire = $_POST['questionnaireId'];
 		
 		
-		$view = new UserView($this, 'inviter',array('user' =>$this->currentUser , 'idQestionnaire' => $idQestionnaire)); 
+		$view = new UserView($this, 'nombreDInvitation',array('user' =>$this->currentUser, 'idQuestionnaire' => $idQuestionnaire)); 
 		$view->render(); 
+	}
+	
+	public function inviterQuiz($request){
+		$idQuestionnaire = $_POST['idQuestionnaire'];
+		$nbInvitation = $_POST['nbInvitation'];
+		
+		
+		$view = new UserView($this, 'inviterDebut',array('user' =>$this->currentUser , 'idQuestionnaire' => $idQuestionnaire)); 
+		$view->renderDebut(); 
+		$view->renderMilieu(); 
+		
+		for($i=0;$i<$nbInvitation;$i++){
+			$view = new UserView($this, 'inviterMilieu',array('user' =>$this->currentUser , 'idQuestionnaire' => $idQuestionnaire, 'i'=>$i)); 
+			$view->renderMilieu(); 
+		}
+		
+		$view = new UserView($this, 'inviterFin',array('user' =>$this->currentUser , 'idQuestionnaire' => $idQuestionnaire)); 
+		$view->renderMilieu(); 
 	}
     
     public function voirQuestionnairesInvite($request){
@@ -563,15 +588,15 @@ class ProfController extends UserController{
 	}
 	
 	public function voirInviterQuiz($request){
-		$idQestionnaire = $_POST['questionnaireId'];
+		$idQuestionnaire = $_POST['questionnaireId'];
 		
-		$emailInvite=Prof::getEmailInvite($idQestionnaire);
+		$emailInvite=Prof::getEmailInvite($idQuestionnaire);
 		$invites=array();
 		foreach($emailInvite as $email){
 			$invites[]=Prof::getInviteByEmail($email);
 		}
 		foreach($invites as $i => $invite){
-			$invites[$i]['note']=Note::getValeurIfExist($idQestionnaire,$_SESSION['id']);
+			$invites[$i]['note']=Note::getValeurIfExist($idQuestionnaire,$_SESSION['id']);
 		}
 		
 		$view = new UserView($this,'listeInvite',array('user'=>$this->currentUser,'invites'=>$invites));

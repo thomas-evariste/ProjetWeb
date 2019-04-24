@@ -8,14 +8,17 @@
 					</div>
 				</div>
 				<div class="d-flex justify-content-center form_container">
-					<form  action="index.php?action=envoiEmail&controller=prof" method="post">
+					<form  action="index.php?action=inviterQuiz&controller=prof" method="post">
 					<h2 class="titre-insc">Invitation</h2>
 						<table>
 						<tr class="input-group mb-3">
-							<td><input type="email" name="email" class="form-control input_user" value="" placeholder="email: "></td>
+							<td>Combient de personnes à inviter :</td>
 						</tr>
 						<tr class="input-group mb-3">
-							<td>idQuestionnaire:<input type="number" name="idQestionnaire" class="form-control input_user" value="<?php echo $idQestionnaire;?>" readonly></td>
+							<td><input type="number" name="nbInvitation" class="form-control input_user" value="1" ></td>
+						</tr>
+						<tr class="input-group mb-3">
+							<td>idQuestionnaire:<input type="number" name="idQuestionnaire" class="form-control input_user" value="<?php echo $idQuestionnaire;?>" readonly></td>
 						</tr>
 						<tr class="d-flex justify-content-center mt-3 login_container">
 							

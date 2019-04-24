@@ -48,10 +48,6 @@
           <i class="fa fa-plus-circle"></i>
           Créer un questionnaire
         </a>
-        <a class="dropdown-item" href="index.php?action=creerQuestion&controller=prof">
-          <i class="fa fa-plus-circle"></i>
-          Créer une question
-        </a>
         </div>
       </li>
       <li class="nav-item dropdown">
