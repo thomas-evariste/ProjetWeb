@@ -245,6 +245,14 @@ class Question extends Model{
                 WHERE ID_PROPOSITION = $idReponse
                 ";
         $sth=parent::query($sql);
+        //$bonus=Questionnaire::getBonus();
+        //$malus=Questionnaire::getMalus();
+        /*
+        if($answerValue==1){
+
+        }*/
+
+
     }
 
     public static function supprimer($idQuestion){
