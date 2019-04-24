@@ -31,7 +31,7 @@
 
             foreach($questionnaires as $questionnaire){
                 echo "<div class=\"questionnaire\">";
-                echo "<button class=\"btn\" type=\"button\" data-toggle=\"collapse\" data-target=\"#collapseExample".$questionnaire['id']."\" aria-expanded=\"false\" aria-controls=\"collapseExample\">"
+                echo "<button class=\"btn bouton_col_ens\" type=\"button\" data-toggle=\"collapse\" data-target=\"#collapseExample".$questionnaire['id']."\" aria-expanded=\"false\" aria-controls=\"collapseExample\">"
 				.$questionnaire['titre']."</button>" ;
 				 echo "</div>";
 				echo"<div class=\"nomQuestionnaire collapse\" id=\"collapseExample".$questionnaire['id']."\">";
