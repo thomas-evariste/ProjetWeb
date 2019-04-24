@@ -534,7 +534,6 @@ class ProfController extends UserController{
     public function voirQuestionnairesInvite($request){
 		$currentUser = Prof::getById($_SESSION['id']);
 		$userEmail=$currentUser->getMail();
-		echo ' cc: '.$userEmail.' :cc ';
 		if( $userEmail==""){
 			$view = new UserView($this,'ajoutEmailProf',array('user'=>$this->currentUser));
 			$view->render();
