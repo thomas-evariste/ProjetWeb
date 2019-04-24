@@ -578,8 +578,9 @@ class ProfController extends UserController{
 		$currentUser = Prof::getById($_SESSION['id']);
 		$userEmail = $_POST['mail'];
 		Prof::modify('MAIL',$userEmail,$_SESSION['id']);
+		$nomDePage = 'Invitations aux questionnaires';
 		$questionnaires = Prof::getQuestionnaireAFaireInvite($currentUser->getId(),$userEmail);
-		$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+		$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires, 'nomDePage'=>$nomDePage));
 		$view->render();
 	}
 	

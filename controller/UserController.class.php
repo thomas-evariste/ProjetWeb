@@ -310,7 +310,7 @@ class UserController extends AnonymousController{
     
     public function voirQuestionnairesInvite($request){
 		$currentUser = User::getById($_SESSION['id']);
-		$userEmail=$currentUser->getEmail($_SESSION['id']);
+		$userEmail=$currentUser->getMail();
 		if( $userEmail==""){
 			$view = new UserView($this,'ajoutEmail',array('user'=>$this->currentUser));
 			$view->render();
@@ -327,7 +327,7 @@ class UserController extends AnonymousController{
 		$currentUser = User::getById($_SESSION['id']);
 		$userEmail = $_POST['mail'];
 		User::modify('MAIL',$userEmail,$_SESSION['id']);
-			$nomDePage = 'Invitations aux questionnaires';
+		$nomDePage = 'Invitations aux questionnaires';
 		$questionnaires = User::getQuestionnaireAFaireInvite($currentUser->getId(),$userEmail);
 		$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires, 'nomDePage'=>$nomDePage));
 		$view->render();
