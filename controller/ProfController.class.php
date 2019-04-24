@@ -38,7 +38,7 @@ class ProfController extends UserController{
 			$questionnaires[$key]['createur']=Prof::getLoginById($questionnaire['createur']);
 		}
 		$nomDePage = 'Invitations aux questionnaires';
-		$view = new ProfView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires ,'nomDePage'=>$nomDePage));
+		$view = new ProfView($this,'choixQuestionnairesProf',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires ,'nomDePage'=>$nomDePage));
         $view->render();
     }
 
@@ -668,7 +668,7 @@ class ProfController extends UserController{
 				$questionnaires[$key]['createur']=Prof::getLoginById($questionnaire['createur']);
 			}
 			$nomDePage = 'Invitations aux questionnaires';
-			$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires,'nomDePage'=>$nomDePage));
+			$view = new UserView($this,'choixQuestionnairesProf',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires,'nomDePage'=>$nomDePage));
 			$view->render();
 		}
     }
@@ -679,7 +679,7 @@ class ProfController extends UserController{
 		Prof::modify('MAIL',$userEmail,$_SESSION['id']);
 		$nomDePage = 'Invitations aux questionnaires';
 		$questionnaires = Prof::getQuestionnaireAFaireInvite($currentUser->getId(),$userEmail);
-		$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires, 'nomDePage'=>$nomDePage));
+		$view = new UserView($this,'choixQuestionnairesProf',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires, 'nomDePage'=>$nomDePage));
 		$view->render();
 	}
 	
@@ -699,6 +699,19 @@ class ProfController extends UserController{
 		
 		$view = new UserView($this,'listeInvite',array('user'=>$this->currentUser,'invites'=>$invites,'noteMax'=>$noteMax));
 		$view->render();
+	}
+	
+	public function questionnairesParTag($request){
+		$currentUser = Prof::getById($_SESSION['id']);
+		$tag = $_GET['tag'];
+		$questionnaires = User::getQuestionnairesParTag($currentUser->getId(),$tag);
+		foreach($questionnaires as $key => $questionnaire){
+			$questionnaires[$key]['createur']=Prof::getLoginById($questionnaire['createur']);
+		}
+		$nomDePage = 'Questionnaires liés à : '.$tag;
+		$view = new UserView($this,'choixQuestionnairesProf',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires,'nomDePage' =>$nomDePage));
+        $view->render();
+
 	}
 
 } 
