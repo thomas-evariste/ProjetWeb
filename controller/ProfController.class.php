@@ -440,17 +440,14 @@ class ProfController extends UserController{
 			$justesse =0;
 			if(!empty($argsTentative)){
 				$justesse = $currentUser->verifiReponseQCM($argsTentative,$id_questionnaire);
-				echo 'justesse : ' . $justesse . '<br>';
 				if($justesse==0){
 					$note=$note+$malus;
 				}
 				else{
-					echo 'pt :' . $bonus*$justesse . '<br>';
 					$note=$note+$bonus*$justesse;
 				}
 			}
 		}
-		echo 'note : ' . $note;
 		$currentUser->attribuNote($_SESSION['id'],$id_questionnaire,$note);
 		
 	}
@@ -580,7 +577,6 @@ class ProfController extends UserController{
 	public function ajoutEmail($request){
 		$currentUser = Prof::getById($_SESSION['id']);
 		$userEmail = $_POST['mail'];
-		echo $userEmail;
 		Prof::modify('MAIL',$userEmail,$_SESSION['id']);
 		$questionnaires = Prof::getQuestionnaireAFaireInvite($currentUser->getId(),$userEmail);
 		$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));

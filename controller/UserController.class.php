@@ -252,7 +252,6 @@ class UserController extends AnonymousController{
 				}
 			}
 		}
-		echo 'note : ' . $note;
 		$currentUser->attribuNote($_SESSION['id'],$id_questionnaire,$note);
 		
 	}
@@ -327,10 +326,10 @@ class UserController extends AnonymousController{
 	public function ajoutEmail($request){
 		$currentUser = User::getById($_SESSION['id']);
 		$userEmail = $_POST['mail'];
-		echo $userEmail;
 		User::modify('MAIL',$userEmail,$_SESSION['id']);
+			$nomDePage = 'Invitations aux questionnaires';
 		$questionnaires = User::getQuestionnaireAFaireInvite($currentUser->getId(),$userEmail);
-		$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+		$view = new UserView($this,'choixQuestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires, 'nomDePage'=>$nomDePage));
 		$view->render();
 	}
 	
