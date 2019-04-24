@@ -21,7 +21,7 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-	<li class="nav-item">
+		<li class="nav-item">
         <img src="css/images/IMT_Lille_Douai_Logo_WEB.png" alt="logo imt lille douai" class="logo_imt_l_d">
       </li>
       <li class="nav-item active">
