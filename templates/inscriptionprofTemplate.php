@@ -31,13 +31,13 @@
 								<td><input type="text" name="nom" class="form-control input_user" value="" placeholder="Nom :"></td>
 							</tr>
 							<tr class="input-group mb-2">
-								<td><input type="text" name="prenom" class="form-control input_user" value="" placeholder="Prenom :"></td>
+								<td><input type="text" name="prenom" class="form-control input_user" value="" placeholder="Prénom :"></td>
 							</tr>
 							<tr class="input-group mb-2">
 								<td class="interne_quest">Interne:  <input type='hidden' value='0' name='interne'><INPUT type="checkbox" name="interne" class="form-control interne_btn " value="1" </td>
 							</tr>
 							<tr class="d-flex justify-content-center mt-3 login_container">
-								<th /><td> <input type="submit" value="Creer mon compte" /></td>
+								<th /><td> <input type="submit" value="Créer mon compte" /></td>
 							</tr>
 
 						</table>

@@ -12,6 +12,9 @@ body{
     color:red !important;
 }
 
+.logo_imt_l_d{
+	width: 105px;
+}
 
 .merci 
 {
@@ -23,7 +26,7 @@ body{
 }
 
 input{
-	background-color: #F39C12;
+	background-color: #FF9900;
 }
 
 .table_espacee{
@@ -44,7 +47,7 @@ div.alignRight{
 
 #listeQuestion .niveau2{
 	list-style-type:none;
-	background-color:#F39C12;
+	background-color:#FF9900;
 	padding-bottom:0px;
 }
 
@@ -75,20 +78,35 @@ div.alignRight{
 	border: none;
 }
 
+.bouton_col_ens{
+	width:100%;
+}
+
+.h2_centre{
+	text-align: center;
+}
+
 .questionnaire{
-	background-color:#FFFFFF;
+	margin-left: auto;
+	margin-right: auto;
+	background-color:#FF9900;
 	text-align:center;
+	margin-top:25px;
 	margin-bottom:5px;
+	width:70%;
+	border-radius: 10px ;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.questionnaire div.nomQuestionnaire div{
-	display:none;
-	background-color:#FFFFFF;
+.nomQuestionnaire{
+	margin-left: auto;
+	margin-right: auto;
+	background-color:#FF9900;
+	width:70%;
+	border-radius:10px ;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.questionnaire div.nomQuestionnaire:hover div{
-	display:block;
-}
 
 span.dateOuverture{
 	float:25%;

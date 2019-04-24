@@ -8,7 +8,7 @@
 }
 
 .brand-centered {
-     display: block;
+    display: block;
     position: relative;
     width: 100%; 
     height: 40vh;
@@ -100,12 +100,12 @@
 
 .grid-item:hover .content2{
     opacity:1;
-	background-color: #F39C12;
+	background-color: #FF9900;
 } 
 
 .grid-item:hover .content2 .caption{
     opacity:1;
-	background-color: #F39C12
+	background-color: #FF9900;
 }
 
 /*tamanho dos itens da grid - termina*/

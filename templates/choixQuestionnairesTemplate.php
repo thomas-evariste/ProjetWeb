@@ -1,5 +1,5 @@
 
-<?php echo'<h2>'. $nomDePage .'</h2>'   ?>
+<?php echo"<h2 class=\"h2_centre\">". $nomDePage .'</h2>'   ?>
 
 <table class='table_espacee'>
 
