@@ -1,33 +1,20 @@
-<table>
 
-    <thead>
-    
-        <tr>
-            <th>Classement</th>
-            <th>Pseudo</th>
-            <th>Prenom</th>
-            <th>Nom</th>
-            <th>Note</th> 
-        </tr>
-    </thead>
-
-    <tbody>
     
         <?php 
         
             foreach($resultats as $resultat){
 				
-                echo "<tr>   
-                <th>" . $resultat['classement'] ." </th>
-                <th>" . $resultat['login']."</th>
-                <th>" . $resultat['prenom'] ."</th>
-                <th>" . $resultat['nom'] ."</th> 
-                <th>" . $resultat['valeur']." sur ". $noteMax ."</th> 
-                 </tr>";
+				
+				
+				echo"<div class=\"questionnaire \" >";
+                echo "<div class=\"classement\">". $resultat['classement'] . ". ".$resultat['login']." </div>";
+                echo "<div>Prenom: ". $resultat['prenom'] ." Nom: ". $resultat['nom'] ." </div>";
+                echo "<div>Résultat: ". $resultat['valeur']." sur ". $noteMax ." </div>";
+                
+				
+				echo "</div>";
+				
+				
             }
         
         ?>
-
-    </tbody>
-
-</table>

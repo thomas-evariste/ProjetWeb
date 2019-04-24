@@ -284,7 +284,8 @@ class ProfController extends UserController{
     public function voirQuestionnaires($request){
 		$currentUser = Prof::getById($_SESSION['id']);
         $questionnaires = Prof::getQuestionnaireAFaire($currentUser->getId());
-        $view = new UserView($this,'choixQuestionnairesProf',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+		$nomDePage = 'Quiz Disponibles';
+        $view = new UserView($this,'choixQuestionnairesProf',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires,'nomDePage'=>$nomDePage));
         $view->render();
     }
 	

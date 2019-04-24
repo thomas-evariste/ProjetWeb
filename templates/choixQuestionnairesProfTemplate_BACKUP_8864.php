@@ -17,6 +17,7 @@
 				else{
 					$dateStringF = "";
 				}
+<<<<<<< HEAD
 				
 				echo "<div class=\"questionnaire\">";
                 echo "<button class=\"btn bouton_col_ens\" type=\"button\" data-toggle=\"collapse\" data-target=\"#collapseExample".$questionnaire['id']."\" aria-expanded=\"false\" aria-controls=\"collapseExample\">"
@@ -32,11 +33,24 @@
                 echo "<div class=\"etat\">Etat: ". $questionnaire['etat'] ." </div>";
                 echo "<div class=\"createur\">Createur: ". $questionnaire['createur'] ." </div>";
                 echo "<div class=\"boutons\">
-				<form action=\"index.php?action=repondreQuiz&controller=user\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$questionnaire['id']."'><input type='submit' value='R�pondre'></form>
+				<form action=\"index.php?action=repondreQuiz&controller=user\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$questionnaire['id']."'><input type='submit' value='Répondre'></form>
 				";
 				
 				echo "</div></div>";
 				
+=======
+                echo "<tr>   
+                <th>" . $questionnaire['titre'] ." </th>
+                <th>" . $questionnaire['description']."</th>
+                <th>" . $dateStringO ."</th>
+                <th>" . $dateStringF ."</th>
+                <th>" . $questionnaire['connexionRequise'] ."</th>
+                <th>" . $questionnaire['etat'] ."</th>
+                <th>" . $questionnaire['url'] ."</th>
+                <th>" . $questionnaire['createur'] ."</th> 
+                <th><form action=\"index.php?action=repondreQuiz&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$questionnaire['id']."'><input type='submit' value='Répondre'></form></th>
+                </tr>";
+>>>>>>> origin/Travail_Simon
             }
         
         ?>
