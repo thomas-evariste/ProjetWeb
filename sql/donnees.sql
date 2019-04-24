@@ -43,7 +43,10 @@ INSERT INTO `ENSEIGNANT` (`ID_USER`, `LOGIN`, `PASSWORD`, `INTERNE`, `DESCRIPTIO
 --
 
 INSERT INTO `NOTE` (`ID_USER`, `ENS_ID_USER`, `ID_NOTE`, `ID_QUESTIONNAIRE`, `VALEUR`) VALUES
-(1,1,1,1,'10');
+(9,1,1,8,'3'),
+(3,1,2,12,'3'),
+(3,1,3,15,'3'),
+(8,1,11,8,'4');
 
 
 --
@@ -51,7 +54,10 @@ INSERT INTO `NOTE` (`ID_USER`, `ENS_ID_USER`, `ID_NOTE`, `ID_QUESTIONNAIRE`, `VA
 --
 
 INSERT INTO `PARTICIPANT` (`ID_USER`, `LOGIN`, `PASSWORD`, `PROMOTION`, `MAJEURE`, `NOM`, `PRENOM`, `MAIL`) VALUES
-(3, 'simon', 'simon', 2018, 'ISIC', 'DROGO', 'Simon', 'simon.dromer@etu.imt-lille-douai.fr');
+(8, 'zz', 'zz', 2020, 'ISIC', 'Zidane', 'Zinedine', 'zinedine.zidane@etu.imt-lille-douai.fr'),
+(9, 'thomas', 'thomas', 2020, 'ISIC', 'Guyot', 'Thomas', 'thomas.guyot@etu.imt-lille-douai.fr'),
+(10, 'jean', 'jean', 2020, 'ISIC', 'Dupond', 'Jean', 'jean.dupond@etu.imt-lille-douai.fr'),
+(3, 'simon', 'simon', 2020, 'IQ', 'Dromer', 'Simon', 'simon.dromer@etu.imt-lille-douai.fr');
 
 
 --
@@ -635,7 +641,15 @@ INSERT INTO `ASSOCIER` (`LIBELLE`, `ID_QUESTION`) VALUES
 
 INSERT INTO `EST_INVITE` (`EMAIL`, `ID_QUESTIONNAIRE`, `A_PARTICIPE`) VALUES
 ('cc@gmail.com', 1, 1),
-('cc@gmail.com', 2, 1);
+('simon.dromer@etu.imt-lille-douai.fr',8,0),
+('simon.dromer@etu.imt-lille-douai.fr',9,0),
+('simon.dromer@etu.imt-lille-douai.fr',15,1),
+('simon.dromer@etu.imt-lille-douai.fr',12,1),
+('simon.dromer@etu.imt-lille-douai.fr',16,0),
+('zinedine.zidane@etu.imt-lille-douai.fr',8,0),
+('thomas.guyot@etu.imt-lille-douai.fr',8,1),
+('jean.dupond@etu.imt-lille-douai.fr',8,1),
+('qc@mail.com',6,0);
 
 --
 -- Contenu de la table `CONTENIR`
