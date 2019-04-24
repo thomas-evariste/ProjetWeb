@@ -22,7 +22,7 @@
                 <th>" . $questionnaire['description']."</th>
                 <th>" . $questionnaire['etat'] ."</th>
                 <th>" . $questionnaire['createur'] ."</th> 
-                <th>" . $questionnaire['note'] ."</th> 
+                <th>" . $questionnaire['note']." sur ". $questionnaire['noteMax'] ."</th> 
 				<th><form action=\"index.php?action=classementQuiz&controller=user\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$questionnaire['id']."'><input type='submit' value='Classement'></form></th>
                 </tr>";
 				

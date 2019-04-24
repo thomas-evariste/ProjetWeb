@@ -107,7 +107,6 @@ class ProfController extends UserController{
         $nbTag = $request->read('nbTag');
         $idQuestionnaire=$request->read('idQuestionnaire');
         $bareme=$request->read('bareme_question');
-        print_r($_POST);
         if ($type=="QO"){
             echo "ON EST UN TYPE QO !";
             $idQuestion = Question::createId();
@@ -398,7 +397,6 @@ class ProfController extends UserController{
 		
 		$regle = $currentUser->getRegle($id_questionnaire);
 		
-		print_r($args);
 		foreach ($regle as $nom => $valeur) {
 			if($nom=='BONUS'){
 				$bonus=$valeur;
@@ -462,6 +460,9 @@ class ProfController extends UserController{
         $questionnaires = Prof::getQuestionnaireFait($currentUser->getId());
 		foreach($questionnaires as $key => $questionnaire){
 			$questionnaires[$key]['corrige']=Questionnaire::getCorrige($questionnaire['id']);
+			$dataMaxNote = $currentUser->getAllIdQuestionAndBaremeAtQuestionnaire($questionnaire['id']);
+			$noteMax = $currentUser->calculNoteMax($dataMaxNote);
+			$questionnaires[$key]['noteMax']=$noteMax;
 		}
         $view = new UserView($this,'resultatQuestionnairesProf',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
         $view->render();
@@ -472,6 +473,11 @@ class ProfController extends UserController{
 		$id_questionnaire = $_POST['questionnaireId'];
 		$resultats = NOTE::getResultats($id_questionnaire);
 		$nbResultats = count($resultats);
+		
+		
+		$dataMaxNote = $currentUser->getAllIdQuestionAndBaremeAtQuestionnaire($id_questionnaire);
+		$noteMax = $currentUser->calculNoteMax($dataMaxNote);
+		
 		
 		$permut =true;
 		while($permut){
@@ -496,7 +502,7 @@ class ProfController extends UserController{
 			}
 		}
 		
-        $view = new UserView($this,'classementQuestionnaires',array('user'=>$this->currentUser, 'resultats'=>$resultats));
+        $view = new UserView($this,'classementQuestionnaires',array('user'=>$this->currentUser, 'resultats'=>$resultats, 'noteMax'=>$noteMax));
         $view->render();
     }
 	

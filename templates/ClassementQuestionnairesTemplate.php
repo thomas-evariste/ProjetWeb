@@ -22,7 +22,7 @@
                 <th>" . $resultat['login']."</th>
                 <th>" . $resultat['prenom'] ."</th>
                 <th>" . $resultat['nom'] ."</th> 
-                <th>" . $resultat['valeur'] ."</th> 
+                <th>" . $resultat['valeur']." sur ". $noteMax ."</th> 
                  </tr>";
             }
         
