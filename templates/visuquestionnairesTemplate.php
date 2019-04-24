@@ -1,31 +1,4 @@
-<!--
-<table>
 
-    <thead>
-    
-        <tr>
-            <th>TITRE</th>
-            <th>DESCRIPTION</th>
-            <th>DATE OUVERTURE</th>
-            <th>DATE FERMETURE</th>
-            <th>CONNEXION REQUISE</th>
-            <th>ETAT</th>
-            <th>URL</th>
-           
-        </tr>
-    </thead>
-
-    <tbody>
-    
-	<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-    Button with data-target
-  </button>
-</p>
-<div class="collapse" id="collapseExample">
-  <div class="card card-body">
-    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-  </div>
-</div>-->
 	<?php echo"<h2 class=\"h2_centre\">". $nomDePage .'</h2>'   ?>
 	
 	
@@ -69,7 +42,8 @@
                 else{
                     echo "<form action=\"index.php?action=classementQuiz&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$questionnaire['id']."'><input type='submit' value='Classement'></form>";
                 }
-                echo "<form action=\"index.php?action=nombreDInvitation&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$questionnaire['id']."'><input type='submit' value='Inviter'></form>
+                echo "<form action=\"index.php?action=nombreDInvitation&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$questionnaire['id']."'><input type='submit' value='Inviter' disabled=\"disabled\"></form>";
+                echo "<form action=\"index.php?action=nombreDInvitationSansMail&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$questionnaire['id']."'><input type='submit' value='Inviter sans envoi de mail'></form>
                 <form action=\"index.php?action=voirInviterQuiz&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$questionnaire['id']."'><input type='submit' value='Voir invités'></form>
                 ";
 
@@ -79,25 +53,9 @@
                 echo "</div></div>";
                 
                 
-                /*echo "<th><form action=\"index.php?action=modifierQuestionnaire&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$questionnaire['id']."'><input type='submit' value='Modifier Questions'></form></th>";
-                if($questionnaire['aCorriger']==1){                
-                    echo "<th><form action=\"index.php?action=corrigerQuestionnaire&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$questionnaire['id']."'><input type='submit' value='Corriger'></form></th>";
-                }
-                echo "<th><form action=\"index.php?action=classementQuiz&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$questionnaire['id']."'><input type='submit' value='Classement'></form></th>
-                ";
-				if($questionnaire['etat']=='Prive'){
-				echo "<th><form action=\"index.php?action=nombreDInvitation&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$questionnaire['id']."'><input type='submit' value='Inviter'></form></th>";
-                echo "<th><form action=\"index.php?action=voirInviterQuiz&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$questionnaire['id']."'><input type='submit' value='Voir invités'></form></th>";
-                }*/
 
             }
         
         ?>
-<!--
-    </tbody>
-
-</table>
-        -->
-
 
 

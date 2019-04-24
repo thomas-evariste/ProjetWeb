@@ -4,7 +4,7 @@
 						</tr>
 						<tr class="d-flex justify-content-center mt-3 login_container">
 							
-							<th /><td> <input type="submit" value="Inviter" /></td>
+							<th /><td> <input type="submit" value="Inviter"/></td>
 						</tr>
 						</table>
 					</form>
