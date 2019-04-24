@@ -219,7 +219,8 @@ class ProfController extends UserController{
 			}
 			return ($a['aCorriger'] < $b['aCorriger']);
 		});
-        $view = new ProfView($this,'visuquestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires));
+		$nomDePage='Mes questionnaires';
+        $view = new ProfView($this,'visuquestionnaires',array('user'=>$this->currentUser,'questionnaires'=>$questionnaires, 'nomDePage'=>$nomDePage));
         $view->render();
 	}
 	

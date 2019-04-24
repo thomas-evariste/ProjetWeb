@@ -82,6 +82,10 @@ div.alignRight{
 	width:100%;
 }
 
+.h2_centre{
+	text-align: center;
+}
+
 .questionnaire{
 	margin-left: auto;
   margin-right: auto;
