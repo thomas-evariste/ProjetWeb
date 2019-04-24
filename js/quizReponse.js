@@ -4,13 +4,20 @@ $(document).ready(function() {
     }
 
     function functionGo(i){
-        if($('#repQuestion'+i.data.int).val().length<100){
+        if($('#repQuestion'+i.data.int).val()!=undefined){
+            if($('#repQuestion'+i.data.int).val().length<100){
+                $('#panel'+(i.data.int+1)).show();
+                $('#panel'+i.data.int).hide();
+            }
+            else{
+                $('#panelError'+i.data.int).html("Merci d'insérer une réponse de moins de 100 caractères, la votre est actuellement de "+ ($('#repQuestion'+i.data.int).val().length) + " caractères");
+            }
+        }
+        else{
             $('#panel'+(i.data.int+1)).show();
             $('#panel'+i.data.int).hide();
         }
-        else{
-            $('#panelError'+i.data.int).html("Merci d'insérer une réponse de moins de 100 caractères, la votre est actuellement de "+ ($('#repQuestion'+i.data.int).val().length) + " caractères");
-        }
+
     }
 
     function functionBack(i){
