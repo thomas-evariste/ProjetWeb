@@ -1,0 +1,118 @@
+SELECT MAX(ID_NOTE) as nb FROM NOTE => trouver l'ID max de la table NOTE
+
+SELECT * FROM NOTE WHERE ID_QUESTIONNAIRE = '$id_questionnaire' => Obtenir les données de la table NOTE qui ont pour ID $id_questionnaire
+
+SELECT * FROM PARTICIPANT WHERE ID_USER = '$id_user' => Obtenir les données de la table PARTICIPANT qui ont pour ID $id_user
+
+SELECT * FROM ENSEIGNANT WHERE ID_USER = '$id_user' => Obtenir les données de la table ENSEIGNANT qui ont pour ID $id_user
+
+SELECT VALEUR FROM NOTE WHERE ID_QUESTIONNAIRE = '$id_questionnaire'  AND ID_USER='$id_user' 
+=> Obtenir la colonne VALEUR de la table NOTE pour le questionnaire $id_Questionnaire et l'utilisateur $id_user (une seule valeur peut être
+renvoyée, un utilisateur ne pouvant participer qu'une fois à un questionnaire)
+
+INSERT INTO ENSEIGNANT VALUES(:id,:login,:password,:interne,:description,:nom,:prenom,:mail) => Créer un enseignant
+
+SELECT ID_USER FROM ENSEIGNANT WHERE LOGIN = '$login' => trouver l'ID de l'enseignant ayant $login comme login (pour la mise en place de la session)
+
+SELECT LOGIN  FROM ENSEIGNANT WHERE ID_USER = '$id' => trouver le login d'un enseignant à l'aide de son ID
+
+SELECT * FROM ENSEIGNANT WHERE LOGIN = '$login' => obtenir l'intégralité des infos d'un enseignant à l'aide du login
+
+SELECT * FROM ENSEIGNANT WHERE LOGIN = '$login' AND PASSWORD = '$password' => obtenir l'intégralité des infos d'un enseignant à l'aide du login (Pour la connexion)
+
+UPDATE ENSEIGNANT SET $column = '$data' WHERE ID_USER='$id' => Permet d'update une COLONNE De la table ENSEIGNANT en prenant un user
+par son ID
+
+SELECT * FROM QUESTIONNAIRE WHERE ID_CREATEUR='$idUser' => Obtenir les Questionnaires d'un prof
+
+SELECT QUESTION.* 
+        FROM QUESTION, CONTENIR, QUESTIONNAIRE 
+        WHERE QUESTION.ID_QUESTION = CONTENIR.ID_QUESTION
+        AND CONTENIR.ID_QUESTIONNAIRE = QUESTIONNAIRE.ID_QUESTIONNAIRE
+        AND QUESTIONNAIRE.ID_QUESTIONNAIRE = '$idQuestionnaire'
+
+=> Obtenir les questions d'un Questionnaire
+
+SELECT * FROM QUESTION
+                WHERE ID_QUESTION IN 
+                    (SELECT ID_QUESTION 
+                    FROM CONTENIR 
+                    WHERE ID_QUESTIONNAIRE = '$idQuestionnaire' )
+                AND TYPE='QO'
+=> Obtenir les questions ouvertes d'un questionnaire
+
+SELECT EMAIL FROM EST_INVITE WHERE ID_QUESTIONNAIRE = '$idQuestionnaire' => Obtenir les Mails invités à un questionnaire
+
+SELECT NOM, PRENOM, ID_USER, MAIL FROM ENSEIGNANT WHERE MAIL = '$email' => Obtenir les infos d'un enseignant invité à un questionnaire
+
+SELECT NOM, PRENOM, ID_USER, MAIL FROM PARTICIPANT WHERE MAIL = '$email' => Obtenir les infos d'un élève invité à un questionnaire
+
+SELECT * FROM CONTENIR WHERE ID_QUESTIONNAIRE = '$id_questionnaire' => Permet d'obtenir les Questions et Barèmes de celles-ci d'un questionnaire
+
+SELECT BONUS FROM REGLE WHERE ID_REGLE in (SELECT ID_REGLE FROM SPECIFIER WHERE ID_QUESTIONNAIRE = '$id_questionnaire' ) => Obtenir la valeur BONUS associée lors de la création du questionnaire (qui permet de déterminer la note)
+
+
+SELECT * FROM QUESTION WHERE ID_QUESTION = '$id' => Obtenir toutes les infos d'une question par ID
+
+SELECT * FROM REPONSE_DISPONIBLE WHERE ID_PROPOSITION IN (SELECT ID_PROPOSITION FROM DISPOSER WHERE ID_QUESTION = '$idQuestion' )
+=> Obtenir les infos de toutes les réponses associées à une question
+
+SELECT rep.* 
+                FROM REPONSE_DISPONIBLE as rep, TENTER, QUESTION, PARTICIPANT, DISPOSER
+                WHERE QUESTION.ID_QUESTION = :id_question
+                AND QUESTION.ID_QUESTION = DISPOSER.ID_QUESTION
+                AND DISPOSER.ID_PROPOSITION = rep.ID_PROPOSITION
+                AND PARTICIPANT.ID_USER = TENTER.ID_USER
+                AND TENTER.ID_PROPOSITION = rep.ID_PROPOSITION
+                AND TENTER.A_CORRIGER=1
+=> Obtenir toutes les réponses à corriger d'une question
+
+UPDATE TENTER
+SET A_CORRIGER=0, JUSTE=$answerValue
+WHERE ID_PROPOSITION = $idReponse
+=> Permet d'affecter une valeur (si la réponse est juste ou non) à une proposition tentée par un élève, lors de la correction manuelle ou automatique.
+
+DELETE FROM CONTENIR WHERE ID_QUESTION=:idQuestion
+DELETE FROM DISPOSER WHERE ID_QUESTION=:idQuestion
+DELETE FROM ASSOCIER WHERE ID_QUESTION=:idQuestion
+DELETE FROM REPONSE_DISPONIBLE WHERE ID_PROPOSITION=:idReponse
+DELETE FROM QUESTION WHERE ID_QUESTION=:idQuestion
+=> Supprime une question et ses réponses associées de la BDD
+
+SELECT COUNT(DISTINCT QUESTION.ID_QUESTION) AS nb FROM QUESTION, DISPOSER, REPONSE_DISPONIBLE, TENTER 
+        WHERE QUESTION.ID_QUESTION IN (SELECT ID_QUESTION FROM CONTENIR WHERE ID_QUESTIONNAIRE =:idQuestionnaire)
+        AND QUESTION.TYPE='QO'
+        AND DISPOSER.ID_PROPOSITION = REPONSE_DISPONIBLE.ID_PROPOSITION
+        AND QUESTION.ID_QUESTION = QUESTION.ID_QUESTION 
+        AND TENTER.ID_PROPOSITION = REPONSE_DISPONIBLE.ID_PROPOSITION
+        AND TENTER.A_CORRIGER=1
+=> Retourne le nombre de questions devant être corrigées manuellement
+
+INSERT INTO CONTENIR VALUES(:idQuestion,:idQuestionnaire,:bareme) => Lie une question et un questionnaire en lui affectant un barème
+
+SELECT COUNT(LIBELLE) as nb FROM TAG WHERE LIBELLE='$libelle' => Permet de tester si un TAG existe selon son libellé
+
+SELECT * FROM REGLE WHERE ID_REGLE in (SELECT ID_REGLE FROM SPECIFIER WHERE ID_QUESTIONNAIRE = '$id_questionnaire' ) => obtenir données de la table REGLE d'un questionnaire
+
+SELECT REPONSE_CORRECTE FROM REPONSE_DISPONIBLE WHERE ID_PROPOSITION = '$tentative' => Permet de vérifier si la proposition d'un utilisateur est correcte (correction automatique QCM/QCU)
+
+SELECT BAREME FROM CONTENIR WHERE ID_QUESTION = (SELECT ID_QUESTION FROM DISPOSER WHERE ID_PROPOSITION = '$tentative') => Obtenir le barème d'un question depuis l'ID d'une de ses réponses
+
+SELECT ID_PROPOSITION FROM REPONSE_DISPONIBLE WHERE (REPONSE_CORRECTE = 1) AND (ID_PROPOSITION IN (SELECT ID_PROPOSITION FROM DISPOSER WHERE ID_QUESTION = '$id_question'))
+=> Permet d'obtenir les bonnes réponses d'un utilisateur pour la notation (correction auto)
+
+SELECT ID_CREATEUR FROM QUESTIONNAIRE WHERE ID_QUESTIONNAIRE = '$id_questionnaire' => retrouver créateur d'un questionnaire selon son ID
+
+SELECT * FROM QUESTIONNAIRE WHERE (ID_QUESTIONNAIRE IN (SELECT ID_QUESTIONNAIRE FROM NOTE WHERE ID_USER = '$idUser')) => Obtenir les données des questionnaires faits par un utilisateur
+
+~> SELECT VALEUR FROM NOTE WHERE (ID_QUESTIONNAIRE ='$data->ID_QUESTIONNAIRE') AND (ID_USER = '$idUser') 
+
+	=> Permet d'obtenir les notes à ces questionnaires
+
+SELECT * FROM QUESTIONNAIRE WHERE (ID_QUESTIONNAIRE NOT IN (SELECT ID_QUESTIONNAIRE FROM NOTE WHERE ID_USER = '$idUser')) 
+		AND (ID_QUESTIONNAIRE in (SELECT ID_QUESTIONNAIRE FROM EST_INVITE WHERE EMAIL = '$emailUser')) 
+=> Obtenir la liste des questionnaires auxquels un utilisateur a été invité et pour lequel il n'a pas été noté
+
+
+
+
