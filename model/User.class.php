@@ -31,11 +31,11 @@ class User extends Model{
 
     public static function isLoginUsed($login){
         
-        $sth = parent::query("SELECT LOGIN FROM PARTICIPANT WHERE LOGIN='$login'");
+        $sth = parent::query("SELECT COUNT(LOGIN) as nb  FROM PARTICIPANT WHERE LOGIN='$login'");
         $data = $sth->fetch(PDO::FETCH_OBJ);
-        $sth2 = parent::query("SELECT LOGIN FROM ENSEIGNANT WHERE LOGIN='$login'");
-        $data2 = $sth->fetch(PDO::FETCH_OBJ);
-        if(!empty($data) || !empty($data2)){
+        $sth2 = parent::query("SELECT COUNT(LOGIN) as nb FROM ENSEIGNANT WHERE LOGIN='$login'");
+        $data2 = $sth2->fetch(PDO::FETCH_OBJ);
+        if(($data->nb+$data2->nb)>0){
             return true;
         }
         return false;
