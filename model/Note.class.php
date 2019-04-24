@@ -65,7 +65,7 @@ class Note extends Model{
         if (!empty($data)){
             return $data->VALEUR;
         }
-		return null;
+		return "";
 	}
 
 }

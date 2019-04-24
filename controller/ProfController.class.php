@@ -589,6 +589,8 @@ class ProfController extends UserController{
 	public function voirInviterQuiz($request){
 		$idQuestionnaire = $_POST['questionnaireId'];
 		
+		$dataMaxNote = $this->currentUser->getAllIdQuestionAndBaremeAtQuestionnaire($idQuestionnaire);
+		$noteMax = $this->currentUser->calculNoteMax($dataMaxNote);
 		$emailInvite=Prof::getEmailInvite($idQuestionnaire);
 		$invites=array();
 		foreach($emailInvite as $email){
@@ -598,7 +600,7 @@ class ProfController extends UserController{
 			$invites[$i]['note']=Note::getValeurIfExist($idQuestionnaire,$_SESSION['id']);
 		}
 		
-		$view = new UserView($this,'listeInvite',array('user'=>$this->currentUser,'invites'=>$invites));
+		$view = new UserView($this,'listeInvite',array('user'=>$this->currentUser,'invites'=>$invites,'noteMax'=>$noteMax));
 		$view->render();
 	}
 
