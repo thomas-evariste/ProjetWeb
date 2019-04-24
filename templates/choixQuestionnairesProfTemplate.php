@@ -41,7 +41,7 @@
                 <th>" . $questionnaire['etat'] ."</th>
                 <th>" . $questionnaire['url'] ."</th>
                 <th>" . $questionnaire['createur'] ."</th> 
-                <th><form action=\"index.php?action=repondreQuiz&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$questionnaire['id']."'><input type='submit' value='Repondre'></form></th>
+                <th><form action=\"index.php?action=repondreQuiz&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$questionnaire['id']."'><input type='submit' value='Répondre'></form></th>
                 </tr>";
             }
         
