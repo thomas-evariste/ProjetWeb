@@ -10,7 +10,7 @@
 				if($invite['note']!=""){
                 echo "<div>Note: ". $invite['note']." sur ". $noteMax ." </div>";}
 				else{
-					echo "<div> cette utilisateur n'a pas encore répondu au questionnaire</div>";
+					echo "<div> cet utilisateur n'a pas encore répondu au questionnaire</div>";
 				}
 				echo "</div>";
 				
