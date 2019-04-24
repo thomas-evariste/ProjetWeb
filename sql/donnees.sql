@@ -34,8 +34,8 @@ INSERT INTO `ENSEIGNANT` (`ID_USER`, `LOGIN`, `PASSWORD`, `INTERNE`, `DESCRIPTIO
 (5, 'b', 'b', 1, 'Professor of opérational research', 'LUJAK', 'Marin', 'bidule@mail.com'),
 (6, 'c', 'c', 0, 'Professeur de mathématiques', 'ATALI', 'Jack', 'test@mail.com'),
 (7, 'd', 'd', 1, 'Doctorant', 'NEWTON', 'Isaac', 'op@mail.com'),
-(2, 'e', 'e', 1, 'Professeur de mathématiques', 'COQUEREL', 'Quentin', 'qc@mail.com'),
-(1, 'f', 'f', 1, 'Professeur de mathématiques', 'COQUEREL', 'Quentin', 'cc@gmail.com');
+(2, 'e', 'e', 1, 'Professeur de mathématiques', 'Fabresse', 'Luc', 'qc@mail.com'),
+(1, 'f', 'f', 1, 'Professeur d\'informatique', 'Pinot', 'Rémy', 'cc@gmail.com');
 
 
 --
@@ -152,27 +152,27 @@ INSERT INTO `QUESTION` (`ID_QUESTION`, `TYPE`, `INTITULE_QUESTION`) VALUES
 --
 
 INSERT INTO `QUESTIONNAIRE` (`ID_QUESTIONNAIRE`, `TITRE`, `DESCRIPTION_QUESTIONNAIRE`, `DATE_OUVERTURE`, `DATE_FERMETURE`, `CONNEXION_REQUISE`, `ETAT`, `URL`,`ID_CREATEUR`) VALUES
-(3, 'QCU Nature', NULL, NULL, NULL, 0, 'Public', NULL, 2),
+(3, 'QCU Nature', NULL, NULL, NULL, 0, 'Public', NULL, 1),
 (4, 'QCU Littérature', NULL, NULL, NULL, 0, 'Public', NULL, 2),
-(5, 'QCU Histoire', NULL, NULL, NULL, 0, 'Public', NULL, 2),
+(5, 'QCU Histoire', NULL, NULL, NULL, 0, 'Public', NULL, 1),
 (6, 'QCU Informatique', NULL, NULL, NULL, 0, 'Public', NULL, 2),
-(7, 'QCU Géographie', NULL, NULL, NULL, 0, 'Public', NULL, 2),
+(7, 'QCU Géographie', NULL, NULL, NULL, 0, 'Public', NULL, 1),
 (8, 'QCU Physique-Chimie', NULL, NULL, NULL, 0, 'Public', NULL, 2),
-(9, 'QCU Energétique', NULL, NULL, NULL, 0, 'Public', NULL, 2),
+(9, 'QCU Energétique', NULL, NULL, NULL, 0, 'Public', NULL, 1),
 (10, 'QCU Développement durable', NULL, NULL, NULL, 0, 'Public', NULL, 2),
-(11, 'QCU Mathématiques', NULL, NULL, NULL, 0, 'Public', NULL, 2),
+(11, 'QCU Mathématiques', NULL, NULL, NULL, 0, 'Public', NULL, 1),
 (12, 'QCU Sport', NULL, NULL, NULL, 0, 'Public', NULL, 2),
-(13, 'QCU Télécom', NULL, NULL, NULL, 0, 'Public', NULL, 2),
+(13, 'QCU Télécom', NULL, NULL, NULL, 0, 'Public', NULL, 1),
 (14, 'QCU Langues', NULL, NULL, NULL, 0, 'Public', NULL, 2),
-(15, 'QCM Littérature', NULL, NULL, NULL, 0, 'Public', NULL, 2),
+(15, 'QCM Littérature', NULL, NULL, NULL, 0, 'Public', NULL, 1),
 (16, 'QCM Histoire', NULL, NULL, NULL, 0, 'Public', NULL, 2),
-(17, 'QCM Informatique', NULL, NULL, NULL, 0, 'Public', NULL, 2),
+(17, 'QCM Informatique', NULL, NULL, NULL, 0, 'Public', NULL, 1),
 (18, 'QCM Nature', NULL, NULL, NULL, 0, 'Public', NULL, 2),
-(19, 'QCM Géographie', NULL, NULL, NULL, 0, 'Public', NULL, 2),
+(19, 'QCM Géographie', NULL, NULL, NULL, 0, 'Public', NULL, 1),
 (20, 'QCM Physique-Chimie', NULL, NULL, NULL, 0, 'Public', NULL, 2),
-(21, 'QCM Energétique', NULL, NULL, NULL, 0, 'Public', NULL, 2),
+(21, 'QCM Energétique', NULL, NULL, NULL, 0, 'Public', NULL, 1),
 (22, 'QCM Développement durable', NULL, NULL, NULL, 0, 'Public', NULL, 2),
-(23, 'QCM Mathématiques', NULL, NULL, NULL, 0, 'Public', NULL, 2),
+(23, 'QCM Mathématiques', NULL, NULL, NULL, 0, 'Public', NULL, 1),
 (24, 'QCM Sport', NULL, NULL, NULL, 0, 'Public', NULL, 2);
 
 --
