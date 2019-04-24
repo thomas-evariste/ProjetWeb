@@ -32,7 +32,7 @@
                 echo "<div class=\"etat\">Etat: ". $questionnaire['etat'] ." </div>";
                 echo "<div class=\"createur\">Createur: ". $questionnaire['createur'] ." </div>";
                 echo "<div class=\"boutons\">
-				<form action=\"index.php?action=repondreQuiz&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$questionnaire['id']."'><input type='submit' value='Répondre'></form>
+				<form action=\"index.php?action=repondreQuiz&controller=prof\" method=\"POST\"><input type='hidden' name='questionnaireId' value='".$questionnaire['id']."'><input type='submit' value='RÃ©pondre'></form>
 				";
 				
 				echo "</div></div>";
