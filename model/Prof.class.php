@@ -72,8 +72,13 @@ class Prof extends User{
         $sql = "SELECT ID_USER FROM ENSEIGNANT WHERE LOGIN = '$login'";
         $sth = parent::query($sql);
         $data= $sth->fetch(PDO::FETCH_OBJ);
-        echo "data :".$data->ID_USER;
         return $data->ID_USER;
+    }
+    public static function getLoginById($id){
+        $sql = "SELECT LOGIN  FROM ENSEIGNANT WHERE ID_USER = '$id'";
+        $sth = parent::query($sql);
+        $data= $sth->fetch(PDO::FETCH_OBJ);
+        return $data->LOGIN;
     }
 
 
